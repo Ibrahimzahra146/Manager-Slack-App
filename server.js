@@ -146,8 +146,9 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   } else {
 
     var stringfy = JSON.stringify(msg);
-    console.log("the message is ");
+    console.log("the message isa ");
     console.log(stringfy);
+    sendVacationToManager("dd")
     getMembersList(msg.body.event.user, msg)
 
 
