@@ -1,4 +1,4 @@
-name: slack demo
+name: Manager App
 config:
 - name: APIAI_ACCESS_KEY
   friendly_name: API Ai access token
