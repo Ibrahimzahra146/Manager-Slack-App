@@ -92,7 +92,7 @@ function getMembersList(Id, msg) {
     }
   });
 }
-function sendVacationToManager(managerEmail){
+function sendVacationToManager(managerEmail) {
   var message = {
     'type': 'message',
     'channel': "D3PBGG355",
@@ -146,7 +146,8 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   } else {
 
     var stringfy = JSON.stringify(msg);
-
+    console.log("the message is ");
+    console.log(stringfy);
     getMembersList(msg.body.event.user, msg)
 
 
