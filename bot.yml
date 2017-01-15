@@ -1,0 +1,14 @@
+name: slack demo
+config:
+- name: APIAI_ACCESS_KEY
+  friendly_name: API Ai access token
+  type: secret
+  global: true
+- name: SLACK_APP_ACCESS_KEY
+  friendly_name: SLACK Ai access token
+  type: secret
+  global: true
+- name: SLACK_BOT_ACCESS_KEY
+  friendly_name: SLACK bot access token
+  type: secret
+  global: true
