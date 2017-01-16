@@ -108,6 +108,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
+  msg.say("You accepted the request")
   var message = {
     'type': 'message',
     'channel': "D3PBGG355",
