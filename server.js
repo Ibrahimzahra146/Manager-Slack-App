@@ -94,7 +94,7 @@ function getMembersList(Id, msg) {
 
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
-  if (msg.body.event.user == "U3NP5LM6Z") {
+  if (msg.body.event.user == "U3R213B2L") {
     console.log("message from bot ")
 
   } else {
@@ -102,6 +102,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     var stringfy = JSON.stringify(msg);
     console.log("the message isa ");
     console.log(stringfy);
+    getMembersList(msg.body.event.user, msg)
 
 
   }
