@@ -91,51 +91,6 @@ function getMembersList(Id, msg) {
     }
   });
 }
-function sendVacationToManager(startDate, endDate, email) {
-  var message = {
-    'type': 'message',
-    'channel': "D3PBGG355",
-    user: "U3FNW74JD",
-    text: 'what is my name',
-    ts: '1482920918.000057',
-    team: "T3FN29ZSL",
-    event: 'direct_message'
-  };
-  bot.startConversation(message, function (err, convo) {
-
-
-    if (!err) {
-      var text12 = {
-        "attachments": [
-          {
-            "text": "U receive new Vacation request",
-            "callback_id": 'manager_confirm_reject',
-            "color": "#3AA3E3",
-            "attachment_type": "default",
-            "actions": [
-              {
-                "name": 'confirm',
-                "text": "Confirm",
-                "type": "button",
-                "value": "confirm"
-              },
-              {
-                "name": 'reject',
-                "text": "reject",
-                "type": "button",
-                "value": "reject"
-              }
-            ]
-          }
-        ]
-      }
-      var stringfy = JSON.stringify(text12);
-      var obj1 = JSON.parse(stringfy);
-      bot.reply(message, obj1);
-
-    }
-  });
-}
 
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
@@ -155,7 +110,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   var message = {
     'type': 'message',
-    'channel': "D3RR2RE68",
+    'channel': "D3PBGG355",
     user: "U3FNW74JD",
     text: 'what is my name',
     ts: '1482920918.000057',
@@ -180,7 +135,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
   var arr = value.toString().split(",");
-  msg.respond(msg.body.response_url, "your manager reject Yourn vacarion ")
+  msg.respond(msg.body.response_url, "your manager reject Your vacation ")
 })
 app.get('/', function (req, res) {
   res.send('Hello')
