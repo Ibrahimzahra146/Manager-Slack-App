@@ -102,7 +102,6 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     var stringfy = JSON.stringify(msg);
     console.log("the message isa ");
     console.log(stringfy);
-    getMembersList(msg.body.event.user, msg)
 
 
   }
@@ -135,7 +134,28 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
   var arr = value.toString().split(",");
-  msg.respond(msg.body.response_url, "your manager reject Your vacation ")
+  var message = {
+    'type': 'message',
+    'channel': "D3PBGG355",
+    user: "U3FNW74JD",
+    text: 'what is my name',
+    ts: '1482920918.000057',
+    team: "T3FN29ZSL",
+    event: 'direct_message'
+  };
+  bot.startConversation(message, function (err, convo) {
+
+
+    if (!err) {
+      var text12 = {
+        "text": "your manager rejected your vacation request ",
+      }
+      var stringfy = JSON.stringify(text12);
+      var obj1 = JSON.parse(stringfy);
+      bot.reply(message, obj1);
+
+    }
+  });
 })
 app.get('/', function (req, res) {
   res.send('Hello')
