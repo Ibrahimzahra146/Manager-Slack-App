@@ -36,7 +36,6 @@ var bot = controller.spawn({
 }).startRTM();
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
-  console.log("the received email value is " + emailValue);
   userdb.findOne({ email: emailValue }).then(function (u) {
     if (u == undefined)
       console.log("the not database is defined every where")
@@ -92,7 +91,7 @@ function getMembersList(Id, msg) {
     }
   });
 }
-function sendVacationToManager(managerEmail) {
+function sendVacationToManager(startDate, endDate, email) {
   var message = {
     'type': 'message',
     'channel': "D3PBGG355",
@@ -148,71 +147,35 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     var stringfy = JSON.stringify(msg);
     console.log("the message isa ");
     console.log(stringfy);
-    sendVacationToManager("dd")
     getMembersList(msg.body.event.user, msg)
 
 
   }
 })
-slapp.action('confirm_reject', 'confirm', (msg, value) => {
-
-  var arr = value.toString().split(",");
-  var userEmail = arr[2];
-  //get the id of the user based on email to can send Post request
-  /*  request({
-      //
-      url: "http://www.json-generator.com/api/json/get/bUzQoShutK?indent=2",
-      json: true
-    }, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        var stringfy = JSON.stringify(body);
-        var vacationDetails = {
-          "id": body.id,
-          from: arr[0],
-          to: arr[1],
-          type: 1,
-          comments: "I wnat vacation"
-        }
-        vacationDetails = Json.stringfy(vacationDetails);
-        console.log(stringfy);
-        //send Post request
-        request.post({
-          url: 'Url of Post reuest from backend',
-          body: vacationDetails
-        }, function (error, response, body) {
-          //here we should send notification to manager ,first we should get all managers
-          request({
-            //
-            url: "http://www.json-generator.com/api/json/get/bTUuKhuXZu?indent=2",
-            json: true
-          }, function (error, response, body) {
-            var i = 0;
-            while ((body[i] != null) && (body[i] != undefined)) {
-              var manager = body[i].username;
-              sendVacationToManager(manager);
-              i++;
-            }
-  
-          });
-  
-        });
-        //******************************************************************************************************
-        //  msg.respond(msg.body.response_url, body.name + " which your id is "+body.id +"  Your  request has been submitted to your managers ")
-  
-      }
-    })*/
-  msg.respond(msg.body.response_url, "Your  request has been submitted to your managers ")
-  sendVacationToManager("Ibrahim")
-})
-slapp.action('confirm_reject', 'reject', (msg, value) => {
-
-  var arr = value.toString().split(",");
-  msg.respond(msg.body.response_url, "Ok. Operation aborted ")
-})
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
+  var message = {
+    'type': 'message',
+    'channel': "D3RR2RE68",
+    user: "U3FNW74JD",
+    text: 'what is my name',
+    ts: '1482920918.000057',
+    team: "T3FN29ZSL",
+    event: 'direct_message'
+  };
+  bot.startConversation(message, function (err, convo) {
 
-  var arr = value.toString().split(",");
-  msg.respond(msg.body.response_url, "your manager confirm Yourn vacarion  ")
+
+    if (!err) {
+      var text12 = {
+        "text": "your manager accepted your vacation request ",
+      }
+      var stringfy = JSON.stringify(text12);
+      var obj1 = JSON.parse(stringfy);
+      bot.reply(message, obj1);
+
+    }
+  });
+
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
