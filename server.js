@@ -43,7 +43,7 @@ function sendRequestToApiAi(emailValue, msg) {
   });
 
   var text = msg.body.event.text;
-  let apiaiRequest = apiAiService.textRequest(text + " " + emailValue,
+  let apiaiRequest = apiAiService.textRequest(text,
     {
       sessionId: sessionId
     });
@@ -100,7 +100,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   } else {
 
     var stringfy = JSON.stringify(msg);
-    console.log("the message isa ");
+    console.log("the message is ");
     console.log(stringfy);
     getMembersList(msg.body.event.user, msg)
 
