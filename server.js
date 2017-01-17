@@ -39,7 +39,7 @@ function sendRequestToApiAi(emailValue, msg) {
   userdb.findOne({ email: emailValue }).then(function (u) {
     if (u == undefined)
       console.log("the not database is defined every where")
-    else console.log("defined every where")
+    else console.log("defined every where ")
   });
 
   var text = msg.body.event.text;
