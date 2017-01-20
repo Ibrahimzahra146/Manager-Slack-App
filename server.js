@@ -19,9 +19,9 @@ var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY;
 var SLACK_ACCESS_TOKEN = process.env.SLACK_APP_ACCESS_KEY;
 var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
 var fs = require('fs');
-var userId = "U3T2WSC3U"
-var employeeChannel = "D3T0WA96X";
-var managerChannel = "D3TP7TUGP"
+var userId = ""
+var employeeChannel = "";
+var managerChannel = ""
 var Constants = require('./Constants.js');
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
