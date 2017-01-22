@@ -20,8 +20,8 @@ var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY;
 var SLACK_ACCESS_TOKEN = process.env.SLACK_APP_ACCESS_KEY;
 var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
 var fs = require('fs');
-var userId = "U3FNW74JD"
-var employeeChannel = "D3PBGG355";
+var userId = ""
+var employeeChannel = "";
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 pg.defaults.ssl = true;
@@ -113,7 +113,21 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  
+  pg.connect(process.env.DATABASE_URL, function (err, client) {
+    if (err) throw err;
+    console.log('Connected to postgres! Getting schemas...');
+
+    client
+      .query("select * from UsersDetails where useremail='brhoom200904@hotmail.com';")
+      .on('row', function (row) {
+        employeeChannel = row.channelid;
+        userId=row.userId
+        console.log("arrive");
+        console.log("userId"+userId);
+
+
+      });
+  });
 
   msg.say("You accepted the request")
   var message = {
