@@ -117,7 +117,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
     console.log('Connected to postgres! Getting schemas...');
 
     client
-      .query("select * from UsersDetails where useremail="+value+";")
+      .query("select * from UsersDetails where useremail="+"'"+value+"'"+";")
       .on('row', function (row) {
         employeeChannel = row.channelid;
         userId=row.userid
