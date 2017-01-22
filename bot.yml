@@ -12,3 +12,7 @@ config:
   friendly_name: SLACK bot access token
   type: secret
   global: true
+- name: Db_URL
+  friendly_name: Url for the user details database
+  type: secret
+  global: true

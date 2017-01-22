@@ -12,6 +12,7 @@ const async = require('async');
 const apiai = require('apiai');
 const APIAI_LANG = 'en';
 const apiAiService = apiai(APIAI_ACCESS_TOKEN);
+var pg = require('pg');
 var sessionId = uuid.v1();
 var db = require('node-localdb');
 var userdb = db('./userDetails1.json')
@@ -23,6 +24,7 @@ var userId = "U3FNW74JD"
 var employeeChannel = "D3PBGG355";
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
+pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
   convo_store: BeepBoopConvoStore(),
@@ -111,6 +113,8 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
+  
+
   msg.say("You accepted the request")
   var message = {
     'type': 'message',
