@@ -108,8 +108,6 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     console.log("the message is ");
     console.log(stringfy);
     getMembersList(msg.body.event.user, msg)
-
-Db_URL
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
