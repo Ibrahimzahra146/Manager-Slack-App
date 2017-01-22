@@ -109,11 +109,11 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     console.log(stringfy);
     getMembersList(msg.body.event.user, msg)
 
-
+Db_URL
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  pg.connect(process.env.DATABASE_URL, function (err, client) {
+  pg.connect(process.env.Db_URL, function (err, client) {
     if (err) throw err;
     console.log('Connected to postgres! Getting schemas...');
 
