@@ -111,18 +111,15 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  console.log("the value "+value);
   pg.connect(process.env.Db_URL, function (err, client) {
     if (err) throw err;
     console.log('Connected to postgres! Getting schemas...');
 
     client
-      .query("select * from UsersDetails where useremail="+"'"+value+"'"+";")
+      .query("select * from UsersDetails where useremail=" + "'" + value + "'" + ";")
       .on('row', function (row) {
         employeeChannel = row.channelid;
-        userId=row.userid
-        console.log("arrive");
-        console.log("userId"+userId);
+        userId = row.userid
 
 
       });
@@ -154,8 +151,19 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
+  pg.connect(process.env.Db_URL, function (err, client) {
+    if (err) throw err;
+    console.log('Connected to postgres! Getting schemas...');
 
-  var arr = value.toString().split(",");
+    client
+      .query("select * from UsersDetails where useremail=" + "'" + value + "'" + ";")
+      .on('row', function (row) {
+        employeeChannel = row.channelid;
+        userId = row.userid
+
+
+      });
+  });
   var message = {
     'type': 'message',
     'channel': employeeChannel,
