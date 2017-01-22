@@ -119,7 +119,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
       .query("select * from UsersDetails where useremail='brhoom200904@hotmail.com';")
       .on('row', function (row) {
         employeeChannel = row.channelid;
-        userId=row.userId
+        userId=row.userid
         console.log("arrive");
         console.log("userId"+userId);
 
