@@ -140,7 +140,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
     if (!err) {
       var text12 = {
-        "text": "your manager accepted your vacation request ",
+        "text": "Manager @name has accepted your time off request.Enjoy it.",
       }
       var stringfy = JSON.stringify(text12);
       var obj1 = JSON.parse(stringfy);
@@ -178,7 +178,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
     if (!err) {
       var text12 = {
-        "text": "your manager rejected your vacation request ",
+        "text": "Manager @name has rejected your time off request.Sorry! ",
       }
       var stringfy = JSON.stringify(text12);
       var obj1 = JSON.parse(stringfy);
