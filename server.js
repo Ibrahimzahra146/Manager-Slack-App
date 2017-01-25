@@ -44,7 +44,7 @@ function sendRequestToApiAi(emailValue, msg) {
   userdb.findOne({ email: emailValue }).then(function (u) {
     if (u == undefined)
       console.log("the not database is defined every where")
-    else console.log("defined every where ")
+    else console.log("defined  every where ")
   });
 
   var text = msg.body.event.text;
@@ -140,7 +140,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
     if (!err) {
       var text12 = {
-        "text": "Manager @name has accepted your time off request.Enjoy it.",
+        "text": "Manager @name has accepted your time off request.Take care.",
       }
       var stringfy = JSON.stringify(text12);
       var obj1 = JSON.parse(stringfy);
