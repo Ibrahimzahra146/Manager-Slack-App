@@ -43,7 +43,7 @@ var bot = controller.spawn({
 function sendRequestToApiAi(emailValue, msg) {
   userdb.findOne({ email: emailValue }).then(function (u) {
     if (u == undefined)
-      console.log("the not database is defined every where")
+      console.log("")
     else console.log("defined  every where ")
   });
 
@@ -125,10 +125,10 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
       });
   });
 
-  msg.say("You accepted the request")
+  msg.say("You have accepted the time off request.")
   var message = {
     'type': 'message',
-    'channel': "D3YLP36RE" ,
+    'channel': "D3YLP36RE",
     user: "U402Y24TH",
     text: 'what is my name',
     ts: '1482920918.000057',
@@ -151,7 +151,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  msg.say("you have rejected the vacation request")
+  msg.say("you have rejected the time off request")
   pg.connect(process.env.Db_URL, function (err, client) {
     if (err) throw err;
     console.log('Connected to postgres! Getting schemas...');
