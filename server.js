@@ -166,9 +166,9 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
       });
   });
   var message = {
-    'type': 'message',
-    'channel': employeeChannel,
-    user: userId,
+   'type': 'message',
+    'channel': "D3YLP36RE",
+    user: "U402Y24TH",
     text: 'what is my name',
     ts: '1482920918.000057',
     team: "T3FN29ZSL",
