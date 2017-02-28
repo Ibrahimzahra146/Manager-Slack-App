@@ -50,8 +50,12 @@ function storeManagerSlackInformation(email, msg) {
     body: email
     //Set the body as a stringcc
   }, function (error, response, body) {
+    console.log("=========> arrive2")
+
     console.log(body)
     if (response.statusCode == 404) {
+      console.log("=========> arrive1")
+
       console.log("the employee not found ")
       requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
         "email": email,
@@ -70,7 +74,7 @@ function storeManagerSlackInformation(email, msg) {
     }
     else if (response.statusCode == 200) {
       console.log("=========> arrive")
-        console.log(response.getBody());
+      console.log(response.getBody());
     }
   });
 }
