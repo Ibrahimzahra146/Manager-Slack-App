@@ -69,6 +69,7 @@ function storeManagerSlackInformation(email, msg) {
 
     }
     else if (response.statusCode == 200) {
+      console.log("=========> arrive")
         console.log(response.getBody());
     }
   });
