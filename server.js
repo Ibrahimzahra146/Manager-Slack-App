@@ -85,9 +85,10 @@ function storeManagerSlackInformation(email, msg) {
           body: email
           //Set the body as a stringcc
         }, function (error, response, body) {
-          console.log("DELETE");
+          console.log("DELETEd");
 
         });
+        console.log("=====>arrive3")
         requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
           "email": email,
           "hrChannelId": "",
@@ -97,6 +98,8 @@ function storeManagerSlackInformation(email, msg) {
           "userChannelId": userChId
         })
           .then(function (response) {
+            console.log("=====>arrive4")
+
             // Get the response body
             response.getBody();
           });
