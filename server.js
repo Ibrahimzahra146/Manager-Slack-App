@@ -7,6 +7,7 @@ const BeepBoopContext = require('slapp-context-beepboop')
 const bodyParser = require('body-parser');
 const uuid = require('node-uuid');
 const request = require('request');
+const requestify = require('requestify');
 const JSONbig = require('json-bigint');
 const async = require('async');
 const apiai = require('apiai');
