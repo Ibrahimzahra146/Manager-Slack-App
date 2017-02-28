@@ -60,7 +60,6 @@ function storeManagerSlackInformation(email, msg) {
       requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
-
         "managerChannelId": msg.body.event.channel,
         "slackUserId": msg.body.event.user,
         "teamId": msg.body.team_id,
@@ -74,9 +73,9 @@ function storeManagerSlackInformation(email, msg) {
     }
     else if (response.statusCode == 200) {
       if (JSON.parse(body).managerChannelId == "") {
-
+        var userChId = JSON.parse(body).userChannelId;
         request({
-          url: "http://5fafa105.ngrok.io/api/v1/toffy/"+JSON.parse(body).id, //URL to hitDs
+          url: "http://5fafa105.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -88,6 +87,18 @@ function storeManagerSlackInformation(email, msg) {
           console.log("DELETE");
 
         });
+        requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
+          "email": email,
+          "hrChannelId": "",
+          "managerChannelId": msg.body.event.channel,
+          "slackUserId": msg.body.event.user,
+          "teamId": msg.body.team_id,
+          "userChannelId": userChId
+        })
+          .then(function (response) {
+            // Get the response body
+            response.getBody();
+          });
       }
     }
   });
