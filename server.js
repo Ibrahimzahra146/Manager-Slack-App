@@ -76,7 +76,7 @@ function storeManagerSlackInformation(email, msg) {
       console.log("=========> arrive")
       console.log(body)
       console.log('----------------')
-      console.log(body.userChannelId);
+      console.log(body['userChannelId']);
     }
   });
 }
