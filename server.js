@@ -80,6 +80,7 @@ function storeManagerSlackInformation(email, msg) {
         console.log("=====>arrive6")
 
         var userChId = JSON.parse(body).userChannelId;
+        var hrChId=JSON.parse(body).hrChannelId;
         request({
           url: "http://5fafa105.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
@@ -96,7 +97,7 @@ function storeManagerSlackInformation(email, msg) {
         console.log("=====>arrive3")
         requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
           "email": email,
-          "hrChannelId": "",
+          "hrChannelId": hrChId,
           "managerChannelId": msg.body.event.channel,
           "slackUserId": msg.body.event.user,
           "teamId": msg.body.team_id,
