@@ -39,7 +39,7 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
-function storeUserSlackInformation(email, msg) {
+function storeManagerSlackInformation(email, msg) {
   request({
     url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
