@@ -73,7 +73,10 @@ function storeManagerSlackInformation(email, msg) {
 
     }
     else if (response.statusCode == 200) {
+      console.log("=====>arrive5")
       if (JSON.parse(body).managerChannelId == "") {
+        console.log("=====>arrive5")
+
         var userChId = JSON.parse(body).userChannelId;
         request({
           url: "http://5fafa105.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
