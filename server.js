@@ -74,8 +74,8 @@ function storeManagerSlackInformation(email, msg) {
     }
     else if (response.statusCode == 200) {
       console.log("=====>arrive5")
-      if (JSON.parse(body).managerChannelId == "") {
-        console.log("=====>arrive5")
+      if (JSON.parse(body).managerChannelId !=msg.body.event.channel) {
+        console.log("=====>arrive6")
 
         var userChId = JSON.parse(body).userChannelId;
         request({
