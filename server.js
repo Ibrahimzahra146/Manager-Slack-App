@@ -39,15 +39,45 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
+function storeUserSlackInformation(email, msg) {
+  request({
+    url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+    },
+    body: email
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    console.log(body)
+    if (response.statusCode == 404) {
+      console.log("the employee not found ")
+      requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
+        "email": email,
+        "hrChannelId": "",
+
+        "managerChannelId": msg.body.event.channel,
+        "slackUserId": msg.body.event.user,
+        "teamId": msg.body.team_id,
+        "userChannelId": ""
+      })
+        .then(function (response) {
+          // Get the response body
+          response.getBody();
+        });
+
+    }
+    else if (response.statusCode == 200) {
+        console.log(response.getBody());
+    }
+  });
+}
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
-  userdb.findOne({ email: emailValue }).then(function (u) {
-    if (u == undefined)
-      console.log("")
-    else console.log("defined  every where ")
-  });
-
+  storeManagerSlackInformation(emailValue, msg);
   var text = msg.body.event.text;
+
   let apiaiRequest = apiAiService.textRequest(text,
     {
       sessionId: sessionId
@@ -166,7 +196,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
       });
   });
   var message = {
-   'type': 'message',
+    'type': 'message',
     'channel': "D3YLP36RE",
     user: "U402Y24TH",
     text: 'what is my name',
