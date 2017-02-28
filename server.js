@@ -73,10 +73,22 @@ function storeManagerSlackInformation(email, msg) {
 
     }
     else if (response.statusCode == 200) {
-      console.log("=========> arrive")
-      console.log(body)
-      console.log('----------------')
-      console.log((JSON.parse(body)).userChannelId);
+      if (JSON.parse(body).managerChannelId == "") {
+
+        request({
+          url: "http://5fafa105.ngrok.io/api/v1/toffy/"+JSON.parse(body).id, //URL to hitDs
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+          },
+          body: email
+          //Set the body as a stringcc
+        }, function (error, response, body) {
+          console.log("DELETE");
+
+        });
+      }
     }
   });
 }
