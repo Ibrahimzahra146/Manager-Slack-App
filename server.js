@@ -40,6 +40,11 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
+
+/*--------------___________________________________________________----------------------
+Add manager infromation to database
+-------------____________________________________________________---------------------
+*/
 function storeManagerSlackInformation(email, msg) {
   request({
     url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
@@ -51,11 +56,9 @@ function storeManagerSlackInformation(email, msg) {
     body: email
     //Set the body as a stringcc
   }, function (error, response, body) {
-    console.log("=========> arrive2")
 
-    console.log(body)
     if (response.statusCode == 404) {
-      console.log("=========> arrive1")
+
 
       console.log("the employee not found ")
       requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
@@ -72,15 +75,16 @@ function storeManagerSlackInformation(email, msg) {
         });
 
     }
-    else if (response.statusCode == 200) {
-      console.log("=====>arrive5")
-      console.log((JSON.parse(body)).managerChannelId)
-      console.log(msg.body.event.channel)
-      if (((JSON.parse(body)).managerChannelId) != (msg.body.event.channel)) {
-        console.log("=====>arrive6")
 
+    /*--------------___________________________________________________----------------------
+    check if the record is already exist ,that mean the manager use the system as employee
+    -------------____________________________________________________---------------------
+    */
+    else if (response.statusCode == 200) {
+
+      if (((JSON.parse(body)).managerChannelId) != (msg.body.event.channel)) {
         var userChId = JSON.parse(body).userChannelId;
-        var hrChId=JSON.parse(body).hrChannelId;
+        var hrChId = JSON.parse(body).hrChannelId;
         request({
           url: "http://5fafa105.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
@@ -132,7 +136,11 @@ function sendRequestToApiAi(emailValue, msg) {
   apiaiRequest.on('error', (error) => console.error(error));
   apiaiRequest.end();
 }
-//get all information about team users like email ,name ,user id ...etc
+
+/*--------------___________________________________________________----------------------
+get all information about team users like email ,name ,user id ...etc
+-------------____________________________________________________---------------------
+*/
 function getMembersList(Id, msg) {
   var emailValue = "";
   request({
@@ -167,6 +175,10 @@ function getMembersList(Id, msg) {
   });
 }
 
+/*--------------___________________________________________________----------------------
+listen for user messages
+-------------____________________________________________________---------------------
+*/
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   if (msg.body.event.user == "U3R213B2L") {
@@ -222,40 +234,38 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
   msg.say("you have rejected the time off request")
-  pg.connect(process.env.Db_URL, function (err, client) {
-    if (err) throw err;
-    console.log('Connected to postgres! Getting schemas...');
-
-    client
-      .query("select * from UsersDetails where useremail=" + "'" + value + "'" + ";")
-      .on('row', function (row) {
-        employeeChannel = row.channelid;
-        userId = row.userid
-
-
-      });
-  });
-  var message = {
-    'type': 'message',
-    'channel': "D3YLP36RE",
-    user: "U402Y24TH",
-    text: 'what is my name',
-    ts: '1482920918.000057',
-    team: "T3FN29ZSL",
-    event: 'direct_message'
-  };
-  bot.startConversation(message, function (err, convo) {
+  request({
+    url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+    },
+    body: email
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    var message = {
+      'type': 'message',
+      'channel': "D3YLP36RE",
+      user: "U402Y24TH",
+      text: 'what is my name',
+      ts: '1482920918.000057',
+      team: "T3FN29ZSL",
+      event: 'direct_message'
+    };
+    bot.startConversation(message, function (err, convo) {
 
 
-    if (!err) {
-      var text12 = {
-        "text": "Manager @name has rejected your time off request.Sorry! ",
+      if (!err) {
+        var text12 = {
+          "text": "Manager @name has rejected your time off request.Sorry! ",
+        }
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        bot.reply(message, obj1);
+
       }
-      var stringfy = JSON.stringify(text12);
-      var obj1 = JSON.parse(stringfy);
-      bot.reply(message, obj1);
-
-    }
+    });
   });
 })
 app.get('/', function (req, res) {
