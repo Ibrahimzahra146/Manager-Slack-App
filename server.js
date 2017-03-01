@@ -47,7 +47,7 @@ Add manager infromation to database
 */
 function storeManagerSlackInformation(email, msg) {
   request({
-    url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    url: 'http://f43d047e.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function storeManagerSlackInformation(email, msg) {
 
 
       console.log("the employee not found ")
-      requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
+      requestify.post('http://f43d047e.ngrok.io/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
         "managerChannelId": msg.body.event.channel,
@@ -86,7 +86,7 @@ function storeManagerSlackInformation(email, msg) {
         var userChId = JSON.parse(body).userChannelId;
         var hrChId = JSON.parse(body).hrChannelId;
         request({
-          url: "http://5fafa105.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
+          url: "http://f43d047e.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function storeManagerSlackInformation(email, msg) {
 
         });
         console.log("=====>arrive3")
-        requestify.post('http://5fafa105.ngrok.io/api/v1/toffy', {
+        requestify.post('http://f43d047e.ngrok.io/api/v1/toffy', {
           "email": email,
           "hrChannelId": hrChId,
           "managerChannelId": msg.body.event.channel,
@@ -193,64 +193,64 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  pg.connect(process.env.Db_URL, function (err, client) {
-    if (err) throw err;
-    console.log('Connected to postgres! Getting schemas...');
-
-    client
-      .query("select * from UsersDetails where useremail=" + "'" + value + "'" + ";")
-      .on('row', function (row) {
-        employeeChannel = row.channelid;
-        userId = row.userid
-
-
-      });
-  });
-
-  msg.say("You have accepted the time off request.")
-  var message = {
-    'type': 'message',
-    'channel': "D3YLP36RE",
-    user: "U402Y24TH",
-    text: 'what is my name',
-    ts: '1482920918.000057',
-    team: "T3FN29ZSL",
-    event: 'direct_message'
-  };
-  bot.startConversation(message, function (err, convo) {
-
-
-    if (!err) {
-      var text12 = {
-        "text": "Manager @name has accepted your time off request.Take care.",
-      }
-      var stringfy = JSON.stringify(text12);
-      var obj1 = JSON.parse(stringfy);
-      bot.reply(message, obj1);
-
-    }
-  });
-
-})
-slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  msg.say("you have rejected the time off request")
   request({
-    url: 'http://5fafa105.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    url: 'http://f43d047e.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
     },
-    body: email
+    body: value
     //Set the body as a stringcc
   }, function (error, response, body) {
+    var responseBody = JSON.parse(body);
+
+    msg.say("You have accepted the time off request.")
     var message = {
       'type': 'message',
-      'channel': "D3YLP36RE",
-      user: "U402Y24TH",
+      'channel': responseBody.userChannelId,
+      user: responseBody.slackUserId,
       text: 'what is my name',
       ts: '1482920918.000057',
-      team: "T3FN29ZSL",
+      team: responseBody.teamId,
+      event: 'direct_message'
+    };
+    bot.startConversation(message, function (err, convo) {
+
+
+      if (!err) {
+        var text12 = {
+          "text": "Manager @name has accepted your time off request.Take care.",
+        }
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        bot.reply(message, obj1);
+
+      }
+    });
+  });
+})
+slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
+
+  msg.say("you have rejected the time off request")
+  request({
+    url: 'http://f43d047e.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+    },
+    body: value
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    var responseBody = JSON.parse(body);
+    var message = {
+      'type': 'message',
+      'channel': responseBody.userChannelId,
+      user: responseBody.slackUserId,
+      text: 'what is my name',
+      ts: '1482920918.000057',
+      team: responseBody.teamId,
       event: 'direct_message'
     };
     bot.startConversation(message, function (err, convo) {
