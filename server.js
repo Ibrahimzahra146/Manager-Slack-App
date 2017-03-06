@@ -289,7 +289,6 @@ app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request");
   console.log(clientIp)
-  next();
   res.send('Hello1')
 })
 
