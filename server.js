@@ -186,6 +186,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
   } else {
     console.log("arrive1")
+    console.log(IP);
     request({
       url: "http://" + IP + "/api/v1/employee/login", //URL to hitDs
       method: 'POST',
