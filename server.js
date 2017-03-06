@@ -185,6 +185,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     console.log("message from bot  ")
 
   } else {
+    console.log("arrive1")
     request({
       url: "http://" + IP + "/api/v1/employee/login", //URL to hitDs
       method: 'POST',
