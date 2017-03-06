@@ -187,7 +187,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
   } else {
     request({
-      url: "https://beepboophq.com/proxy/47003ae5c33c4305a844f5503ee1c036",
+      url: "https://beepboophq.com/proxy/47003ae5c33c4305a844f5503ee1c036/",
       json: true
     }, function (error, response, body) {
       console.log("ok i sent the request")
