@@ -17,7 +17,7 @@ var pg = require('pg');
 var sessionId = uuid.v1();
 var db = require('node-localdb');
 var userdb = db('./userDetails1.json')
-var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY;
+var IP = process.env.APIAI_ACCESS_KEY;
 var SLACK_ACCESS_TOKEN = process.env.SLACK_APP_ACCESS_KEY;
 var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
 var fs = require('fs');
@@ -185,11 +185,25 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     console.log("message from bot ")
 
   } else {
+    request({
+      url: "http://" + IP + "/api/v1/employee/login", //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: "brhoom200904@hotmail.com"
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      console.log("arrive2")
+      console.log(error)
+      console.log(response)
+    });
+    msg.say("ok")
 
-    var stringfy = JSON.stringify(msg);
-    console.log("the message is ");
-    console.log(stringfy);
-    getMembersList(msg.body.event.user, msg)
+    /* var stringfy = JSON.stringify(msg);
+     console.log("the message is ");
+     console.log(stringfy);
+     getMembersList(msg.body.event.user, msg)*/
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
