@@ -183,7 +183,7 @@ listen for user messages
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   if (msg.body.event.user == "U3R213B2L") {
-    console.log("message from bot  ")
+    console.log("message from bot")
 
   } else {
 
