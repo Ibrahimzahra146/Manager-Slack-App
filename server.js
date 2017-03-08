@@ -61,7 +61,7 @@ function storeManagerSlackInformation(email, msg) {
     if (response.statusCode == 404) {
 
 
-      console.log("the employee not found ")
+      console.log("the employee not found  ")
       requestify.post('http://4436e503.ngrok.io/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
