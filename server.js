@@ -24,6 +24,7 @@ var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
 var fs = require('fs');
 var userId = ""
 var employeeChannel = "";
+var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 pg.defaults.ssl = true;
@@ -48,7 +49,7 @@ Add manager infromation to database
 */
 function storeManagerSlackInformation(email, msg) {
   request({
-    url: 'http://4436e503.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    url: 'http://'+IP+'/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ function storeManagerSlackInformation(email, msg) {
 
 
       console.log("the employee not found  ")
-      requestify.post('http://4436e503.ngrok.io/api/v1/toffy', {
+      requestify.post('http://'+IP+'/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
         "managerChannelId": msg.body.event.channel,
@@ -87,7 +88,7 @@ function storeManagerSlackInformation(email, msg) {
         var userChId = JSON.parse(body).userChannelId;
         var hrChId = JSON.parse(body).hrChannelId;
         request({
-          url: "http://4436e503.ngrok.io/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
+          url: "http://"+IP+"/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ function storeManagerSlackInformation(email, msg) {
 
         });
         console.log("=====>arrive3")
-        requestify.post('http://4436e503.ngrok.io/api/v1/toffy', {
+        requestify.post('http://'+IP+'/api/v1/toffy', {
           "email": email,
           "hrChannelId": hrChId,
           "managerChannelId": msg.body.event.channel,
@@ -196,7 +197,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   request({
-    url: 'http://4436e503.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    url: 'http://'+IP+'/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -236,7 +237,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
   msg.say("you have rejected the time off request")
   request({
-    url: 'http://4436e503.ngrok.io/api/v1/toffy/get-record', //URL to hitDs
+    url: 'http://'+IP+'/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
