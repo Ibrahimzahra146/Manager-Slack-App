@@ -273,7 +273,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
-  console.log("new request");
+  console.log("new request ");
   console.log(clientIp)
   res.send('Hello1')
 })
