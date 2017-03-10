@@ -80,18 +80,6 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
 
 
 
-    request({
-      url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cookie': generalCookies
-      }
-      //Set the body as a stringcc
-    }, function (error, response, body) {
-      console.log("response.statusCode" + response.statusCode)
-      console.log(" Put request sent  ")
-    })
   })
 
 }
