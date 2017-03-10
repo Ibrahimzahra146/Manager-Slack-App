@@ -29,6 +29,7 @@ var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var generalCookies = ""
 var managerIdInHr = ""
+var sessionFlag = 0;
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
@@ -73,31 +74,37 @@ function sendFeedBackMessage(responseBody) {
   });
 }
 function getNewSession(email, callback) {
+  var res = ""
+  if (sessionFlag == 1) {
+    res = generalCookies;
+    callback(res)
+  } else {
+    console.log("========>Getting new sessio ID")
+    console.log("The IP" + IP)
+    request({
+      url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': generalCookies
 
-  console.log("========>Getting new sessio ID")
-  console.log("The IP" + IP)
-  request({
-    url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': generalCookies
+      },
+      body: email
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      managerIdInHr = (JSON.parse(body)).id;
+      console.log("userIdInHr ====>>>" + managerIdInHr);
 
-    },
-    body: email
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    managerIdInHr = (JSON.parse(body)).id;
-    console.log("userIdInHr ====>>>" + managerIdInHr);
-
-    var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
-    console.log("cookies==================>" + cookies)
-    var arr = cookies.toString().split(";")
-    console.log("trim based on ;==========>" + arr[0])
-    var res = arr[0].replace(/['"]+/g, '');
-    console.log("final session is =========>" + res)
-    callback(res);
-  });
+      var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
+      console.log("cookies==================>" + cookies)
+      var arr = cookies.toString().split(";")
+      console.log("trim based on ;==========>" + arr[0])
+      res = arr[0].replace(/['"]+/g, '');
+      console.log("final session is =========>" + res)
+      sessionFlag = 1;
+      callback(res);
+    });
+  }
 }
 function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
   getNewSession(managerEmail, function (cookie) {
