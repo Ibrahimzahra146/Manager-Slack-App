@@ -255,6 +255,8 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
+  console.log("userEmail" + userEmail)
+
   console.log("managerEmail" + managerEmail)
   console.log("vacation id-====-===>>>>" + vacationId)
   sendVacationPutRequest(vacationId, approvalId, managerEmail)
