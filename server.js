@@ -105,6 +105,19 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
     console.log("vacationId------>" + vacationId)
     console.log("approvalId------>" + approvalId)
     console.log("managerEmail------>" + managerEmail)
+    var uri = 'http://' + IP + '/api/v1 /vacation/' + vacationId + '/managerApproval/' + approvalId
+    console.log("uri"+uri)
+    request({
+      url:uri , //URL to hitDs
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': generalCookies
+      },
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      console.log("response.lll"+response.statusCode)
+    });
 
 
 
