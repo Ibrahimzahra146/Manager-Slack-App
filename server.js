@@ -27,6 +27,7 @@ var employeeChannel = "";
 var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
+var generalCookies = ""
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
@@ -42,13 +43,40 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
+function getNewSession(email, callback) {
+
+  console.log("========>Getting new sessio ID")
+  console.log("The IP" + IP)
+  request({
+    url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': generalCookies
+
+    },
+    body: email
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    userIdInHr = (JSON.parse(body)).id;
+    console.log("userIdInHr ====>>>" + userIdInHr);
+
+    var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
+    console.log("cookies==================>" + cookies)
+    var arr = cookies.toString().split(";")
+    console.log("trim based on ;==========>" + arr[0])
+    var res = arr[0].replace(/['"]+/g, '');
+    console.log("final session is =========>" + res)
+    callback(res);
+  });
+}
 function sendVacationPutRequest(vacationId, approvalId) {
   request({
     url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+      'Cookie': generalCookies
     }
     //Set the body as a stringcc
   }, function (error, response, body) {
