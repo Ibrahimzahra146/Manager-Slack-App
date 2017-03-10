@@ -72,7 +72,7 @@ function getNewSession(email, callback) {
 }
 function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
   getNewSession(managerEmail, function (cookie) {
-    generalCookies=cookie;
+    generalCookies=cookie;  
     request({
       url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
       method: 'PUT',
@@ -83,7 +83,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
       //Set the body as a stringcc
     }, function (error, response, body) {
       console.log("response.statusCode" + response.statusCode)
-      console.log("Put request sent")
+      console.log("Put request sent ")
     })
   })
 
