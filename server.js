@@ -28,7 +28,7 @@ var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var generalCookies = ""
-var managerIdInHr=""
+var managerIdInHr = ""
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
@@ -73,7 +73,13 @@ function getNewSession(email, callback) {
 }
 function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
   getNewSession(managerEmail, function (cookie) {
-    generalCookies=cookie;  
+    generalCookies = cookie;
+    console.log("vacationId------>" + vacationId)
+    console.log("approvalId------>" + approvalId)
+    console.log("managerEmail------>" + managerEmail)
+
+
+
     request({
       url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
       method: 'PUT',
