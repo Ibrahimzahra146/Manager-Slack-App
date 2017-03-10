@@ -70,19 +70,23 @@ function getNewSession(email, callback) {
     callback(res);
   });
 }
-function sendVacationPutRequest(vacationId, approvalId) {
-  request({
-    url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': generalCookies
-    }
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    console.log("response.statusCode" + response.statusCode)
-    console.log("Put request sent")
+function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
+  getNewSession(managerEmail, function (cookie) {
+    generalCookies=cookie;
+    request({
+      url: 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId, //URL to hitDs
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': generalCookies
+      }
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      console.log("response.statusCode" + response.statusCode)
+      console.log("Put request sent")
+    })
   })
+
 }
 
 /*--------------___________________________________________________----------------------
@@ -243,8 +247,10 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   var userEmail = arr[0];
   var vacationId = arr[1];
   var approvalId = arr[2]
+  var managerEmail = arr[3]
+  console.log("managerEmail" + managerEmail)
   console.log("vacation id-====-===>>>>" + vacationId)
-  sendVacationPutRequest(vacationId, approvalId)
+  sendVacationPutRequest(vacationId, approvalId, managerEmail)
 
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
