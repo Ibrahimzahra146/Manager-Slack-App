@@ -45,7 +45,7 @@ var bot = controller.spawn({
 
 }).startRTM();
 function sendFeedBackMessage(responseBody) {
-  console.log("Arrive at sendFeedBackMessage")
+  console.log("Arrive sendFeedBackMessage")
   var message = {
     'type': 'message',
     'channel': responseBody.userChannelId,
@@ -285,10 +285,10 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
     //Set the body as a stringcc
   }, function (error, response, body) {
     var responseBody = JSON.parse(body);
-
+    sendFeedBackMessage(responseBody)
     msg.say("You have accepted the time off request.")
 
-    sendFeedBackMessage(responseBody)
+
   });
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
