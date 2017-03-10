@@ -28,6 +28,7 @@ var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var generalCookies = ""
+var managerIdInHr=""
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
@@ -58,8 +59,8 @@ function getNewSession(email, callback) {
     body: email
     //Set the body as a stringcc
   }, function (error, response, body) {
-    userIdInHr = (JSON.parse(body)).id;
-    console.log("userIdInHr ====>>>" + userIdInHr);
+    managerIdInHr = (JSON.parse(body)).id;
+    console.log("userIdInHr ====>>>" + managerIdInHr);
 
     var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
     console.log("cookies==================>" + cookies)
