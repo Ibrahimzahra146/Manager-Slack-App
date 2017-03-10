@@ -248,7 +248,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   console.log("managerEmail" + managerEmail)
   console.log("vacation id-====-===>>>>" + vacationId)
   sendVacationPutRequest(vacationId, approvalId, managerEmail)
-
+  console.log("arrive333333")
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
