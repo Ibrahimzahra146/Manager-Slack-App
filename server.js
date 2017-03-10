@@ -117,6 +117,8 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
       //Set the body as a stringcc
     }, function (error, response, body) {
       console.log("response.lll"+response.statusCode)
+      console.log("error"+error)
+      
     });
 
 
