@@ -45,6 +45,9 @@ var bot = controller.spawn({
 
 }).startRTM();
 function sendFeedBackMessage(responseBody) {
+  console.log("responseBody.userChannelId " + responseBody.userChannelId)
+  console.log("responseBody.slackUserId " + responseBody.slackUserId)
+  console.log("responseBody.teamId " + responseBody.teamId)
   console.log("Arrive sendFeedBackMessage")
   var message = {
     'type': 'message',
