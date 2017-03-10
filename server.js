@@ -52,6 +52,7 @@ function sendVacationPutRequest(vacationId, approvalId) {
     }
     //Set the body as a stringcc
   }, function (error, response, body) {
+    console.log("response.statusCode" + response.statusCode)
     console.log("Put request sent")
   })
 }
@@ -214,7 +215,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   var userEmail = arr[0];
   var vacationId = arr[1];
   var approvalId = arr[2]
-  console.log("vacation id-====-===>>>>"+vacationId)
+  console.log("vacation id-====-===>>>>" + vacationId)
   sendVacationPutRequest(vacationId, approvalId)
 
   request({
