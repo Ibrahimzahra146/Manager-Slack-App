@@ -83,7 +83,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
       //Set the body as a stringcc
     }, function (error, response, body) {
       console.log("response.statusCode" + response.statusCode)
-      console.log("Put request sent ")
+      console.log(" Put request sent  ")
     })
   })
 
