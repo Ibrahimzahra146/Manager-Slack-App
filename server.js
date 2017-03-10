@@ -284,7 +284,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
       event: 'direct_message'
     };
     bot.startConversation(message, function (err, convo) {
-
+      console.log("cannot send message")
 
       if (!err) {
         var text12 = {
