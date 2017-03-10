@@ -44,6 +44,31 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
+function sendFeedBackMessage(responseBody) {
+  console.log("Arrive at sendFeedBackMessage")
+  var message = {
+    'type': 'message',
+    'channel': responseBody.userChannelId,
+    user: responseBody.slackUserId,
+    text: 'what is my name',
+    ts: '1482920918.000057',
+    team: responseBody.teamId,
+    event: 'direct_message'
+  };
+  bot.startConversation(message, function (err, convo) {
+    console.log("cannot send message")
+
+    if (!err) {
+      var text12 = {
+        "text": "Manager @name has accepted your time off request.Take care.",
+      }
+      var stringfy = JSON.stringify(text12);
+      var obj1 = JSON.parse(stringfy);
+      bot.reply(message, obj1);
+
+    }
+  });
+}
 function getNewSession(email, callback) {
 
   console.log("========>Getting new sessio ID")
@@ -262,28 +287,8 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
     var responseBody = JSON.parse(body);
 
     msg.say("You have accepted the time off request.")
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
-      console.log("cannot send message")
 
-      if (!err) {
-        var text12 = {
-          "text": "Manager @name has accepted your time off request.Take care.",
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-
-      }
-    });
+    sendFeedBackMessage(responseBody)
   });
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
