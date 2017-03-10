@@ -105,7 +105,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
     console.log("vacationId------>" + vacationId)
     console.log("approvalId------>" + approvalId)
     console.log("managerEmail------>" + managerEmail)
-    var uri = 'http://' + IP + '/api/v1 /vacation/' + vacationId + '/managerApproval/' + approvalId
+    var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
     console.log("uri"+uri)
     request({
       url:uri , //URL to hitDs
