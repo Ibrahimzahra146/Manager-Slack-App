@@ -106,19 +106,28 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
     console.log("approvalId------>" + approvalId)
     console.log("managerEmail------>" + managerEmail)
     var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
-    console.log("uri"+uri)
+    console.log("uri" + uri)
+    var approvalBody = {
+      "id": approvalId,
+      "comments": "From Ibrahim",
+      "state": "Approved",
+      "type": "MANAGER"
+
+    }
+    approvalBody = JSON.stringify(approvalBody)
     request({
-      url:uri , //URL to hitDs
+      url: uri, //URL to hitDs
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Cookie': generalCookies
       },
+      body: approvalBody
       //Set the body as a stringcc
     }, function (error, response, body) {
-      console.log("response.lll"+response.statusCode)
-      console.log("error"+error)
-      
+      console.log("response.lll" + response.statusCode)
+      console.log("error" + error)
+
     });
 
 
