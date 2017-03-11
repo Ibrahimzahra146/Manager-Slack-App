@@ -107,6 +107,7 @@ function getNewSession(email, callback) {
   }
 }
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
+  console.log("sending vacation put request")
   getNewSession(managerEmail, function (cookie) {
     generalCookies = cookie;
     console.log("vacationId------>" + vacationId)
