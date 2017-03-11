@@ -106,7 +106,7 @@ function getNewSession(email, callback) {
     });
   }
 }
-function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
+function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
   getNewSession(managerEmail, function (cookie) {
     generalCookies = cookie;
     console.log("vacationId------>" + vacationId)
@@ -117,7 +117,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail) {
     var approvalBody = {
       "id": approvalId,
       "comments": "From Ibrahim",
-      "state": "Approved",
+      "state": status,
       "type": "MANAGER"
 
     }
@@ -302,12 +302,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
-  console.log("userEmail" + userEmail)
-
-  console.log("managerEmail" + managerEmail)
-  console.log("vacation id-====-===>>>>" + vacationId)
-  sendVacationPutRequest(vacationId, approvalId, managerEmail)
-  console.log("arrive333333")
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Approved")
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
@@ -326,8 +321,12 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   });
 })
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-
-  msg.say("you have rejected the time off request")
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Regected")
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
@@ -335,10 +334,11 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
       'Content-Type': 'application/json',
       'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
     },
-    body: value
+    body: userEmail
     //Set the body as a stringcc
   }, function (error, response, body) {
     var responseBody = JSON.parse(body);
+
     var message = {
       'type': 'message',
       'channel': responseBody.userChannelId,
@@ -362,6 +362,9 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
       }
     });
   });
+
+  msg.say("you have rejected the time off request")
+
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
