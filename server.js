@@ -326,6 +326,12 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
+  console.log("Regected userEmail " + userEmail)
+  console.log("Regected vacationId " + vacationId)
+  console.log("Regected approvalId " + approvalId)
+
+  console.log("Regected managerEmail " + managerEmail)
+
   sendVacationPutRequest(vacationId, approvalId, managerEmail, "Regected")
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
