@@ -75,7 +75,7 @@ function sendFeedBackMessage(responseBody) {
 }
 function getNewSession(email, callback) {
   var res = ""
-  if (sessionFlag == 1) {
+  if (sessionFlag == 0) {
     res = generalCookies;
     callback(res)
   } else {
@@ -100,7 +100,7 @@ function getNewSession(email, callback) {
       var arr = cookies.toString().split(";")
       console.log("trim based on ;==========>" + arr[0])
       res = arr[0].replace(/['"]+/g, '');
-      console.log("final session is =========>" + res)
+      console.log("final session is =========> " + res)
       sessionFlag = 1;
       callback(res);
     });
