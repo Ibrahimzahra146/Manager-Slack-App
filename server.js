@@ -75,7 +75,7 @@ function sendFeedBackMessage(responseBody) {
 }
 function getNewSession(email, callback) {
   var res = ""
-  if (sessionFlag == 0) {
+  if (sessionFlag == 1) {
     res = generalCookies;
     callback(res)
   } else {
