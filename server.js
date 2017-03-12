@@ -347,7 +347,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
   console.log("Regected managerEmail " + managerEmail)
 
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Regected")
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Rejected")
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
     method: 'POST',
