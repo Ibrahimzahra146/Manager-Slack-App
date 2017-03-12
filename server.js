@@ -325,7 +325,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
       'Content-Type': 'application/json',
       'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
     },
-    body: userEmail
+    body: "brhoom200904@hotmail.com"
     //Set the body as a stringcc
   }, function (error, response, body) {
     var responseBody = JSON.parse(body);
@@ -355,7 +355,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
       'Content-Type': 'application/json',
       'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
     },
-    body: userEmail
+    body: "brhoom200904@hotmail.com"
     //Set the body as a stringcc
   }, function (error, response, body) {
     var responseBody = JSON.parse(body);
