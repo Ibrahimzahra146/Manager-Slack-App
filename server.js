@@ -107,40 +107,54 @@ function getNewSession(email, callback) {
   }
 }
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
-  console.log("sending vacation put request "+status)
-  getNewSession(managerEmail, function (cookie) {
-    generalCookies = cookie;
-    console.log("vacationId------>" + vacationId)
-    console.log("approvalId------>" + approvalId)
-    console.log("managerEmail------>" + managerEmail)
-    var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
-    console.log("uri" + uri)
-    var approvalBody = {
-      "id": approvalId,
-      "comments": "From Ibrahim",
-      "state": status,
-      "type": "MANAGER"
-
+  console.log("sending vacation put request " + status)
+  request({
+    url: "http://" + IP + "/api/v1/employee/8/balance",
+    json: true,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': generalCookies
     }
-    approvalBody = JSON.stringify(approvalBody)
-    request({
-      url: uri, //URL to hitDs
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cookie': generalCookies
-      },
-      body: approvalBody
-      //Set the body as a stringcc
-    }, function (error, response, body) {
-      console.log("response.lll" + response.statusCode)
-      console.log("error" + error)
+  }, function (error, response, body) {
+    if (response.statusCode == 403) {
+      sessionFlag = 0;
+    }
+    getNewSession(managerEmail, function (cookie) {
+      generalCookies = cookie;
+      console.log("vacationId------>" + vacationId)
+      console.log("approvalId------>" + approvalId)
+      console.log("managerEmail------>" + managerEmail)
+      var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
+      console.log("uri" + uri)
+      var approvalBody = {
+        "id": approvalId,
+        "comments": "From Ibrahim",
+        "state": status,
+        "type": "MANAGER"
 
-    });
+      }
+      approvalBody = JSON.stringify(approvalBody)
+      request({
+        url: uri, //URL to hitDs
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': generalCookies
+        },
+        body: approvalBody
+        //Set the body as a stringcc
+      }, function (error, response, body) {
+        console.log("response.lll" + response.statusCode)
+        console.log("error" + error)
+
+      });
 
 
 
+    })
   })
+
 
 }
 
