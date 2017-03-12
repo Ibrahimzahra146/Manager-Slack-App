@@ -311,7 +311,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   }
 })
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  console.log("Manager accepted the vacaction")
+  console.log("Manager @ahmad accepted the vacaction")
   var arr = value.toString().split(";")
   var userEmail = arr[0];
   var vacationId = arr[1];
@@ -374,7 +374,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
       if (!err) {
         var text12 = {
-          "text": "Manager @name has rejected your time off request.Sorry! ",
+          "text": "Manager @ahmad has rejected your time off request.Sorry! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
