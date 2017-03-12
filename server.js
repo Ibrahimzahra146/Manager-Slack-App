@@ -64,7 +64,7 @@ function sendFeedBackMessage(responseBody) {
 
     if (!err) {
       var text12 = {
-        "text": "Manager @name has accepted your time off request.Take care.",
+        "text": "Manager @ahmad has accepted your time off request.Take care.",
       }
       var stringfy = JSON.stringify(text12);
       var obj1 = JSON.parse(stringfy);
