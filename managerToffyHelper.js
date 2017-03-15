@@ -8,8 +8,8 @@ exports.userIdInHr = userIdInHr
 var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
-    var ID=getIdByEmail(email)
-    printLogs("arrive at show employees  ")
+    var ID = getIdByEmail(email)
+    printLogs("arrive at show employees")
     request({
         url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
         method: 'GET',
@@ -123,14 +123,15 @@ function printLogs(msg) {
 }
 function getIdByEmail(email) {
     makePostRequest('employee/get-id', "email", function (response, body) {
-        printLogs(body)
+        printLogs("body:" + body)
     })
 
 }
 function makePostRequest(path, body, callback) {
-
+    var uri = 'http://' + IP + '/api/v1/' + path
+    printLogs("uri "+uri)
     request({
-        url: 'http://' + IP + '/api/v1/' + path, //URL to hitDs
+        url: uri, //URL to hitDs
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
