@@ -8,7 +8,7 @@ exports.userIdInHr = userIdInHr
 var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
-
+    printLogs("arrive at show employees")
     request({
         url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
         method: 'GET',
@@ -82,6 +82,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
 get new session id using login api
 */
 module.exports.getNewSession = function getNewSession(email, callback) {
+    printLogs("arrive at get new session")
     var res = generalCookies
     console.log("email ------->" + email)
 
@@ -90,7 +91,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
         callback(res)
 
     } else {
-        console.log("========>Getting new sessio IDaaa")
+        printLogs("getting new session")
         request({
             url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
             method: 'POST',
@@ -102,17 +103,18 @@ module.exports.getNewSession = function getNewSession(email, callback) {
             body: email
             //Set the body as a stringcc
         }, function (error, response, body) {
-            console.log("Arrive 2334")
-         
+            printLogs("new Session response with statusCode ="+response.statusCode)
 
             var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
-            console.log("cookies==================>" + cookies)
+            printLogs(cookies)
             var arr = cookies.toString().split(";")
-            console.log("trim based on ;==========>" + arr[0])
             res = arr[0].replace(/['"]+/g, '');
             console.log("final session is =========>" + res)
             sessionFlag = 1;
             callback(res);
         });
     }
+}
+function printLogs(msg) {
+    console.log("msg:======>:" + msg)
 }

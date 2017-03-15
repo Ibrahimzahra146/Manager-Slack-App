@@ -10,6 +10,7 @@ const uuid = require('node-uuid');
 const request = require('request');
 const requestify = require('requestify');
 const JSONbig = require('json-bigint');
+const managerToffyHelper = require('./managerToffyHelper.js')
 const async = require('async');
 const apiai = require('apiai');
 const APIAI_LANG = 'en';
@@ -73,39 +74,7 @@ function sendFeedBackMessage(responseBody) {
     }
   });
 }
-function getNewSession(email, callback) {
-  var res = ""
-  if (sessionFlag == 1) {
-    res = generalCookies;
-    callback(res)
-  } else {
-    console.log("========>Getting new sessio ID")
-    console.log("The IP" + IP)
-    request({
-      url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cookie': generalCookies
 
-      },
-      body: email
-      //Set the body as a stringcc
-    }, function (error, response, body) {
-      managerIdInHr = (JSON.parse(body)).id;
-      console.log("userIdInHr ====>>>" + managerIdInHr);
-
-      var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
-      console.log("cookies==================>" + cookies)
-      var arr = cookies.toString().split(";")
-      console.log("trim based on ;==========>" + arr[0])
-      res = arr[0].replace(/['"]+/g, '');
-      console.log("final session is =========> " + res)
-      sessionFlag = 1;
-      callback(res);
-    });
-  }
-}
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
   console.log("sending vacation put request " + status)
   request({
@@ -120,7 +89,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     if (response.statusCode == 403) {
       sessionFlag = 0;
     }
-    getNewSession(managerEmail, function (cookie) {
+    managetToffyHelper.getNewSession(managerEmail, function (cookie) {
       generalCookies = cookie;
       console.log("vacationId------>" + vacationId)
       console.log("approvalId------>" + approvalId)
@@ -246,7 +215,10 @@ function sendRequestToApiAi(emailValue, msg) {
 
   apiaiRequest.on('response', (response) => {
     let responseText = response.result.fulfillment.speech;
-    msg.say(responseText);
+    if (responseText == "showEmployees") {
+      managerToffyHelper.showEmployees(msg, emailValue)
+    } else
+        msg.say(responseText);
 
 
   });
