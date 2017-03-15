@@ -42,7 +42,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
                         if (i > 0) {
                             stringMessage = stringMessage + ","
                         }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" +"email:"+(JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" +"Name: "+ (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" +"Email: "+(JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
                         i++;
 
                     }
