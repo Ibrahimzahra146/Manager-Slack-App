@@ -120,7 +120,7 @@ function printLogs(msg) {
     console.log("msg:======>:" + msg)
 }
 function getIdByEmail(email) {
-    makePostRequest('employee/get-id', "email", function (response, body) {
+    makePostRequest('employee/get-id', email, function (response, body) {
         printLogs("body:" + body)
     })
 
