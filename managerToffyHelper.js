@@ -9,23 +9,15 @@ var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
-    request({
-        url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cookie': generalCookies
-        },
-    }, function (error, response, body) {
-        if (response.statusCode == 403) {
-            sessionFlag = 0
-        }
-        managerToffyHelper.getNewSession(email, function (cookie) {
-            var uri = 'http://' + IP + '/api/v1/employee/manager/8/direct'
-            printLogs("Url " + uri)
-            generalCookies = cookie;
-            var ID = getIdByEmail(email)
 
+    if (response.statusCode == 403) {
+        sessionFlag = 0
+    }
+    managerToffyHelper.getNewSession(email, function (cookie) {
+        generalCookies = cookie;
+        getIdByEmail(email, function (Id) {
+            var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
+            printLogs("Url " + uri)
             printLogs("generalCookies " + generalCookies)
             request({
                 url: uri,
@@ -71,11 +63,11 @@ module.exports.showEmployees = function showEmployees(msg, email) {
                     msg.say(stringfy)
                 }
             })
-
         })
 
 
-    });
+    })
+
 }
 
 
@@ -119,9 +111,11 @@ module.exports.getNewSession = function getNewSession(email, callback) {
 function printLogs(msg) {
     console.log("msg:======>:" + msg)
 }
-function getIdByEmail(email) {
+function getIdByEmail(email, call) {
+
     makePostRequest('employee/get-id', email, function (response, body) {
         printLogs("body:" + body)
+        callback(body)
     })
 
 }
