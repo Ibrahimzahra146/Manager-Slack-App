@@ -35,7 +35,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
                     'Cookie': generalCookies
                 },
             }, function (error, response, body) {
-                console.log("========>" + response.statusCode);
+                printLogs("response.statusCode" + response.statusCode);
                 var i = 0;
                 var stringMessage = "["
                 if (!error && response.statusCode === 200) {
@@ -61,10 +61,8 @@ module.exports.showEmployees = function showEmployees(msg, email) {
                             }
                         ]
                     }
-                    console.log("messageBody" + messageBody)
                     var stringfy = JSON.stringify(messageBody);
 
-                    console.log("stringfy" + stringfy)
                     stringfy = stringfy.replace(/\\/g, "")
                     stringfy = stringfy.replace(/]\"/, "]")
                     stringfy = stringfy.replace(/\"\[/, "[")
@@ -87,7 +85,7 @@ get new session id using login api
 module.exports.getNewSession = function getNewSession(email, callback) {
     printLogs("arrive at get new session")
     var res = generalCookies
-    console.log("email ------->" + email)
+    printLogs("email: " + email)
 
     if (sessionFlag == 1) {
         res = generalCookies
@@ -112,7 +110,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
             printLogs(cookies)
             var arr = cookies.toString().split(";")
             res = arr[0].replace(/['"]+/g, '');
-            console.log("final session is =========>" + res)
+            printLogs("final session:" + res)
             sessionFlag = 1;
             callback(res);
         });
@@ -130,6 +128,7 @@ function getIdByEmail(email) {
 function makePostRequest(path, body1, callback) {
     var uri = 'http://' + IP + '/api/v1/' + path
     printLogs("uri " + uri)
+    printLogs("Email: " + body1)
     request({
         url: uri, //URL to hitDs
         method: 'POST',
