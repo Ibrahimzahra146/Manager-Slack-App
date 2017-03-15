@@ -8,6 +8,7 @@ exports.userIdInHr = userIdInHr
 var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
+    var ID=getIdByEmail(email)
     printLogs("arrive at show employees")
     request({
         url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
@@ -21,10 +22,11 @@ module.exports.showEmployees = function showEmployees(msg, email) {
             sessionFlag = 0
         }
         managerToffyHelper.getNewSession(email, function (cookie) {
+
             var uri = 'http://' + IP + '/api/v1/employee/manager/8/direct'
-            printLogs("Url "+uri)
+            printLogs("Url " + uri)
             generalCookies = cookie;
-            printLogs("generalCookies "+generalCookies)
+            printLogs("generalCookies " + generalCookies)
             request({
                 url: uri,
                 method: 'GET',
@@ -42,7 +44,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
                         if (i > 0) {
                             stringMessage = stringMessage + ","
                         }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" +"Name: "+ (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" +"Email: "+(JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Name: " + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + "Email: " + (JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
                         i++;
 
                     }
@@ -104,7 +106,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
             body: email
             //Set the body as a stringcc
         }, function (error, response, body) {
-            printLogs("new Session response with statusCode ="+response.statusCode)
+            printLogs("new Session response with statusCode =" + response.statusCode)
 
             var cookies = JSON.stringify((response.headers["set-cookie"])[0]);
             printLogs(cookies)
@@ -118,4 +120,26 @@ module.exports.getNewSession = function getNewSession(email, callback) {
 }
 function printLogs(msg) {
     console.log("msg:======>:" + msg)
+}
+function getIdByEmail(email) {
+    makePostRequest('employee/get-id', "email", function (response, body) {
+        printLogs(body)
+    })
+
+}
+function makePostRequest(path, body, callback) {
+
+    request({
+        url: 'http://' + IP + '/api/v1/' + path, //URL to hitDs
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': generalCookies
+
+        },
+        body: body
+        //Set the body as a stringcc
+    }, function (error, response, body) {
+        callback(response, body)
+    })
 }
