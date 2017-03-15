@@ -108,7 +108,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
 function printLogs(msg) {
     console.log("msg:======>:" + msg)
 }
-function getIdByEmail(email, call) {
+function getIdByEmail(email, callback) {
 
     makePostRequest('employee/get-id', email, function (response, body) {
         printLogs("body:" + body)
