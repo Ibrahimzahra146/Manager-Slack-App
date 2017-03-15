@@ -21,7 +21,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
             sessionFlag = 0
         }
         managerToffyHelper.getNewSession(email, function (cookie) {
-            var uri = 'http://' + IP + 'api/v1/employee/manager/8/direct'
+            var uri = 'http://' + IP + '/api/v1/employee/manager/8/direct'
             printLogs("Url "+uri)
             generalCookies = cookie;
             printLogs("generalCookies "+generalCookies)
