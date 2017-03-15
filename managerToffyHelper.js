@@ -9,7 +9,7 @@ var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
     var ID=getIdByEmail(email)
-    printLogs("arrive at show employees ")
+    printLogs("arrive at show employees  ")
     request({
         url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
         method: 'GET',
