@@ -8,7 +8,6 @@ exports.userIdInHr = userIdInHr
 var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
-    var ID = getIdByEmail(email)
     printLogs("arrive at show employees")
     request({
         url: 'http://' + IP + '/api/v1/employee/manager/8/direct',
@@ -22,10 +21,11 @@ module.exports.showEmployees = function showEmployees(msg, email) {
             sessionFlag = 0
         }
         managerToffyHelper.getNewSession(email, function (cookie) {
-
             var uri = 'http://' + IP + '/api/v1/employee/manager/8/direct'
             printLogs("Url " + uri)
             generalCookies = cookie;
+            var ID = getIdByEmail(email)
+
             printLogs("generalCookies " + generalCookies)
             request({
                 url: uri,
@@ -129,7 +129,7 @@ function getIdByEmail(email) {
 }
 function makePostRequest(path, body1, callback) {
     var uri = 'http://' + IP + '/api/v1/' + path
-    printLogs("uri "+uri)
+    printLogs("uri " + uri)
     request({
         url: uri, //URL to hitDs
         method: 'POST',
@@ -141,7 +141,7 @@ function makePostRequest(path, body1, callback) {
         body: body1
         //Set the body as a stringcc
     }, function (error, response, body) {
-        printLogs("body:"+body)
+        printLogs("body:" + body)
         callback(response, body)
     })
 }
