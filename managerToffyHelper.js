@@ -14,7 +14,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
         generalCookies = cookie;
         getIdByEmail(email, function (Id) {
             var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
-            printLogs("Url " + uri)
+            printLogs("Url :" + uri)
             printLogs("generalCookies " + generalCookies)
             request({
                 url: uri,
