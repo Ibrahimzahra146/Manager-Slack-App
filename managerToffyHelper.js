@@ -127,7 +127,7 @@ function getIdByEmail(email) {
     })
 
 }
-function makePostRequest(path, body, callback) {
+function makePostRequest(path, body1, callback) {
     var uri = 'http://' + IP + '/api/v1/' + path
     printLogs("uri "+uri)
     request({
@@ -138,9 +138,10 @@ function makePostRequest(path, body, callback) {
             'Cookie': generalCookies
 
         },
-        body: body
+        body: body1
         //Set the body as a stringcc
     }, function (error, response, body) {
+        printLogs("body:"+body)
         callback(response, body)
     })
 }
