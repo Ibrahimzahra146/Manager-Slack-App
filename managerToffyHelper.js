@@ -14,7 +14,7 @@ module.exports.showEmployees = function showEmployees(msg, email) {
         generalCookies = cookie;
         getIdByEmail(email, function (Id) {
             var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
-            printLogs("Url :" + uri)
+            printLogs("Url :    " + uri)
             printLogs("generalCookies " + generalCookies)
             request({
                 url: uri,
@@ -106,7 +106,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
     }
 }
 function printLogs(msg) {
-    console.log("msg:======>:" + msg)
+    console.log("msg:=======>:" + msg)
 }
 function getIdByEmail(email, callback) {
 
