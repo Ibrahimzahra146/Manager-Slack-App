@@ -10,9 +10,6 @@ var sessionFlag = 0;
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
 
-    if (response.statusCode == 403) {
-        sessionFlag = 0
-    }
     managerToffyHelper.getNewSession(email, function (cookie) {
         generalCookies = cookie;
         getIdByEmail(email, function (Id) {
