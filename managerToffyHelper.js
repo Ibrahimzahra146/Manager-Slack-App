@@ -106,7 +106,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
     }
 }
 function printLogs(msg) {
-    console.log("msg:=======>:" + msg)
+    console.log("msg:========>:" + msg)
 }
 function getIdByEmail(email, callback) {
 
