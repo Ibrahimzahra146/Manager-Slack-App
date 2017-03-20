@@ -89,7 +89,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     if (response.statusCode == 403) {
       sessionFlag = 0;
     }
-    managetToffyHelper.getNewSession(managerEmail, function (cookie) {
+    managerToffyHelper.getNewSession(managerEmail, function (cookie) {
       generalCookies = cookie;
       console.log("vacationId------>" + vacationId)
       console.log("approvalId------>" + approvalId)
