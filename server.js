@@ -401,7 +401,7 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
       if (!err) {
         var text12 = {
-          "text": "Manager @ahmad has accepted your time off request without detuction.Sorry! ",
+          "text": "Manager @ahmad has accepted your time off request without detuction. Enjoy! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
