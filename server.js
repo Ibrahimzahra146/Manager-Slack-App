@@ -91,11 +91,11 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     }
     managerToffyHelper.getNewSession(managerEmail, function (cookie) {
       generalCookies = cookie;
-      console.log("vacationId------>" + vacationId)
+      console.log("vacationId" + vacationId)
       console.log("approvalId------>" + approvalId)
-      console.log("managerEmail------>" + managerEmail)
+      console.log("managerEmail" + managerEmail)
       var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
-      console.log("uri" + uri)
+      console.log("uri::" + uri)
       var approvalBody = {
         "id": approvalId,
         "comments": "From Ibrahim",
@@ -146,7 +146,7 @@ function storeManagerSlackInformation(email, msg) {
     if (response.statusCode == 404) {
 
 
-      console.log("the employee not f  ound  ")
+      console.log("The employee not found  ")
       requestify.post('http://' + IP + '/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
@@ -218,7 +218,7 @@ function sendRequestToApiAi(emailValue, msg) {
     if (responseText == "showEmployees") {
       managerToffyHelper.showEmployees(msg, emailValue)
     } else
-        msg.say(responseText);
+      msg.say(responseText);
 
 
   });
@@ -282,6 +282,8 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     getMembersList(msg.body.event.user, msg)
   }
 })
+
+
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
   console.log("Manager @ahmad accepted the vacaction")
   var arr = value.toString().split(";")
@@ -307,7 +309,60 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
   });
 })
+
+
+
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  console.log("Regected userEmail " + userEmail)
+  console.log("Regected vacationId " + vacationId)
+  console.log("Regected approvalId " + approvalId)
+
+  console.log("Regected managerEmail " + managerEmail)
+
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Rejected")
+  request({
+    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+    },
+    body: "brhoom200904@hotmail.com"
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    var responseBody = JSON.parse(body);
+
+    var message = {
+      'type': 'message',
+      'channel': responseBody.userChannelId,
+      user: responseBody.slackUserId,
+      text: 'what is my name',
+      ts: '1482920918.000057',
+      team: responseBody.teamId,
+      event: 'direct_message'
+    };
+    bot.startConversation(message, function (err, convo) {
+      if (!err) {
+        var text12 = {
+          "text": "Manager @ahmad has rejected your time off request.Sorry! ",
+        }
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        bot.reply(message, obj1);
+      }
+    });
+  });
+
+  msg.say("you have rejected the time off request")
+})
+
+
+slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
   var arr = value.toString().split(";")
   var userEmail = arr[0];
   var vacationId = arr[1];
@@ -346,7 +401,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
       if (!err) {
         var text12 = {
-          "text": "Manager @ahmad has rejected your time off request.Sorry! ",
+          "text": "Manager @ahmad has accepted your time off request without detuction.Sorry! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
