@@ -349,7 +349,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
     bot.startConversation(message, function (err, convo) {
       if (!err) {
         var text12 = {
-          "text": "Manager @ahmad has rejected your time off request.Sorry! ",
+          "text": "Approver @ahmad-dk has rejected your time off request.Sorry! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
@@ -401,7 +401,7 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
       if (!err) {
         var text12 = {
-          "text": "Manager @ahmad has accepted your time off request without detuction. Enjoy! ",
+          "text": "Approver @ahmad-dk has accepted your time off request without detuction. Enjoy! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
