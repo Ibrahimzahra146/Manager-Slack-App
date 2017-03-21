@@ -206,29 +206,33 @@ function storeManagerSlackInformation(email, msg) {
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
   managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
-    console.log("The manager role is  " + role)
+    if (role == true) {
+      storeManagerSlackInformation(emailValue, msg);
+      var text = msg.body.event.text;
+
+      let apiaiRequest = apiAiService.textRequest(text,
+        {
+          sessionId: sessionId
+        });
+
+      apiaiRequest.on('response', (response) => {
+        let responseText = response.result.fulfillment.speech;
+        if (responseText == "showEmployees") {
+          managerToffyHelper.showEmployees(msg, emailValue)
+        } else
+          msg.say(responseText);
+
+
+      });
+      apiaiRequest.on('error', (error) => console.error(error));
+      apiaiRequest.end();
+    } else {
+      msg.say("Sorry!.You dont have the permession to use this bot.")
+    }
 
   })
 
-  storeManagerSlackInformation(emailValue, msg);
-  var text = msg.body.event.text;
 
-  let apiaiRequest = apiAiService.textRequest(text,
-    {
-      sessionId: sessionId
-    });
-
-  apiaiRequest.on('response', (response) => {
-    let responseText = response.result.fulfillment.speech;
-    if (responseText == "showEmployees") {
-      managerToffyHelper.showEmployees(msg, emailValue)
-    } else
-      msg.say(responseText);
-
-
-  });
-  apiaiRequest.on('error', (error) => console.error(error));
-  apiaiRequest.end();
 }
 
 /*--------------___________________________________________________----------------------
