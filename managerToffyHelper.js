@@ -136,7 +136,7 @@ function makePostRequest(path, body1, callback) {
     })
 }
 module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
-    printLogs("getting Roles");
+    printLogs("getting Roles ");
     request({
         url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
         method: 'POST',
