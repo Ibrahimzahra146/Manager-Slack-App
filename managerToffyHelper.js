@@ -148,7 +148,8 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
         body: email
         //Set the body as a stringcc
     }, function (error, response, body) {
-        printLogs((JSON.parse(body)[0].name))
-        callback(JSON.parse(body)[0].name)
+        var roles = (JSON.parse(body));
+        printLogs("ROles"+JSON.stringify(body))
+        callback(role)
     })
 }
