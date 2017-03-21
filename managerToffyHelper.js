@@ -135,7 +135,7 @@ function makePostRequest(path, body1, callback) {
         callback(response, body)
     })
 }
-module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
+module.exports.getRoleByEmail = function getRoleByEmail(email,role, callback) {
     printLogs("getting Roles");
     request({
         url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
@@ -151,7 +151,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
         if (response.statusCode = 403) {
             sessionFlag = 0;
         }
-        managerToffyHelper.getNewSession(email, role, function (cookies) {
+        managerToffyHelper.getNewSession(email, function (cookies) {
             generalCookies = cookies;
             request({
                 url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
