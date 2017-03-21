@@ -205,7 +205,7 @@ function storeManagerSlackInformation(email, msg) {
 }
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
-  managerToffyHelper.getRoleByEmail(emailValue, "Manager", function (role) {
+  managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     console.log("The manager role is " + role)
 
   })
