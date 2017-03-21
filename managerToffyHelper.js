@@ -135,3 +135,20 @@ function makePostRequest(path, body1, callback) {
         callback(response, body)
     })
 }
+module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
+    printLogs("getting Roles");
+    request({
+        url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': generalCookies
+
+        },
+        body: email
+        //Set the body as a stringcc
+    }, function (error, response, body) {
+        printLogs((JSON.parse(body)[0].name))
+        callback(JSON.parse(body)[0].name)
+    })
+}

@@ -205,6 +205,10 @@ function storeManagerSlackInformation(email, msg) {
 }
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
+  managerToffyHelper.getRoleByEmail(emailValue,function(Role){
+    console.log("get role"+Role)
+    
+  })
   storeManagerSlackInformation(emailValue, msg);
   var text = msg.body.event.text;
 
@@ -244,19 +248,11 @@ function getMembersList(Id, msg) {
         if (body.members[i]["id"] == Id) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
-          userdb.findOne({ email: emailValue }).then(function (u) {
-            if (u == undefined) {
-              console.log("New user request the service");
-              userdb.insert({ email: emailValue, channel: msg.body.event.channel }).then(function (u) {
-              });
-            }
-            else console.log("the user already exist")
-          });
+
           sendRequestToApiAi(emailValue, msg);
           break;
         }
-        console.log("the email:");
-        console.log(body.members[i]["profile"].email);
+
 
         i++;
       }
