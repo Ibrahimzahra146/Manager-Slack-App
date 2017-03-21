@@ -148,7 +148,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email,role, callback) {
         body: email
         //Set the body as a stringcc
     }, function (error, response, body) {
-        if (response.statusCode = 403) {
+        if (response.statusCode == 403) {
             sessionFlag = 0;
         }
         managerToffyHelper.getNewSession(email, function (cookies) {
