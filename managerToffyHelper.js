@@ -150,6 +150,6 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
     }, function (error, response, body) {
         var roles = (JSON.parse(body));
         printLogs("ROles"+JSON.stringify(body))
-        callback(role)
+        callback(roles)
     })
 }
