@@ -148,8 +148,27 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, callback) {
         body: email
         //Set the body as a stringcc
     }, function (error, response, body) {
-        var roles = (JSON.parse(body));
-        printLogs("ROles"+JSON.stringify(body))
-        callback(roles)
+        if (response.statusCode = 403) {
+            sessionFlag = 0;
+        }
+        managerToffyHelper.getNewSession(email, function (cookies) {
+            generalCookies = cookies;
+            request({
+                url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': generalCookies
+
+                },
+                body: email
+                //Set the body as a stringcc
+            }, function (error, response, body) {
+                var roles = (JSON.parse(body));
+                printLogs("ROles" + JSON.stringify(body))
+                callback(roles)
+            })
+        })
+
     })
 }
