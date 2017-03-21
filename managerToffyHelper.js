@@ -136,6 +136,7 @@ function makePostRequest(path, body1, callback) {
     })
 }
 module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
+    var flag = false;
     printLogs("getting Roles ");
     request({
         url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
@@ -169,13 +170,13 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
                 while (roles[i]) {
                     printLogs("roles[i].name" + roles[i].name)
                     if (roles[i].name == role) {
-                        callback(true)
+                        flag = true;
                         break;
                     }
                     i++;
 
                 }
-                callback(false)
+                callback(flag)
 
             })
         })
