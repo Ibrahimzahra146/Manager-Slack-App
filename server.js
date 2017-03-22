@@ -412,7 +412,7 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
     });
   });
 
-  msg.say("you have rejected the time off request")
+  msg.say("You have accepted the time off request but without detuction");
 
 })
 app.get('/', function (req, res) {
