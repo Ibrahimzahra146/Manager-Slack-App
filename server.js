@@ -83,7 +83,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Cookie': managerToffyHelper.neralCookies
+      'Cookie': managerToffyHelper.generalCookies
     }
   }, function (error, response, body) {
     if (response.statusCode == 403) {
