@@ -28,7 +28,7 @@ var employeeChannel = "";
 var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
-var generalCookies = ""
+
 var managerIdInHr = ""
 
 pg.defaults.ssl = true;
@@ -83,14 +83,14 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Cookie': generalCookies
+      'Cookie': managerToffyHelper.generalCookies
     }
   }, function (error, response, body) {
     if (response.statusCode == 403) {
-    managerToffyHelper.sessionFlag = 0;
+      managerToffyHelper.sessionFlag = 0;
     }
     managerToffyHelper.getNewSession(managerEmail, function (cookie) {
-      generalCookies = cookie;
+      managerToffyHelper.generalCookies = cookie;
       var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
       console.log("uri::" + uri)
       var approvalBody = {
@@ -106,7 +106,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Cookie': generalCookies
+          'Cookie': managerToffyHelper.generalCookies
         },
         body: approvalBody
         //Set the body as a stringcc

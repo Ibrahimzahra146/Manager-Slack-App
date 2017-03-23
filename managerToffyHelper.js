@@ -2,6 +2,7 @@ var requestify = require('requestify');
 const request = require('request');
 var server = require('./server')
 var generalCookies = "initial"
+exports.generalCookies = generalCookies
 var IP = process.env.SLACK_IP
 var userIdInHr = "initial";
 exports.userIdInHr = userIdInHr
@@ -12,17 +13,17 @@ module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
 
     managerToffyHelper.getNewSession(email, function (cookie) {
-        generalCookies = cookie;
+        managerToffyHelper.generalCookies = cookie;
         getIdByEmail(email, function (Id) {
             var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
             printLogs("Url :    " + uri)
-            printLogs("generalCookies " + generalCookies)
+            printLogs("generalCookies " + managerToffyHelper.generalCookies)
             request({
                 url: uri,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie': generalCookies
+                    'Cookie': managerToffyHelper.generalCookies
                 },
             }, function (error, response, body) {
                 printLogs("response.statusCode" + response.statusCode);
@@ -74,11 +75,11 @@ get new session id using login api
 */
 module.exports.getNewSession = function getNewSession(email, callback) {
     printLogs("arrive at get new session")
-    var res = generalCookies
+    var res = managerToffyHelper.generalCookies
     printLogs("email: " + email)
 
     if (managerToffyHelper.sessionFlag == 1) {
-        res = generalCookies
+        res = managerToffyHelper.generalCookies
         callback(res)
 
     } else {
@@ -88,7 +89,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Cookie': generalCookies
+                'Cookie': managerToffyHelper.generalCookies
 
             },
             body: email
@@ -126,7 +127,7 @@ function makePostRequest(path, body1, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Cookie': generalCookies
+            'Cookie': managerToffyHelper.generalCookies
 
         },
         body: body1
@@ -144,7 +145,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Cookie': generalCookies
+            'Cookie': managerToffyHelper.generalCookies
 
         },
         body: email
@@ -154,13 +155,13 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
             managerToffyHelper.sessionFlag = 0;
         }
         managerToffyHelper.getNewSession(email, function (cookies) {
-            generalCookies = cookies;
+            managerToffyHelper.generalCookies = cookies;
             request({
                 url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie': generalCookies
+                    'Cookie': managerToffyHelper.generalCookies
 
                 },
                 body: email
