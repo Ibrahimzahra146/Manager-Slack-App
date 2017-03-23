@@ -78,7 +78,7 @@ function sendFeedBackMessage(responseBody) {
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
   console.log("sending vacation put request " + status)
   request({
-    url: "http://" + IP + "/api/v1/employee/8/balance",
+    url: "http://" + IP + "/api/v1/vacation/" + vacationId,
     json: true,
     method: 'GET',
     headers: {
@@ -91,9 +91,6 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     }
     managerToffyHelper.getNewSession(managerEmail, function (cookie) {
       generalCookies = cookie;
-      console.log("vacationId" + vacationId)
-      console.log("approvalId------>" + approvalId)
-      console.log("managerEmail" + managerEmail)
       var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
       console.log("uri::" + uri)
       var approvalBody = {
@@ -114,7 +111,6 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
         body: approvalBody
         //Set the body as a stringcc
       }, function (error, response, body) {
-        console.log("response.lll" + response.statusCode)
         console.log("error" + error)
 
       });
