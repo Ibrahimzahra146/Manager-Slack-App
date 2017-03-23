@@ -65,7 +65,7 @@ function sendFeedBackMessage(responseBody) {
 
     if (!err) {
       var text12 = {
-        "text": "Manager @ahmad has accepted your time off request.Take care.",
+        "text": "The approver has accepted your time off request.Take care.",
       }
       var stringfy = JSON.stringify(text12);
       var obj1 = JSON.parse(stringfy);
@@ -346,7 +346,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
     bot.startConversation(message, function (err, convo) {
       if (!err) {
         var text12 = {
-          "text": "Approver has rejected your time off request.Sorry! ",
+          "text": "The approver has rejected your time off request.Sorry! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
