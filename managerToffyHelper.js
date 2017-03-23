@@ -11,61 +11,76 @@ var sessionFlag = 0;
 exports.sessionFlag = sessionFlag
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
+    var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
+    printLogs("Url :    " + uri)
+    printLogs("generalCookies " + managerToffyHelper.generalCookies)
+    request({
+        url: uri,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': managerToffyHelper.generalCookies
+        },
+    }, function (error, response, body) {
+        if (response.statusCode == 403) {
+            managerToffyHelper.sessionFlag = 0;
+        }
+        managerToffyHelper.getNewSession(email, function (cookie) {
+            managerToffyHelper.generalCookies = cookie;
+            getIdByEmail(email, function (Id) {
+                var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
+                printLogs("Url :    " + uri)
+                printLogs("generalCookies " + managerToffyHelper.generalCookies)
+                request({
+                    url: uri,
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cookie': managerToffyHelper.generalCookies
+                    },
+                }, function (error, response, body) {
+                    printLogs("response.statusCode" + response.statusCode);
+                    var i = 0;
+                    var stringMessage = "["
+                    if (!error && response.statusCode === 200) {
+                        while ((JSON.parse(body)[i])) {
 
-    managerToffyHelper.getNewSession(email, function (cookie) {
-        managerToffyHelper.generalCookies = cookie;
-        getIdByEmail(email, function (Id) {
-            var uri = 'http://' + IP + '/api/v1/employee/manager/' + Id + '/direct'
-            printLogs("Url :    " + uri)
-            printLogs("generalCookies " + managerToffyHelper.generalCookies)
-            request({
-                url: uri,
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie': managerToffyHelper.generalCookies
-                },
-            }, function (error, response, body) {
-                printLogs("response.statusCode" + response.statusCode);
-                var i = 0;
-                var stringMessage = "["
-                if (!error && response.statusCode === 200) {
-                    while ((JSON.parse(body)[i])) {
-
-                        if (i > 0) {
-                            stringMessage = stringMessage + ","
-                        }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Name: " + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + "Email: " + (JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
-                        i++;
-
-                    }
-                    stringMessage = stringMessage + "]"
-                    var messageBody = {
-                        "text": "Your employees",
-                        "attachments": [
-                            {
-                                "attachment_type": "default",
-                                "text": " ",
-                                "fallback": "ReferenceError",
-                                "fields": stringMessage,
-                                "color": "#F35A00"
+                            if (i > 0) {
+                                stringMessage = stringMessage + ","
                             }
-                        ]
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Name: " + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + "Email: " + (JSON.parse(body))[i].email + "\"" + ",\"short\":true}"
+                            i++;
+
+                        }
+                        stringMessage = stringMessage + "]"
+                        var messageBody = {
+                            "text": "Your employees",
+                            "attachments": [
+                                {
+                                    "attachment_type": "default",
+                                    "text": " ",
+                                    "fallback": "ReferenceError",
+                                    "fields": stringMessage,
+                                    "color": "#F35A00"
+                                }
+                            ]
+                        }
+                        var stringfy = JSON.stringify(messageBody);
+
+                        stringfy = stringfy.replace(/\\/g, "")
+                        stringfy = stringfy.replace(/]\"/, "]")
+                        stringfy = stringfy.replace(/\"\[/, "[")
+                        stringfy = JSON.parse(stringfy)
+
+                        msg.say(stringfy)
                     }
-                    var stringfy = JSON.stringify(messageBody);
-
-                    stringfy = stringfy.replace(/\\/g, "")
-                    stringfy = stringfy.replace(/]\"/, "]")
-                    stringfy = stringfy.replace(/\"\[/, "[")
-                    stringfy = JSON.parse(stringfy)
-
-                    msg.say(stringfy)
-                }
+                })
             })
+
+
         })
-
-
     })
+
 
 }
 
