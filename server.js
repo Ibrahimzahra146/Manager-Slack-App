@@ -30,7 +30,7 @@ var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var generalCookies = ""
 var managerIdInHr = ""
-var sessionFlag = 0;
+
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
 var slapp = Slapp({
@@ -87,7 +87,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
     }
   }, function (error, response, body) {
     if (response.statusCode == 403) {
-      sessionFlag = 0;
+    managerToffyHelper.sessionFlag = 0;
     }
     managerToffyHelper.getNewSession(managerEmail, function (cookie) {
       generalCookies = cookie;

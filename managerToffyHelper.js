@@ -7,6 +7,7 @@ var userIdInHr = "initial";
 exports.userIdInHr = userIdInHr
 var managerToffyHelper = require('./managerToffyHelper')
 var sessionFlag = 0;
+exports.sessionFlag = sessionFlag
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
 
@@ -76,7 +77,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
     var res = generalCookies
     printLogs("email: " + email)
 
-    if (sessionFlag == 1) {
+    if (managerToffyHelper.sessionFlag == 1) {
         res = generalCookies
         callback(res)
 
@@ -100,7 +101,7 @@ module.exports.getNewSession = function getNewSession(email, callback) {
             var arr = cookies.toString().split(";")
             res = arr[0].replace(/['"]+/g, '');
             printLogs("final session:" + res)
-            sessionFlag = 1;
+            managerToffyHelper.sessionFlag = 1;
             callback(res);
         });
     }
@@ -150,7 +151,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
         //Set the body as a stringcc
     }, function (error, response, body) {
         if (response.statusCode == 403) {
-            sessionFlag = 0;
+            managerToffyHelper.sessionFlag = 0;
         }
         managerToffyHelper.getNewSession(email, function (cookies) {
             generalCookies = cookies;
