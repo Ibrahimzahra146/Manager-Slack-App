@@ -11,7 +11,8 @@ var sessionFlag = 0;
 exports.sessionFlag = sessionFlag
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
- 
+    var uri = 'http://' + IP + '/api/v1/employee/profile'
+    printLogs("Url :    " + uri)
     printLogs("generalCookies " + managerToffyHelper.generalCookies)
     request({
         url: uri,
