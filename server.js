@@ -213,10 +213,8 @@ function sendRequestToApiAi(emailValue, msg) {
 
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
-        if (responseText == "showEmployees") {
-          managerToffyHelper.showEmployees(msg, emailValue)
-        } else
-          msg.say(responseText);
+
+        msg.say(responseText);
 
 
       });
