@@ -111,7 +111,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
         body: approvalBody
         //Set the body as a stringcc
       }, function (error, response, body) {
-        console.log("arrive at get new POST requst")
+        console.log("arrive at get new POST requst " + response.statusCode)
 
       });
 
