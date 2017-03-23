@@ -111,7 +111,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
         body: approvalBody
         //Set the body as a stringcc
       }, function (error, response, body) {
-        console.log("error" + error)
+        console.log("arrive at get new POST requst")
 
       });
 
@@ -398,7 +398,7 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
       if (!err) {
         var text12 = {
-          "text": "Approver @ahmad-dk has accepted your time off request without detuction. Enjoy! ",
+          "text": "Approver 1 has accepted your time off request without detuction. Enjoy! ",
         }
         var stringfy = JSON.stringify(text12);
         var obj1 = JSON.parse(stringfy);
