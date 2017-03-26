@@ -47,9 +47,7 @@ var bot = controller.spawn({
 
 }).startRTM();
 function sendFeedBackMessage(responseBody) {
-  console.log("responseBody.userChannelId " + responseBody.userChannelId)
-  console.log("responseBody.slackUserId " + responseBody.slackUserId)
-  console.log("responseBody.teamId " + responseBody.teamId)
+
   console.log("Arrive sendFeedBackMessage  ")
   var message = {
     'type': 'message',
@@ -61,7 +59,6 @@ function sendFeedBackMessage(responseBody) {
     event: 'direct_message'
   };
   bot.startConversation(message, function (err, convo) {
-    console.log("cannot send message")
 
     if (!err) {
       var text12 = {
@@ -76,48 +73,31 @@ function sendFeedBackMessage(responseBody) {
 }
 
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
-  console.log("sending vacation put request " + status)
-  request({
-    url: "http://" + IP + "/api/v1/vacation/" + vacationId,
-    json: true,
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': managerToffyHelper.generalCookies
+
+  managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
+    var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
+    console.log("uri::" + uri)
+    var approvalBody = {
+      "id": approvalId,
+      "comments": "From Ibrahim",
+      "state": status,
+      "type": "MANAGER"
+
     }
-  }, function (error, response, body) {
-    if (response.statusCode == 403) {
-      managerToffyHelper.sessionFlag = 0;
-    }
-    managerToffyHelper.getNewSession(managerEmail, function (cookie) {
-      managerToffyHelper.generalCookies = cookie;
-      var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
-      console.log("uri::" + uri)
-      var approvalBody = {
-        "id": approvalId,
-        "comments": "From Ibrahim",
-        "state": status,
-        "type": "MANAGER"
+    approvalBody = JSON.stringify(approvalBody)
+    request({
+      url: uri, //URL to hitDs
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': remember_me_cookie + ";" + session_id
+      },
+      body: approvalBody
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      console.log("arrive at get new POST requst " + response.statusCode)
 
-      }
-      approvalBody = JSON.stringify(approvalBody)
-      request({
-        url: uri, //URL to hitDs
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': managerToffyHelper.generalCookies
-        },
-        body: approvalBody
-        //Set the body as a stringcc
-      }, function (error, response, body) {
-        console.log("arrive at get new POST requst " + response.statusCode)
-
-      });
-
-
-
-    })
+    });
   })
 
 
@@ -203,7 +183,7 @@ function storeManagerSlackInformation(email, msg) {
 function sendRequestToApiAi(emailValue, msg) {
   managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     if (role == true) {
-      storeManagerSlackInformation(emailValue, msg);
+      //storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
 
       let apiaiRequest = apiAiService.textRequest(text,
