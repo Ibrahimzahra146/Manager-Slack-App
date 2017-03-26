@@ -151,7 +151,6 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         var arr1 = cookies1.toString().split(";")
         res1 = arr1[0].replace(/['"]+/g, '');
         printLogs("final session is =========>" + res)
-        toffyHelper.sessionFlag = 1;
         callback(res, res1);
     });
 
