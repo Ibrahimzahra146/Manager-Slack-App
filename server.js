@@ -183,7 +183,7 @@ function storeManagerSlackInformation(email, msg) {
 function sendRequestToApiAi(emailValue, msg) {
   managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     if (role == true) {
-      //storeManagerSlackInformation(emailValue, msg);
+      storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
 
       let apiaiRequest = apiAiService.textRequest(text,
