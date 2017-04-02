@@ -212,7 +212,6 @@ function sendRequestToApiAi(emailValue, msg) {
           }
           else if (response.result.parameters.email) {
             employeeEmail = response.result.parameters.email
-            employee.showEmployeeStats(emailValue, employeeEmail, msg);
 
 
 
