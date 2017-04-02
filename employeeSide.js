@@ -25,67 +25,73 @@ module.exports.showEmployeeProfile = function showEmployeeProfile(email, employe
                 'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
             },
         }, function (error, response, body) {
-            console.log("3-" + response.statusCode)
-            if (body.manager[1]) {
-                Approver2 = body.manager[1].name;
+            if (response.statusCode == 404) {
+                msg.say("Sorry the employee not exist")
+            } else {
 
+                console.log("3-" + response.statusCode)
+                if (body.manager[1]) {
+                    Approver2 = body.manager[1].name;
+
+                }
+
+                printLogs("show profile bod" + JSON.stringify(body))
+                printLogs("show profile bod" + response.statusCode)
+                var messageBody = {
+                    "text": employeeEmail + " profile details",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "text": " ",
+                            "fallback": "ReferenceError",
+                            "fields": [
+                                {
+                                    "title": "Full name ",
+                                    "value": body.name,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Working days  ",
+                                    "value": "Sun to Thu",
+                                    "short": true
+                                },
+                                {
+                                    "title": "Email ",
+                                    "value": body.email,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Approver 1",
+                                    "value": body.manager[0].name,
+                                    "short": true
+                                },
+
+                                {
+                                    "title": "Emp.type ",
+                                    "value": body.employeeType,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Approver 2",
+                                    "value": Approver2,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Employment date",
+                                    "value": body.hireDate,
+                                    "short": true
+                                }
+                            ],
+                            "color": "#F35A00"
+                        }
+                    ]
+                }
+                var stringfy = JSON.stringify(messageBody);
+                var obj1 = JSON.parse(stringfy);
+                msg.say(obj1)
             }
-
-            printLogs("show profile bod" + JSON.stringify(body))
-            printLogs("show profile bod" + response.statusCode)
-            var messageBody = {
-                "text": employeeEmail + " profile details",
-                "attachments": [
-                    {
-                        "attachment_type": "default",
-                        "text": " ",
-                        "fallback": "ReferenceError",
-                        "fields": [
-                            {
-                                "title": "Full name ",
-                                "value": body.name,
-                                "short": true
-                            },
-                            {
-                                "title": "Working days  ",
-                                "value": "Sun to Thu",
-                                "short": true
-                            },
-                            {
-                                "title": "Email ",
-                                "value": body.email,
-                                "short": true
-                            },
-                            {
-                                "title": "Approver 1",
-                                "value": body.manager[0].name,
-                                "short": true
-                            },
-
-                            {
-                                "title": "Emp.type ",
-                                "value": body.employeeType,
-                                "short": true
-                            },
-                            {
-                                "title": "Approver 2",
-                                "value": Approver2,
-                                "short": true
-                            },
-                            {
-                                "title": "Employment date",
-                                "value": body.hireDate,
-                                "short": true
-                            }
-                        ],
-                        "color": "#F35A00"
-                    }
-                ]
-            }
-            var stringfy = JSON.stringify(messageBody);
-            var obj1 = JSON.parse(stringfy);
-            msg.say(obj1)
         });
+
     })
 
 }
@@ -110,52 +116,57 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                 'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
             }
         }, function (error, response, body) {
-            var messageBody = {
-                "text": employeeEmail + " stats and anuual time off details",
-                "attachments": [
-                    {
-                        "attachment_type": "default",
-                        "text": " ",
-                        "fallback": "ReferenceError",
-                        "fields": [
-                            {
-                                "title": "Rolled over",
-                                "value": parseFloat((body).left_over).toFixed(2) + " weeks ",
-                                "short": true
-                            },
-                            {
-                                "title": "Used time off  ",
-                                "value": parseFloat(body.vacation_balance).toFixed(2) + " weeks ",
-                                "short": true
-                            },
-                            {
-                                "title": "Annual time off ",
-                                "value": parseFloat(body.static_balance).toFixed(2) + " weeks ",
-                                "short": false
-                            },
-                            {
-                                "title": "Extra time off  ",
-                                "value": parseFloat(body.compensation_balance).toFixed(2) + " weeks ",
-                                "short": true
-                            },
-                            {
-                                "title": "Balance",
-                                "value": parseFloat(body.left_over + body.compensation_balance + body.balance).toFixed(2) + " weeks ",
-                                "short": false
-                            },
-                            {
-                                "title": "Used Sick time off  ",
-                                "value": parseFloat(body.sick_vacation_balance).toFixed(2) + " weeks ",
-                                "short": true
-                            }
-                        ],
-                        "color": "#F35A00"
-                    }
-                ]
+            if (response.statusCode == 404) {
+                msg.say("Sorry the employee not exist")
             }
-            var stringfy = JSON.stringify(messageBody);
-            var obj1 = JSON.parse(stringfy);
-            msg.say(obj1);
+            else {
+                var messageBody = {
+                    "text": employeeEmail + " stats and anuual time off details",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "text": " ",
+                            "fallback": "ReferenceError",
+                            "fields": [
+                                {
+                                    "title": "Rolled over",
+                                    "value": parseFloat((body).left_over).toFixed(2) + " weeks ",
+                                    "short": true
+                                },
+                                {
+                                    "title": "Used time off  ",
+                                    "value": parseFloat(body.vacation_balance).toFixed(2) + " weeks ",
+                                    "short": true
+                                },
+                                {
+                                    "title": "Annual time off ",
+                                    "value": parseFloat(body.static_balance).toFixed(2) + " weeks ",
+                                    "short": false
+                                },
+                                {
+                                    "title": "Extra time off  ",
+                                    "value": parseFloat(body.compensation_balance).toFixed(2) + " weeks ",
+                                    "short": true
+                                },
+                                {
+                                    "title": "Balance",
+                                    "value": parseFloat(body.left_over + body.compensation_balance + body.balance).toFixed(2) + " weeks ",
+                                    "short": false
+                                },
+                                {
+                                    "title": "Used Sick time off  ",
+                                    "value": parseFloat(body.sick_vacation_balance).toFixed(2) + " weeks ",
+                                    "short": true
+                                }
+                            ],
+                            "color": "#F35A00"
+                        }
+                    ]
+                }
+                var stringfy = JSON.stringify(messageBody);
+                var obj1 = JSON.parse(stringfy);
+                msg.say(obj1);
+            }
         });
     })
 }

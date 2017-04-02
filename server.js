@@ -203,7 +203,10 @@ function sendRequestToApiAi(emailValue, msg) {
 
             if (response.result.parameters.employee_info_types == "stats")
               employee.showEmployeeStats(emailValue, employeeEmail, msg);
+            else if (response.result.parameters.employee_info_types == "profile")
+              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+
 
 
           }
@@ -215,12 +218,13 @@ function sendRequestToApiAi(emailValue, msg) {
 
             if (response.result.parameters.employee_info_types == "stats")
               employee.showEmployeeStats(emailValue, employeeEmail, msg);
+            else if (response.result.parameters.employee_info_types == "profile")
+              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-
 
           } else msg.say("There is an error in user ID ")
         }
-       else  msg.say(responseText);
+        else msg.say(responseText);
 
 
       });
