@@ -28,7 +28,7 @@ var employeeChannel = "";
 var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
-
+var employee = require("./employeeSide.js")
 var managerIdInHr = ""
 
 pg.defaults.ssl = true;
@@ -193,8 +193,34 @@ function sendRequestToApiAi(emailValue, msg) {
 
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
+        if (responseText == "showEmployeeInfo") {
+          console.log("eresponse:::" + JSON.stringify(response))
+          console.log("employeeEmail:::" + response.result.parameters.email)
+          var employeeEmail = "";
+          if (response.result.parameters.any) {
+            employeeEmail = response.result.parameters.any + "@exalt.ps"
+            employeeEmail = employeeEmail.replace(/ /g, ".");
 
-        msg.say(responseText);
+            if (response.result.parameters.employee_info_types == "stats")
+              employee.showEmployeeStats(emailValue, employeeEmail, msg);
+            else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+
+
+          }
+          else if (response.result.parameters.email) {
+            employeeEmail = response.result.parameters.email
+            employee.showEmployeeStats(emailValue, employeeEmail, msg);
+
+
+
+            if (response.result.parameters.employee_info_types == "stats")
+              employee.showEmployeeStats(emailValue, employeeEmail, msg);
+            else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+
+
+          } else msg.say("There is an error in user ID ")
+        }
+       else  msg.say(responseText);
 
 
       });

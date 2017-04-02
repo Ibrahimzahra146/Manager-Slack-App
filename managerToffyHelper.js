@@ -156,3 +156,34 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
 
 
 }
+
+module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, callback) {
+
+    hrHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
+        managerToffyHelper.general_remember_me = remember_me_cookie
+        managerToffyHelper.general_session_id = sessionId
+
+        console.log("1-hrHelper.general_remember_me+ " + managerToffyHelper.general_remember_me)
+        printLogs("hrHelper.generalCookies=======> " + managerToffyHelper.generalCookies)
+        printLogs("==========>Getting user id from Hr")
+        request({
+            url: "http://" + IP + "/api/v1/employee/get-id", //URL to hitDs
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': managerToffyHelper.general_remember_me
+            },
+            body: employeeEmail
+            //Set the body as a stringcc
+        }, function (error, response, body) {
+            printLogs("=======>body: " + body)
+
+            printLogs(JSON.stringify(body))
+            callback(body)
+
+        })
+    });
+
+
+
+}
