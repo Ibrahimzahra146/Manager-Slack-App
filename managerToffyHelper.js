@@ -159,7 +159,7 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
 
 module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, callback) {
 
-    hrHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
+    managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
         managerToffyHelper.general_remember_me = remember_me_cookie
         managerToffyHelper.general_session_id = sessionId
 
