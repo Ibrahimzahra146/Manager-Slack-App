@@ -138,6 +138,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
     })
 }
 module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email, callback) {
+    console.log("Hi1")
     request({
         url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
         method: 'POST',
@@ -156,6 +157,7 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         printLogs("final session is =========>" + res)
         callback(res, res1);
     });
+    console.log("Hi12")
 
 
 }
