@@ -229,7 +229,159 @@ function sendRequestToApiAi(emailValue, msg) {
       });
       apiaiRequest.on('error', (error) => console.error(error));
       apiaiRequest.end();
-    } else {
+    }
+    else if (responseText == "vacationWithLeave") {
+      var messageText = ""
+      var employeeEmail = ""
+      managerToffyHelper.getTodayDate(function (today) {
+        var time1 = "17:00:00";
+        var time = "8:00:00";
+        var date = today
+        var date1 = today
+        var timeOffCase = -1
+        if (!response.result.parameters.email || !response.result.parameters.any) {
+          msg.say("please specify the user email with request")
+        } else {
+          if (response.result.parameters.email) {
+            employeeEmail = response.result.parameters.email
+
+          } else {
+            employeeEmail = response.result.parameters.any
+            employeeEmail = response.result.parameters.any + "@exalt.ps"
+            employeeEmail = employeeEmail.replace(/ /g, ".");
+          }
+
+
+          if (response.result.parameters.sick_synonyms) {
+            vacation_type1 = "sick"
+          }
+
+          if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
+
+            msg.say("Please specify the date and/or time ")
+
+
+
+          }
+          else if (response.result.parameters.sick_synonyms && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
+            msg.say("Please specify the date and/or time ")
+
+
+            vacation_type1 = "sick"
+
+          }
+          else {
+
+            if (response.result.parameters.time && response.result.parameters.time1 && response.result.parameters.date && response.result.parameters.date1) {
+              time = response.result.parameters.time
+              time1 = response.result.parameters.time1
+              date = response.result.parameters.date;
+              date1 = response.result.parameters.date1;
+
+              timeOffCase = 1
+
+            }
+            else if (response.result.parameters.time && response.result.parameters.time1 && response.result.parameters.date1) {
+              time = response.result.parameters.time
+              time1 = response.result.parameters.time1
+              date = response.result.parameters.date1
+              date1 = response.result.parameters.date1
+
+              timeOffCase = 2
+
+            } else if (response.result.parameters.time && response.result.parameters.time1 && response.result.parameters.date) {
+              time = response.result.parameters.time
+              time1 = response.result.parameters.time1
+              date = response.result.parameters.date
+              date1 = response.result.parameters.date
+              timeOffCase = 3
+
+            }
+
+            else if (response.result.parameters.time && response.result.parameters.date && response.result.parameters.date1) {
+              time = response.result.parameters.time
+              time1 = response.result.parameters.time1
+              date = response.result.parameters.date
+              date1 = response.result.parameters.date1
+              timeOffCase = 4
+
+            } else if (response.result.parameters.time && response.result.parameters.time1) {
+              time = response.result.parameters.time
+              time1 = response.result.parameters.time1
+              timeOffCase = 5
+
+            } else if (response.result.parameters.time && response.result.parameters.date) {
+              time = response.result.parameters.time
+              date = response.result.parameters.date
+              date1 = response.result.parameters.date
+              timeOffCase = 6
+
+            }
+            else if (response.result.parameters.time && response.result.parameters.date1) {
+              time = response.result.parameters.time
+              date1 = response.result.parameters.date1
+              timeOffCase = 7
+
+            }
+            else if (response.result.parameters.date && response.result.parameters.date1) {
+              date = response.result.parameters.date
+              date1 = response.result.parameters.date1
+              timeOffCase = 8
+
+            }
+            else if (response.result.parameters.date) {
+              date = response.result.parameters.date
+              date1 = response.result.parameters.date
+              timeOffCase = 9
+
+            }
+            else if (response.result.parameters.time) {
+              time = response.result.parameters.time
+              timeOffCase = 10
+
+            }
+            date1 = date1.replace(/-/g, "/")
+            date = date.replace(/-/g, "/")
+
+
+            if (vacation_type1 == "") {
+              vacation_type1 = "personal"
+            }
+            //get the milliseconds for the  end of the vacation 
+            managerToffyHelper.convertTimeFormat(time, function (x, y, convertedTime) {
+              managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
+                console.log("convertedTime" + convertedTime)
+                console.log("convertedTime1" + convertedTime1)
+
+
+                var toDate = date1 + " " + convertedTime1
+                var fromDate = date + " " + convertedTime;
+                console.log("toDate::" + toDate);
+                console.log("fromDate::" + fromDate);
+                toDate = new Date(toDate);
+                var dateMilliSeconds = toDate.getTime();
+                console.log("dateMilliSeconds:::" + dateMilliSeconds)
+                dateMilliSeconds = dateMilliSeconds - (3 * 60 * 60 * 1000)
+
+                var timeMilliseconds = new Date(fromDate);
+                timeMilliseconds = timeMilliseconds.getTime();
+                timeMilliseconds = timeMilliseconds - (3 * 60 * 60 * 1000);
+                console.log("timeMilliseconds :::" + timeMilliseconds)
+                managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, employeeEmail, vacation_type1, timeOffCase)
+                vacation_type1 = ""
+              })
+
+            })
+
+
+
+          }
+        }
+      })
+
+    }
+
+    else {
       msg.say("Sorry!.You dont have the permession to use this bot.")
     }
 

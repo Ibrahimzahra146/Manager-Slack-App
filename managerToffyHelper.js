@@ -187,3 +187,188 @@ module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, ca
 
 
 }
+module.exports.getTodayDate = function getTodayDate(callback) {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '/' + mm + '/' + dd;
+    callback(today)
+
+}
+module.exports.convertTimeFormat = function convertTimeFormat(time, callback) {
+    console.log("The Time is =" + time)
+    var arr = time.toString().split(":")
+    var formattedTime = ""
+    var midday = "pm";
+    var TimeforMilliseconds = ""
+    var n = arr[1].length;
+    if (n == 1) {
+        arr[1] = "0" + arr[1]
+    }
+
+    if (arr[0] == "13" || arr[0] == "01" || arr[0] == "1") {
+        formattedTime = "01:" + arr[1];
+        TimeforMilliseconds = "13:" + arr[1]
+    }
+    else if (arr[0] == "14" || arr[0] == "02" || arr[0] == "2") {
+        formattedTime = "02:" + arr[1];
+        TimeforMilliseconds = "14:" + arr[1]
+    }
+    else if (arr[0] == "15" || arr[0] == "03" || arr[0] == "3") {
+        formattedTime = "03:" + arr[1];
+        TimeforMilliseconds = "15:" + arr[1]
+    }
+    else if (arr[0] == "16" || arr[0] == "04" || arr[0] == "4") {
+        formattedTime = "04:" + arr[1];
+        TimeforMilliseconds = "16:" + arr[1]
+    }
+    else if (arr[0] == "17" || arr[0] == "05" || arr[0] == "05") {
+        formattedTime = "05:" + arr[1];
+        TimeforMilliseconds = "17:" + arr[1]
+    }
+    else if (arr[0] == "20" || arr[0] == "08" || arr[0] == "8") {
+        formattedTime = "08:" + arr[1];
+        midday = "am"
+        TimeforMilliseconds = "8:" + arr[1]
+
+    }
+    else if (arr[0] == "21" || arr[0] == "09" || arr[0] == "9") {
+        formattedTime = "09:" + arr[1];
+        midday = "am"
+        TimeforMilliseconds = "9:" + arr[1]
+    }
+    else if (arr[0] == "22" || arr[0] == "10") {
+        formattedTime = "10:" + arr[1];
+        midday = "am"
+        TimeforMilliseconds = "10:" + arr[1]
+    }
+    else if (arr[0] == "23" || arr[0] == "11") {
+        formattedTime = "11:" + arr[1];
+        midday = "am"
+        TimeforMilliseconds = "11:" + arr[1]
+    }
+    else if (arr[0] == "00" || arr[0] == "12") {
+        formattedTime = "12:" + arr[1];
+        midday = "am"
+        TimeforMilliseconds = "12:" + arr[1]
+    }
+
+    else {
+        formattedTime = arr[0] + ":" + arr[1];
+        midday = "am";
+    }
+    console.log("TimeforMilliseconds" + TimeforMilliseconds)
+    callback(formattedTime, midday, TimeforMilliseconds)
+}
+function getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, type, timeOffcase, workingDays, callback) {
+    var typeText = ""
+    if (type == "sick") {
+        typeText = " sick"
+    }
+    var messageText = ""
+    if (timeOffcase == 1) {
+        messageText = "Okay, you asked for a" + typeText + " time off on " + fromDate + "  at, " + formattedFromTime + " " + middayFrom + "" + " to " + ToDate + " at " + formattedTime + " " + midday + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+    } else if (timeOffcase == 2) {
+        messageText = "Okay, you asked for a" + typeText + " time off from, " + formattedFromTime + " " + middayFrom + "" + " to " + formattedTime + " " + midday + " on " + ToDate + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+    } else if (timeOffcase == 3) {
+        messageText = "Okay, you asked for a" + typeText + " time off from, " + formattedFromTime + " " + middayFrom + "" + " to " + formattedTime + " " + midday + " at " + fromDate + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+    } else if (timeOffcase == 4) {
+        messageText = "Okay, you asked for a" + typeText + " time off on, " + fromDate + " at " + formattedFromTime + " " + middayFrom + " to the end of" + fromDate + ", and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+
+    } else if (timeOffcase == 5) {
+        messageText = "Okay, you asked for a" + typeText + " time off from, " + formattedFromTime + " " + middayFrom + " to " + formattedTime + " " + midday + " today and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+    } else if (timeOffcase == 6) {
+        messageText = "Okay, you asked for a " + typeText + "time off at " + formattedFromTime + " " + middayFrom + " to 5:00: pm on " + fromDate + ", and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+    } else if (timeOffcase == 7) {
+        messageText = "Okay, you asked for a " + typeText + "time off on " + fromDate + "  at " + formattedFromTime + " " + middayFrom + "" + " to " + ToDate + " at " + formattedTime + " " + midday + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+
+    } else if (timeOffcase == 8) {
+        messageText = "Okay, you asked for a" + typeText + " time off from  " + fromDate + " to " + ToDate + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+
+    } else if (timeOffcase == 9) {
+        messageText = "Okay, you asked for a" + typeText + " time off on " + fromDate + " and that would be 1 working day. Should I go ahead ? "
+
+
+    } else if (timeOffcase == 10) {
+        messageText = "Okay, you asked for a" + typeText + " time off from, " + formattedFromTime + " " + middayFrom + "" + " to the end of the day," + " and that would be " + workingDays + " working days" + ". Should I go ahead ?"
+
+
+    } else if (timeOffcase == 11) {
+
+    } else if (timeOffcase == 12) {
+
+    }
+    callback(messageText)
+
+}
+module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, employeeEmail, type, timeOffcase) {
+    console.log("sendVacationWithLeaveConfirmation")
+    console.log("fromDate " + fromDate)
+    console.log("fromTime " + fromTime)
+    console.log("toTime " + toTime)
+    console.log("ToDate " + ToDate)
+    console.log("fromMilliseconds " + fromMilliseconds)
+    console.log("toMilliseconds " + toMilliseconds)
+    console.log("employeeEmail" + employeeEmail)
+    managerToffyHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
+        managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
+            getWorkingDays(fromMilliseconds, toMilliseconds, email, function (body) {
+                var workingDays = parseFloat(body).toFixed(1);
+
+                getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, type, timeOffcase, workingDays, function (messagetext) {
+
+                    if (type == "sick") {
+                        msg.say("Sorry to hear that :(")
+                    }
+
+                    var text12 = {
+                        "text": "",
+                        "attachments": [
+                            {
+                                "text": messagetext,
+                                "callback_id": 'leave_with_vacation_confirm_reject',
+                                "color": "#3AA3E3",
+                                "attachment_type": "default",
+                                "actions": [
+                                    {
+                                        "name": 'confirm',
+                                        "text": "Yes",
+                                        "style": "primary",
+                                        "type": "button",
+                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate
+                                    },
+                                    {
+                                        "name": 'reject',
+                                        "text": "No",
+                                        "style": "danger",
+                                        "type": "button",
+                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                    msg.say(text12)
+                })
+            })
+        });
+
+    })
+}
