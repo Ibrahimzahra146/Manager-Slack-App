@@ -107,6 +107,7 @@ function makePostRequest(path, email, callback) {
 
 }
 module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
+    printLogs("Getting roles")
     var flag = false;
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
         request({
