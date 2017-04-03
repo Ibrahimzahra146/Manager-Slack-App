@@ -576,6 +576,72 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
   msg.say("You have accepted the time off request but without detuction");
 
 })
+slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
+  getTodayDate(function (todayDate) {
+    var arr = value.toString().split(",");
+    var type = arr[5]
+    var email = arr[2];
+    var fromDateInMilliseconds = arr[3];
+    var toDateInMilliseconds = arr[4]
+    var workingDays = arr[6]
+    var fromDate = arr[7]
+    var toDate = arr[8]
+    console.log("type:::::" + type)
+    console.log("email:::::" + email)
+    console.log("toDate:::::" + toDate)
+    console.log("fromDateInMilliseconds:::::" + fromDateInMilliseconds)
+    console.log("toDateInMilliseconds:::::" + toDateInMilliseconds)
+    console.log("workingDays:::::" + workingDays)
+    console.log("fromDate:::::" + fromDate)
+    console.log("toDate:::::" + toDate)
+    console.log("employeeEmail11" + arr[9])
+
+    toffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
+
+      toffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
+
+        toffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
+
+          toDate = toDate
+          if (arr[0] && (arr[0] != undefined)) {
+            fromDate = fromDate + " T " + formattedTime + " " + midday
+          } else fromDate = fromDate + " T 08:00 am ";
+
+          if (arr[1] && (arr[1] != undefined)) {
+            toDate = toDate + " T " + formattedTime1 + " " + midday1
+          } else toDate = toDate + " T 05:00 pm ";
+
+
+          if (!managerApproval[0]) {
+            msg.say("You dont have any manager right now ");
+          } else {
+            toffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
+
+            if (type == "sick") {
+              console.log("Manager approvals sick vacation is ::" + JSON.stringify(managerApproval))
+              msg.respond(msg.body.response_url, "Your request has been submitted to your managers and HR admin. You might asked to provide a sick report. I’ll inform you about this.  ")
+
+            }
+            else
+              msg.respond(msg.body.response_url, "Your request has been submitted and is awaiting your managers approval ")
+
+          }
+        });
+
+      });
+
+    });
+  })
+  fromDate = "";
+  toDate = "";
+
+})
+
+slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
+  msg.say("Ok, operation aborted.")
+  fromDate = "";
+  toDate = "";
+})
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request ");
