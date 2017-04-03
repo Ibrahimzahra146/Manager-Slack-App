@@ -254,7 +254,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = today
             var date1 = today
             var timeOffCase = -1
-            if (!(response.result.parameters.email || !response.result.parameters.any)) {
+            if (!(response.result.parameters.email || response.result.parameters.any)) {
               msg.say("please specify the user email with request")
             } else {
               if (response.result.parameters.email) {
