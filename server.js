@@ -263,7 +263,7 @@ function sendRequestToApiAi(emailValue, msg) {
                   employeeEmail = response.result.parameters.email
                 employeeEmail = employeeEmail.toString().split('|')
                 employeeEmail = employeeEmail[1];
-                employeeEmail = employeeEmail.replace(/>/g, "");]
+                employeeEmail = employeeEmail.replace(/>/g, "");
                 console.log("Email after split mail to ")
 
 
