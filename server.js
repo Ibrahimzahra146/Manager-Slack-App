@@ -31,6 +31,8 @@ var Constants = require('./Constants.js');
 var employee = require("./employeeSide.js")
 var managerIdInHr = ""
 var vacation_type1 = ""
+var fromDate = ""
+var toDate = "";
 
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
