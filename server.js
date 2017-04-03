@@ -651,7 +651,7 @@ slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
           if (!managerApproval[0]) {
             msg.say("You dont have any manager right now ");
           } else {
-            toffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
+            managerToffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
               console.log("Manager approvals sick vacation is ::" + JSON.stringify(managerApproval))
