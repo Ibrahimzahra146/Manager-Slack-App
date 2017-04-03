@@ -408,262 +408,280 @@ function sendRequestToApiAi(emailValue, msg) {
 
   })
 
-
 }
+/** */
+function getTodayDate(callback) {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
 
-/*--------------___________________________________________________----------------------
-get all information about team users like email ,name ,user id ...etc
--------------____________________________________________________---------------------
-*/
-function getMembersList(Id, msg) {
-  var emailValue = "";
-  request({
-    url: Constants.SLACK_MEMBERS_LIST_URL + "" + SLACK_ACCESS_TOKEN,
-    json: true
-  }, function (error, response, body) {
-
-    if (!error && response.statusCode === 200) {
-      var i = 0;
-      while ((body.members[i] != null) && (body.members[i] != undefined)) {
-
-        if (body.members[i]["id"] == Id) {
-          console.log(body.members[i]["profile"].email);
-          emailValue = body.members[i]["profile"].email;
-
-          sendRequestToApiAi(emailValue, msg);
-          break;
-        }
-
-
-        i++;
-      }
-    }
-  });
-}
-
-/*--------------___________________________________________________----------------------
-listen for user messages
--------------____________________________________________________---------------------
-*/
-var app = slapp.attachToExpress(express())
-slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
-  if (msg.body.event.user == "U3R213B2L") {
-    console.log("message from bot")
-
-  } else {
-
-
-    var stringfy = JSON.stringify(msg);
-    console.log("the message is ");
-    console.log(stringfy);
-    getMembersList(msg.body.event.user, msg)
+  if (dd < 10) {
+    dd = '0' + dd
   }
-})
 
+  if (mm < 10) {
+    mm = '0' + mm
+  }
 
-slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  console.log("Manager @ahmad accepted the vacaction")
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Approved")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-    sendFeedBackMessage(responseBody)
-    msg.say("You have accepted the time off request.")
-
-
-  });
-})
+  today = yyyy + '/' + mm + '/' + dd;
+  callback(today)
 
 
 
-slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  console.log("Regected userEmail " + userEmail)
-  console.log("Regected vacationId " + vacationId)
-  console.log("Regected approvalId " + approvalId)
+  /*--------------___________________________________________________----------------------
+  get all information about team users like email ,name ,user id ...etc
+  -------------____________________________________________________---------------------
+  */
+  function getMembersList(Id, msg) {
+    var emailValue = "";
+    request({
+      url: Constants.SLACK_MEMBERS_LIST_URL + "" + SLACK_ACCESS_TOKEN,
+      json: true
+    }, function (error, response, body) {
 
-  console.log("Regected managerEmail " + managerEmail)
+      if (!error && response.statusCode === 200) {
+        var i = 0;
+        while ((body.members[i] != null) && (body.members[i] != undefined)) {
 
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Rejected")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
+          if (body.members[i]["id"] == Id) {
+            console.log(body.members[i]["profile"].email);
+            emailValue = body.members[i]["profile"].email;
 
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
-      if (!err) {
-        var text12 = {
-          "text": "The approver has rejected your time off request.Sorry! ",
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-      }
-    });
-  });
-
-  msg.say("you have rejected the time off request")
-})
-
-
-slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  console.log("Regected userEmail " + userEmail)
-  console.log("Regected vacationId " + vacationId)
-  console.log("Regected approvalId " + approvalId)
-
-  console.log("Regected managerEmail " + managerEmail)
-
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "ApprovedWithoutDeduction")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
-
-
-      if (!err) {
-        var text12 = {
-          "text": "The approver has accepted your time off request without detuction. Enjoy! ",
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-
-      }
-    });
-  });
-
-  msg.say("You have accepted the time off request but without detuction");
-
-})
-slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
-  getTodayDate(function (todayDate) {
-    var arr = value.toString().split(",");
-    var type = arr[5]
-    var email = arr[2];
-    var fromDateInMilliseconds = arr[3];
-    var toDateInMilliseconds = arr[4]
-    var workingDays = arr[6]
-    var fromDate = arr[7]
-    var toDate = arr[8]
-    console.log("type:::::" + type)
-    console.log("email:::::" + email)
-    console.log("toDate:::::" + toDate)
-    console.log("fromDateInMilliseconds:::::" + fromDateInMilliseconds)
-    console.log("toDateInMilliseconds:::::" + toDateInMilliseconds)
-    console.log("workingDays:::::" + workingDays)
-    console.log("fromDate:::::" + fromDate)
-    console.log("toDate:::::" + toDate)
-    console.log("employeeEmail11" + arr[9])
-
-    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
-
-      managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
-
-        managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
-
-          toDate = toDate
-          if (arr[0] && (arr[0] != undefined)) {
-            fromDate = fromDate + " T " + formattedTime + " " + midday
-          } else fromDate = fromDate + " T 08:00 am ";
-
-          if (arr[1] && (arr[1] != undefined)) {
-            toDate = toDate + " T " + formattedTime1 + " " + midday1
-          } else toDate = toDate + " T 05:00 pm ";
-
-
-          if (!managerApproval[0]) {
-            msg.say("You dont have any manager right now ");
-          } else {
-            toffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
-
-            if (type == "sick") {
-              console.log("Manager approvals sick vacation is ::" + JSON.stringify(managerApproval))
-              msg.respond(msg.body.response_url, "Your request has been submitted to your managers and HR admin. You might asked to provide a sick report. I’ll inform you about this.  ")
-
-            }
-            else
-              msg.respond(msg.body.response_url, "Your request has been submitted and is awaiting your managers approval ")
-
+            sendRequestToApiAi(emailValue, msg);
+            break;
           }
-        });
 
-      });
+
+          i++;
+        }
+      }
+    });
+  }
+
+  /*--------------___________________________________________________----------------------
+  listen for user messages
+  -------------____________________________________________________---------------------
+  */
+  var app = slapp.attachToExpress(express())
+  slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
+    if (msg.body.event.user == "U3R213B2L") {
+      console.log("message from bot")
+
+    } else {
+
+
+      var stringfy = JSON.stringify(msg);
+      console.log("the message is ");
+      console.log(stringfy);
+      getMembersList(msg.body.event.user, msg)
+    }
+  })
+
+
+  slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
+    console.log("Manager @ahmad accepted the vacaction")
+    var arr = value.toString().split(";")
+    var userEmail = arr[0];
+    var vacationId = arr[1];
+    var approvalId = arr[2]
+    var managerEmail = arr[3]
+    sendVacationPutRequest(vacationId, approvalId, managerEmail, "Approved")
+    request({
+      url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+      },
+      body: userEmail
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      var responseBody = JSON.parse(body);
+      sendFeedBackMessage(responseBody)
+      msg.say("You have accepted the time off request.")
+
 
     });
   })
-  fromDate = "";
-  toDate = "";
-
-})
-
-slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
-  msg.say("Ok, operation aborted.")
-  fromDate = "";
-  toDate = "";
-})
-app.get('/', function (req, res) {
-  var clientIp = requestIp.getClientIp(req);
-  console.log("new request ");
-  console.log(clientIp)
-  res.send('Hello1')
-})
 
 
-console.log('Listening on :' + process.env.PORT)
-app.listen(process.env.PORT)
+
+  slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
+    var arr = value.toString().split(";")
+    var userEmail = arr[0];
+    var vacationId = arr[1];
+    var approvalId = arr[2]
+    var managerEmail = arr[3]
+    console.log("Regected userEmail " + userEmail)
+    console.log("Regected vacationId " + vacationId)
+    console.log("Regected approvalId " + approvalId)
+
+    console.log("Regected managerEmail " + managerEmail)
+
+    sendVacationPutRequest(vacationId, approvalId, managerEmail, "Rejected")
+    request({
+      url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+      },
+      body: userEmail
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      var responseBody = JSON.parse(body);
+
+      var message = {
+        'type': 'message',
+        'channel': responseBody.userChannelId,
+        user: responseBody.slackUserId,
+        text: 'what is my name',
+        ts: '1482920918.000057',
+        team: responseBody.teamId,
+        event: 'direct_message'
+      };
+      bot.startConversation(message, function (err, convo) {
+        if (!err) {
+          var text12 = {
+            "text": "The approver has rejected your time off request.Sorry! ",
+          }
+          var stringfy = JSON.stringify(text12);
+          var obj1 = JSON.parse(stringfy);
+          bot.reply(message, obj1);
+        }
+      });
+    });
+
+    msg.say("you have rejected the time off request")
+  })
+
+
+  slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
+    var arr = value.toString().split(";")
+    var userEmail = arr[0];
+    var vacationId = arr[1];
+    var approvalId = arr[2]
+    var managerEmail = arr[3]
+    console.log("Regected userEmail " + userEmail)
+    console.log("Regected vacationId " + vacationId)
+    console.log("Regected approvalId " + approvalId)
+
+    console.log("Regected managerEmail " + managerEmail)
+
+    sendVacationPutRequest(vacationId, approvalId, managerEmail, "ApprovedWithoutDeduction")
+    request({
+      url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+      },
+      body: userEmail
+      //Set the body as a stringcc
+    }, function (error, response, body) {
+      var responseBody = JSON.parse(body);
+
+      var message = {
+        'type': 'message',
+        'channel': responseBody.userChannelId,
+        user: responseBody.slackUserId,
+        text: 'what is my name',
+        ts: '1482920918.000057',
+        team: responseBody.teamId,
+        event: 'direct_message'
+      };
+      bot.startConversation(message, function (err, convo) {
+
+
+        if (!err) {
+          var text12 = {
+            "text": "The approver has accepted your time off request without detuction. Enjoy! ",
+          }
+          var stringfy = JSON.stringify(text12);
+          var obj1 = JSON.parse(stringfy);
+          bot.reply(message, obj1);
+
+        }
+      });
+    });
+
+    msg.say("You have accepted the time off request but without detuction");
+
+  })
+  slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
+    getTodayDate(function (todayDate) {
+      var arr = value.toString().split(",");
+      var type = arr[5]
+      var email = arr[2];
+      var fromDateInMilliseconds = arr[3];
+      var toDateInMilliseconds = arr[4]
+      var workingDays = arr[6]
+      var fromDate = arr[7]
+      var toDate = arr[8]
+      console.log("type:::::" + type)
+      console.log("email:::::" + email)
+      console.log("toDate:::::" + toDate)
+      console.log("fromDateInMilliseconds:::::" + fromDateInMilliseconds)
+      console.log("toDateInMilliseconds:::::" + toDateInMilliseconds)
+      console.log("workingDays:::::" + workingDays)
+      console.log("fromDate:::::" + fromDate)
+      console.log("toDate:::::" + toDate)
+      console.log("employeeEmail11" + arr[9])
+
+      managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
+
+        managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
+
+          managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
+
+            toDate = toDate
+            if (arr[0] && (arr[0] != undefined)) {
+              fromDate = fromDate + " T " + formattedTime + " " + midday
+            } else fromDate = fromDate + " T 08:00 am ";
+
+            if (arr[1] && (arr[1] != undefined)) {
+              toDate = toDate + " T " + formattedTime1 + " " + midday1
+            } else toDate = toDate + " T 05:00 pm ";
+
+
+            if (!managerApproval[0]) {
+              msg.say("You dont have any manager right now ");
+            } else {
+              toffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
+
+              if (type == "sick") {
+                console.log("Manager approvals sick vacation is ::" + JSON.stringify(managerApproval))
+                msg.respond(msg.body.response_url, "Your request has been submitted to your managers and HR admin. You might asked to provide a sick report. I’ll inform you about this.  ")
+
+              }
+              else
+                msg.respond(msg.body.response_url, "Your request has been submitted and is awaiting your managers approval ")
+
+            }
+          });
+
+        });
+
+      });
+    })
+    fromDate = "";
+    toDate = "";
+
+  })
+
+  slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
+    msg.say("Ok, operation aborted.")
+    fromDate = "";
+    toDate = "";
+  })
+  app.get('/', function (req, res) {
+    var clientIp = requestIp.getClientIp(req);
+    console.log("new request ");
+    console.log(clientIp)
+    res.send('Hello1')
+  })
+
+
+  console.log('Listening on :' + process.env.PORT)
+  app.listen(process.env.PORT)
