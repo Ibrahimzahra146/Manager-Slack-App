@@ -629,7 +629,7 @@ slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
     console.log("toDate:::::" + toDate)
     console.log("employeeEmail11" + arr[9])
 
-    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
+    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
 
       managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
 
