@@ -47,6 +47,7 @@ var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
 
 }).startRTM();
+exports.bot = bot
 function sendFeedBackMessage(responseBody) {
 
   console.log("Arrive sendFeedBackMessage  ")
@@ -596,11 +597,11 @@ slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
     console.log("toDate:::::" + toDate)
     console.log("employeeEmail11" + arr[9])
 
-    toffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
+    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, toffyHelper.userIdInHr, email, type, function (vacationId, managerApproval) {
 
-      toffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
+      managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
 
-        toffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
+        managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
 
           toDate = toDate
           if (arr[0] && (arr[0] != undefined)) {

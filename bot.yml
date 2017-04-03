@@ -20,3 +20,11 @@ config:
   friendly_name: IP for HR token
   type: secret
   global: true
+- name: MANAGER_BOT_ACCESS_KEY
+  friendly_name: Manager bot access token
+  type: secret
+  global: true
+- name: HR_BOT_ACCESS_KEY
+  friendly_name: HR bot access token
+  type: secret
+  global: true
