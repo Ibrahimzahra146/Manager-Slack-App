@@ -411,7 +411,7 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
     printLogs("from" + from);
     printLogs("to======>" + to);
     printLogs("type======>" + type);
-    managerToffyHelper.getIdFromEmail(email, function (Id) {
+    managerToffyHelper.getIdFromEmail(email, email, function (Id) {
         console.log("::::" + "::" + email + "::" + Id)
         var vacationType = "0"
         if (type == "sick") {
