@@ -372,3 +372,32 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
 
     })
 }
+
+function getWorkingDays(startDate, endDate, email, callback) {
+    var vacationBody = {
+        "from": startDate,
+        "to": endDate
+
+    }
+    vacationBody = JSON.stringify(vacationBody)
+
+    managerToffyHelper.getNewSessionwithCookie(email, function (cookies, session_Id) {
+        toffyHelper.generalCookies = cookies
+        request({
+            url: "http://" + IP + "/api/v1/vacation/working-days", //URL to hitDs
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookies + ";" + session_Id
+            },
+            body: vacationBody
+            //Set the body as a stringcc
+        }, function (error, response, body) {
+            console.log("getWorkingDays" + response.statusCode)
+            console.log("getWorkingDays" + body);
+            console.log("getWorkingDays" + JSON.stringify(body));
+            callback(body)
+        })
+
+    })
+}
