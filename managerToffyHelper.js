@@ -638,3 +638,34 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
 
 );*/
 }
+
+/** */
+module.exports.getEmailById = function getEmailById(Path, email, callback) {
+    makeGetRequest(Path, email, function (response, body) {
+
+        callback(body)
+    })
+
+}
+function makeGetRequest(path, email, callback) {
+    managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
+        var uri = 'http://' + IP + '/api/v1/' + path
+        printLogs("uri " + uri)
+
+        request({
+            url: uri, //URL to hitDs
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': remember_me_cookie + ";" + session_Id
+
+            }
+            //Set the body as a stringcc
+        }, function (error, response, body) {
+            printLogs("email:" + body)
+            callback(response, body)
+        })
+
+    })
+
+}
