@@ -48,6 +48,20 @@ var bot = controller.spawn({
 
 }).startRTM();
 exports.bot = bot
+//*********
+var manager_bot = controller.spawn({
+  token: process.env.MANAGER_BOT_ACCESS_KEY
+
+}).startRTM();
+exports.manager_bot = manager_bot
+/***************** */
+
+var hr_bot = controller.spawn({
+  token: process.env.HR_BOT_ACCESS_KEY
+
+}).startRTM();
+exports.hr_bot = hr_bot
+//******************
 function sendFeedBackMessage(responseBody) {
 
   console.log("Arrive sendFeedBackMessage  ")

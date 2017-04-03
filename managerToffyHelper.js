@@ -14,7 +14,7 @@ exports.general_remember_me = general_remember_me;
 var general_session_Id = "";
 exports.general_session_Id = general_session_Id
 var hrRole = 0
-var currentBot = server.bot;
+var currentBot = server.manager_bot;
 module.exports.showEmployees = function showEmployees(msg, email) {
     printLogs("arrive at show employees")
     var uri = 'http://' + IP + '/api/v1/employee/profile'
