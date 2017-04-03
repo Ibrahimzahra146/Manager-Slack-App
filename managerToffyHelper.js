@@ -603,7 +603,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                 ]
             }
             if (approvarType == "Manager") {
-                currentBot = server.bot;
+                currentBot = server.manager_bot;
 
             } else {
 
