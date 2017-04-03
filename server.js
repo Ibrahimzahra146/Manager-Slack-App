@@ -259,12 +259,14 @@ function sendRequestToApiAi(emailValue, msg) {
             } else {
               if (response.result.parameters.email) {
                 //<mailto:ibrahim.zahra@exalt.ps|ibrahim.zahra@exalt.ps>
-                if ((response.result.parameters.email).indexOf('mailto') > -1)
+                if ((response.result.parameters.email).indexOf('mailto') > -1) {
                   employeeEmail = response.result.parameters.email
-                employeeEmail = employeeEmail.toString().split('|')
-                employeeEmail = employeeEmail[1];
-                employeeEmail = employeeEmail.replace(/>/g, "");
-                console.log("Email after split mail to ")
+                  employeeEmail = employeeEmail.toString().split('|')
+                  employeeEmail = employeeEmail[1];
+                  employeeEmail = employeeEmail.replace(/>/g, "");
+                  console.log("Email after split mail to ")
+                }
+                else employeeEmail = response.result.parameters.email
 
 
               } else {
