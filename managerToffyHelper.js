@@ -319,7 +319,7 @@ function getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midd
 
 }
 module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, employeeEmail, type, timeOffcase) {
-    console.log("sendVacationWithLeaveConfirmation")
+    console.log("sendVacationWithLeaveConfirmation ")
     console.log("fromDate " + fromDate)
     console.log("fromTime " + fromTime)
     console.log("toTime " + toTime)
