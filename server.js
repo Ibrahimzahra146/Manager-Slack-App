@@ -524,6 +524,7 @@ function managerAction(msg, value, typeOfaction) {
   var fromDate = ""
   var toDate = ""
   var employeeEmail = ""
+  var managerId = ""
   getTodayDate(function (todayDate) {
     arr = value.toString().split(",");
     type = arr[5]
@@ -534,6 +535,7 @@ function managerAction(msg, value, typeOfaction) {
     fromDate = arr[7]
     toDate = arr[8]
     employeeEmail = arr[9]
+    managerId = arr[10]
     console.log("type:::::" + type)
     console.log("email:::::" + email)
     console.log("toDate:::::" + toDate)
@@ -577,12 +579,21 @@ function managerAction(msg, value, typeOfaction) {
         });
 
       });
+      var i = 0
+      while (managerApproval[i]) {
+        if (managerApproval[i].manager == managerId) {
+          var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + email
+
+          managerApproval(msg, value, "Approved")
+          break;
+        }
+        i++;
+      }
       var value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
 
       managerApproval(msg, value, "Approved")
     });
   })
-  var value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
 
   managerApproval(msg, value, "Approved")
   fromDate = "";

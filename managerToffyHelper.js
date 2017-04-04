@@ -338,51 +338,53 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                 var workingDays = parseFloat(body).toFixed(1);
 
                 getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
+                    managerToffyHelper.getIdByEmail(email, function (Id) {
 
-                    if (type == "sick") {
-                        msg.say("Sorry to hear that :(")
-                    }
 
-                    var text12 = {
-                        "text": "",
-                        "attachments": [
-                            {
-                                "text": messagetext,
-                                "callback_id": 'leave_with_vacation_confirm_reject',
-                                "color": "#3AA3E3",
-                                "attachment_type": "default",
-                                "actions": [
-                                    {
-                                        "name": 'confirm',
-                                        "text": "Yes      ",
-                                        "style": "primary",
-                                        "type": "button",
-                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
-                                    },
-                                    {
-                                        "name": 'reject',
-                                        "text": "No      ",
-                                        "style": "danger",
-                                        "type": "button",
-                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
-                                    }
-                                    ,
-                                    {
-                                        "name": 'confirm_without_detuction',
-                                        "text": "don't detuct",
-                                        "style": "good",
-                                        "type": "button",
-                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                    msg.say(text12)
+                        if (type == "sick") {
+                            msg.say("Sorry to hear that :(")
+                        }
+
+                        var text12 = {
+                            "text": "",
+                            "attachments": [
+                                {
+                                    "text": messagetext,
+                                    "callback_id": 'leave_with_vacation_confirm_reject',
+                                    "color": "#3AA3E3",
+                                    "attachment_type": "default",
+                                    "actions": [
+                                        {
+                                            "name": 'confirm',
+                                            "text": "Yes      ",
+                                            "style": "primary",
+                                            "type": "button",
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                        },
+                                        {
+                                            "name": 'reject',
+                                            "text": "No      ",
+                                            "style": "danger",
+                                            "type": "button",
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                        }
+                                        ,
+                                        {
+                                            "name": 'confirm_without_detuction',
+                                            "text": "don't detuct",
+                                            "style": "good",
+                                            "type": "button",
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                        msg.say(text12)
+                    })
                 })
-            })
-        });
-
+            });
+        })
     })
 }
 
