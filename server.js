@@ -651,7 +651,7 @@ function managerApproval(msg, value, approvalType) {
       managerFeedbackmessage = "You have accepted the time off request but without detuction"
     } else if (approvalType == "Approved") {
 
-      userFeedbackmessageext = "The approver has accepted your time off request.Take care."
+      userFeedbackmessage = "The approver has accepted your time off request.Take care."
       managerFeedbackmessage = "You have accepted the time off."
 
     }
