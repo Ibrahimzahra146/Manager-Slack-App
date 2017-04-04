@@ -499,19 +499,19 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
 
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  managerApproval(msg, value, "Approved")
+  managerApproval1(msg, value, "Approved")
 })
 
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  managerApproval(msg, value, "Regected")
+  managerApproval1(msg, value, "Regected")
 })
 
 
 slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
-  managerApproval(msg, value, "ApprovedWithoutDeduction")
+  managerApproval1(msg, value, "ApprovedWithoutDeduction")
 
 })
 function managerAction(msg, value, typeOfaction) {
@@ -583,13 +583,13 @@ function managerAction(msg, value, typeOfaction) {
       while (managerApproval[i]) {
         if (managerApproval[i].manager == managerId) {
           var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + email
-
-          managerApproval(msg, value, "Approved")
+          console.log("i1" + i)
+          managerApproval1(msg, value, "Approved")
           break;
         }
         i++;
       }
-  
+
     });
   })
 
@@ -597,7 +597,7 @@ function managerAction(msg, value, typeOfaction) {
   toDate = "";
 
 }
-function managerApproval(msg, value, approvalType) {
+function managerApproval1(msg, value, approvalType) {
   var managerFeedbackmessage = ""
   var userFeedbackmessage = ""
   var arr = value.toString().split(";")
