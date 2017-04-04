@@ -135,12 +135,12 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                                 },
                                 {
                                     "title": "Used time off  ",
-                                    "value": parseFloat(body.vacation_balance).toFixed(2) + " weeks ",
+                                    "value": parseFloat(body.consumed_vacation_balance).toFixed(2) + " weeks ",
                                     "short": true
                                 },
                                 {
                                     "title": "Annual time off ",
-                                    "value": parseFloat(body.static_balance).toFixed(2) + " weeks ",
+                                    "value": parseFloat(body.deserved_vacation).toFixed(2) + " weeks ",
                                     "short": false
                                 },
                                 {
@@ -151,11 +151,17 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                                 {
                                     "title": "Balance",
                                     "value": parseFloat(body.left_over + body.compensation_balance + body.balance).toFixed(2) + " weeks ",
-                                    "short": false
+                                    "short": true
                                 },
                                 {
                                     "title": "Used Sick time off  ",
-                                    "value": parseFloat(body.sick_vacation_balance).toFixed(2) + " weeks ",
+                                    "value": parseFloat(body.consume_sick_vacation).toFixed(2) + " weeks ",
+                                    "short": true
+                                }
+                                ,
+                                {
+                                    "title": "Deserved  Sick time off  ",
+                                    "value": parseFloat(body.deserved_sick).toFixed(2) + " weeks ",
                                     "short": true
                                 }
                             ],
