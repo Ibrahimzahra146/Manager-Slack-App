@@ -505,52 +505,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  console.log("Regected userEmail " + userEmail)
-  console.log("Regected vacationId " + vacationId)
-  console.log("Regected approvalId " + approvalId)
-
-  console.log("Regected managerEmail " + managerEmail)
-
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Rejected")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
-      if (!err) {
-        var text12 = {
-          "text": "The approver has rejected your time off request.Sorry! ",
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-      }
-    });
-  });
-
-  msg.say("you have rejected the time off request")
+  managerApproval(msg, value, "Regected")
 })
 
 
@@ -628,13 +583,6 @@ function managerApproval(msg, value, approvalType) {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
-  console.log("Regected userEmail " + userEmail)
-  console.log("Regected vacationId " + vacationId)
-  console.log("Regected approvalId " + approvalId)
-
-  console.log("Regected managerEmail " + managerEmail)
-
-
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
@@ -659,6 +607,11 @@ function managerApproval(msg, value, approvalType) {
       console.log("managerFeedbackmessage")
       msg.say(managerFeedbackmessage);
 
+    } else if (approvalType == "Regected") {
+      userFeedbackmessage = "The approver has regected your time off request."
+      managerFeedbackmessage = "You have regected the time off."
+      console.log("managerFeedbackmessage")
+      msg.say(managerFeedbackmessage);
     }
     var message = {
       'type': 'message',
