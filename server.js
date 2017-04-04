@@ -384,8 +384,6 @@ function sendRequestToApiAi(emailValue, msg) {
                   managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                     console.log("convertedTime" + convertedTime)
                     console.log("convertedTime1" + convertedTime1)
-
-
                     var toDate = date1 + " " + convertedTime1
                     var fromDate = date + " " + convertedTime;
                     console.log("toDate::" + toDate);
@@ -517,7 +515,7 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 function managerAction(msg, value, typeOfaction) {
   var arr = ""
   var type = ""
-  var email = ""
+  var managerEmail = ""
   var fromDateInMilliseconds = ""
   var toDateInMilliseconds = ""
   var workingDays = ""
@@ -528,7 +526,7 @@ function managerAction(msg, value, typeOfaction) {
   getTodayDate(function (todayDate) {
     arr = value.toString().split(",");
     type = arr[5]
-    email = arr[2];
+    managerEmail = arr[2];
     fromDateInMilliseconds = arr[3];
     toDateInMilliseconds = arr[4]
     workingDays = arr[6]
@@ -536,15 +534,7 @@ function managerAction(msg, value, typeOfaction) {
     toDate = arr[8]
     employeeEmail = arr[9]
     managerId = arr[10]
-    console.log("type:::::" + type)
-    console.log("email:::::" + email)
-    console.log("toDate:::::" + toDate)
-    console.log("fromDateInMilliseconds:::::" + fromDateInMilliseconds)
-    console.log("toDateInMilliseconds:::::" + toDateInMilliseconds)
-    console.log("workingDays:::::" + workingDays)
-    console.log("fromDate:::::" + fromDate)
-    console.log("toDate:::::" + toDate)
-    console.log("employeeEmail11" + arr[9])
+
 
     managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, type, function (vacationId, managerApproval) {
 
@@ -565,7 +555,7 @@ function managerAction(msg, value, typeOfaction) {
           if (!managerApproval[0]) {
             msg.say("You dont have any manager right now ");
           } else {
-            managerToffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
+            managerToffyHelper.sendVacationToManager(fromDate, toDate, managerEmail, type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
               console.log("Mansager approvals sick vacation is ::" + JSON.stringify(managerApproval))
@@ -579,10 +569,12 @@ function managerAction(msg, value, typeOfaction) {
         });
 
       });
+
+      //get The id of the manager inorder to get approval id and vacation ID
       var i = 0
       while (managerApproval[i]) {
         if (managerApproval[i].manager == managerId) {
-          var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + email
+          var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + managerEmail
           console.log("i1" + i)
           managerApproval1(msg, value, "Approved")
           break;
