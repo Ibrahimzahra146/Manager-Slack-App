@@ -568,7 +568,7 @@ function managerAction(msg, value, typeOfaction) {
             managerToffyHelper.sendVacationToManager(fromDate, toDate, arr[2], type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
-              console.log("Manager approvals sick vacation is ::" + JSON.stringify(managerApproval))
+              console.log("Mansager approvals sick vacation is ::" + JSON.stringify(managerApproval))
               msg.respond(msg.body.response_url, "Your request has been submitted to your managers and HR admin. You might asked to provide a sick report. I’ll inform you about this.  ")
 
             }
