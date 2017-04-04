@@ -589,13 +589,10 @@ function managerAction(msg, value, typeOfaction) {
         }
         i++;
       }
-      var value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
-
-      managerApproval(msg, value, "Approved")
+  
     });
   })
 
-  managerApproval(msg, value, "Approved")
   fromDate = "";
   toDate = "";
 
