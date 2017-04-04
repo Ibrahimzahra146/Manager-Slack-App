@@ -515,16 +515,25 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
 })
 function managerAction(msg, value, typeOfaction) {
+  var arr = ""
+  var type = ""
+  var email = ""
+  var fromDateInMilliseconds = ""
+  var toDateInMilliseconds = ""
+  var workingDays = ""
+  var fromDate = ""
+  var toDate = ""
+  var employeeEmail = ""
   getTodayDate(function (todayDate) {
-    var arr = value.toString().split(",");
-    var type = arr[5]
-    var email = arr[2];
-    var fromDateInMilliseconds = arr[3];
-    var toDateInMilliseconds = arr[4]
-    var workingDays = arr[6]
-    var fromDate = arr[7]
-    var toDate = arr[8]
-    var employeeEmail = arr[9]
+    arr = value.toString().split(",");
+    type = arr[5]
+    email = arr[2];
+    fromDateInMilliseconds = arr[3];
+    toDateInMilliseconds = arr[4]
+    workingDays = arr[6]
+    fromDate = arr[7]
+    toDate = arr[8]
+    employeeEmail = arr[9]
     console.log("type:::::" + type)
     console.log("email:::::" + email)
     console.log("toDate:::::" + toDate)
@@ -568,10 +577,12 @@ function managerAction(msg, value, typeOfaction) {
         });
 
       });
+      var value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
 
+      managerApproval(msg, value, "Approved")
     });
   })
-  value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
+  var value = employeeEmail + ";" + vacationId + ";" + approvalId + ";" + email
 
   managerApproval(msg, value, "Approved")
   fromDate = "";
