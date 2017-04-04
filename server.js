@@ -213,7 +213,7 @@ function sendRequestToApiAi(emailValue, msg) {
         let responseText = response.result.fulfillment.speech;
         if (responseText == "showEmployeeInfo") {
           console.log("eresponse:::" + JSON.stringify(response))
-          console.log("employeeEmail:::" + response.result.parameters.email)
+          console.log("employeeEmail: ::" + response.result.parameters.email)
           var employeeEmail = "";
           if (response.result.parameters.any) {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
