@@ -366,6 +366,14 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                         "type": "button",
                                         "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
                                     }
+                                    ,
+                                    {
+                                        "name": 'confirm_without_detuction',
+                                        "text": "confirm without detuct",
+                                        "style": "good",
+                                        "type": "button",
+                                        "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
+                                    }
                                 ]
                             }
                         ]
