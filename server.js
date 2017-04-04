@@ -633,6 +633,7 @@ function managerApproval(msg, value, approvalType) {
 
   console.log("Regected managerEmail " + managerEmail)
 
+  msg.say(managerFeedbackmessage);
 
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
   request({
@@ -679,7 +680,6 @@ function managerApproval(msg, value, approvalType) {
     });
   });
 
-  msg.say(managerFeedbackmessage);
 }
 
 
