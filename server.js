@@ -499,29 +499,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
 
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  console.log("Manager @ahmad accepted the vacaction")
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "Approved")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-    sendFeedBackMessage(responseBody)
-    msg.say("You have accepted the time off request.")
-
-
-  });
+  managerApproval(msg, value, "Approved")
 })
 
 
@@ -577,58 +555,10 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
 
 slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  console.log("Regected userEmail " + userEmail)
-  console.log("Regected vacationId " + vacationId)
-  console.log("Regected approvalId " + approvalId)
 
-  console.log("Regected managerEmail " + managerEmail)
-
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, "ApprovedWithoutDeduction")
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
-
-
-      if (!err) {
-        var text12 = {
-          "text": "The approver has accepted your time off request without detuction. Enjoy! ",
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-
-      }
-    });
-  });
-
-  msg.say("You have accepted the time off request but without detuction");
 
 })
-slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
+function managerAction(msg, value, typeOfaction) {
   getTodayDate(function (todayDate) {
     var arr = value.toString().split(",");
     var type = arr[5]
@@ -688,8 +618,80 @@ slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
   fromDate = "";
   toDate = "";
 
-})
+}
+function managerApproval(msg, value, approvalType) {
+  var managerFeedbackmessage = ""
+  var userFeedbackmessage = ""
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  console.log("Regected userEmail " + userEmail)
+  console.log("Regected vacationId " + vacationId)
+  console.log("Regected approvalId " + approvalId)
 
+  console.log("Regected managerEmail " + managerEmail)
+
+
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
+  request({
+    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+    },
+    body: userEmail
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    var responseBody = JSON.parse(body);
+    if (approvalType == "ApprovedWithoutDeduction") {
+      userFeedbackmessage = "The approver has accepted your time off request without detuction. Enjoy! "
+      managerFeedbackmessage = "You have accepted the time off request but without detuction"
+    } else if (approvalType == "Approved") {
+
+      userFeedbackmessageext = "The approver has accepted your time off request.Take care."
+      managerFeedbackmessage = "You have accepted the time off."
+
+    }
+    var message = {
+      'type': 'message',
+      'channel': responseBody.userChannelId,
+      user: responseBody.slackUserId,
+      text: 'what is my name',
+      ts: '1482920918.000057',
+      team: responseBody.teamId,
+      event: 'direct_message'
+    };
+    bot.startConversation(message, function (err, convo) {
+
+
+      if (!err) {
+        var text12 = {
+          "text": userFeedbackmessage,
+        }
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        bot.reply(message, obj1);
+
+      }
+    });
+  });
+
+  msg.say(managerFeedbackmessage);
+}
+
+
+
+
+
+slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
+  managerAction(msg, value, "Approved")
+})
+slapp.action('leave_with_vacation_confirm_reject', 'confirm_without_detuction', (msg, value) => {
+  managerAction(msg, value, "ApprovedWithoutDeduction")
+})
 slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
   msg.say("Ok, operation aborted.")
   fromDate = "";
