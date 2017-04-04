@@ -97,7 +97,7 @@ function makePostRequest(path, email, callback) {
                 'Cookie': remember_me_cookie + ";" + session_Id
 
             },
-            body: body1
+            body: email
             //Set the body as a stringcc
         }, function (error, response, body) {
             printLogs("body:" + body)
