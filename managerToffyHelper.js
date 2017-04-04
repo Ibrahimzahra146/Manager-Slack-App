@@ -354,14 +354,14 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                 "actions": [
                                     {
                                         "name": 'confirm',
-                                        "text": "Yes",
+                                        "text": "Yes      ",
                                         "style": "primary",
                                         "type": "button",
                                         "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
                                     },
                                     {
                                         "name": 'reject',
-                                        "text": "No",
+                                        "text": "No      ",
                                         "style": "danger",
                                         "type": "button",
                                         "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
