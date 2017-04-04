@@ -369,7 +369,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                     ,
                                     {
                                         "name": 'confirm_without_detuction',
-                                        "text": "confirm without detuct",
+                                        "text": "don't detuct",
                                         "style": "good",
                                         "type": "button",
                                         "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail
