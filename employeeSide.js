@@ -141,7 +141,7 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                                 {
                                     "title": "Annual time off ",
                                     "value": parseFloat(body.deserved_vacation).toFixed(2) + " weeks ",
-                                    "short": false
+                                    "short": true
                                 },
                                 {
                                     "title": "Extra time off  ",
