@@ -338,7 +338,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                 var workingDays = parseFloat(body).toFixed(1);
 
                 getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
-                    managerToffyHelper.getIdByEmail(email, function (Id) {
+                    getIdByEmail(email, function (Id) {
 
 
                         if (type == "sick") {
