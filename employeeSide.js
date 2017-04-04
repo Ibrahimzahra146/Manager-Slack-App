@@ -144,26 +144,35 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                                     "short": true
                                 },
                                 {
-                                    "title": "Extra time off  ",
-                                    "value": parseFloat(body.compensation_balance).toFixed(2) + " weeks ",
-                                    "short": true
-                                },
-                                {
-                                    "title": "Balance",
-                                    "value": parseFloat(body.left_over + body.compensation_balance + body.balance).toFixed(2) + " weeks ",
-                                    "short": true
-                                },
-                                {
                                     "title": "Used Sick time off  ",
                                     "value": parseFloat(body.consume_sick_vacation).toFixed(2) + " weeks ",
                                     "short": true
                                 }
                                 ,
                                 {
+                                    "title": "Extra time off  ",
+                                    "value": parseFloat(body.compensation_balance).toFixed(2) + " weeks ",
+                                    "short": true
+                                },
+
+                                {
                                     "title": "Deserved  Sick time off  ",
                                     "value": parseFloat(body.deserved_sick).toFixed(2) + " weeks ",
                                     "short": true
+                                },
+
+
+                                {
+                                    "title": "Balance",
+                                    "value": parseFloat(body.left_over + body.compensation_balance + body.balance).toFixed(2) + " weeks ",
+                                    "short": true
+                                },
+                                {
+                                    "title": "Total sick balance   ",
+                                    "value": parseFloat(body.total_sick_balance).toFixed(2) + " weeks ",
+                                    "short": true
                                 }
+
                             ],
                             "color": "#F35A00"
                         }
