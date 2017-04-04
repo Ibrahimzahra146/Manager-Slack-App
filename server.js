@@ -633,7 +633,6 @@ function managerApproval(msg, value, approvalType) {
 
   console.log("Regected managerEmail " + managerEmail)
 
-  msg.say(managerFeedbackmessage);
 
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
   request({
@@ -654,6 +653,8 @@ function managerApproval(msg, value, approvalType) {
 
       userFeedbackmessage = "The approver has accepted your time off request.Take care."
       managerFeedbackmessage = "You have accepted the time off."
+      console.log("managerFeedbackmessage")
+      msg.say(managerFeedbackmessage);
 
     }
     var message = {
