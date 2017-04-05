@@ -517,7 +517,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                 emailFromId = emailFromId.replace(/\"/, "")
                 emailFromId = emailFromId.replace(/\"/, "")
 
-                console.log("email != emailFromId)" + email + "!=" + emailFromId)
+                console.log("email !=  emailFromId)" + email + "!=" + emailFromId)
 
                 if (email != emailFromId) {
                     console.log("Arrive  after get emailFromId:: " + i)
