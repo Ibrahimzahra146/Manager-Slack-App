@@ -335,7 +335,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     console.log("employeeEmail" + employeeEmail)
     managerToffyHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
         managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
-            getWorkingDays(fromMilliseconds, toMilliseconds, email, function (body) {
+            getWorkingDays(fromMilliseconds, toMilliseconds, employeeEmail, function (body) {
                 var workingDays = parseFloat(body).toFixed(1);
 
                 getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
@@ -390,32 +390,35 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
 }
 
 function getWorkingDays(startDate, endDate, email, callback) {
-    var vacationBody = {
-        "from": startDate,
-        "to": endDate
+    managerToffyHelper.getIdFromEmail(email, function (Id) {
+        var vacationBody = {
+            "from": startDate,
+            "to": endDate
 
-    }
-    vacationBody = JSON.stringify(vacationBody)
+        }
+        vacationBody = JSON.stringify(vacationBody)
 
-    managerToffyHelper.getNewSessionwithCookie(email, function (cookies, session_Id) {
-        request({
-            url: "http://" + IP + "/api/v1/vacation/working-days", //URL to hitDs
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': cookies + ";" + session_Id
-            },
-            body: vacationBody
-            //Set the body as a stringcc
-        }, function (error, response, body) {
-            console.log("getWorkingDays" + response.statusCode)
-            console.log("getWorkingDays" + body);
-            console.log("getWorkingDays" + JSON.stringify(body));
-            callback(body)
+        managerToffyHelper.getNewSessionwithCookie(email, function (cookies, session_Id) {
+            request({
+                url: "http://" + IP + "/api/v1/vacation/working-days", //URL to hitDs
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': cookies + ";" + session_Id
+                },
+                body: vacationBody
+                //Set the body as a stringcc
+            }, function (error, response, body) {
+                console.log("getWorkingDays" + response.statusCode)
+                console.log("getWorkingDays" + body);
+                console.log("getWorkingDays" + JSON.stringify(body));
+                callback(body)
+            })
+
         })
-
     })
 }
+
 
 module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, to, employee_id, email, type, callback) {
     printLogs("Sending vacation post request")
