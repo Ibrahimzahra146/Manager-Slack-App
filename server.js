@@ -597,8 +597,8 @@ function managerApproval1(msg, value, approvalType) {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
-  console.log("userEmail::" + userEmail)
-  console.log("managerEmail"+managerEmail)
+  console.log("userEmail ::" + userEmail)
+  console.log("managerEmail:: "+managerEmail)
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
