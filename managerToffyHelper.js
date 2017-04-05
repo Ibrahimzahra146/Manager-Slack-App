@@ -520,7 +520,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                 if (email != emailFromId) {
                     console.log("Arrive  after get emailFromId:: " + i)
 
-                    console.log("mananger email:::" + managerEmail);
+                    console.log("mananger email::: " + managerEmail);
                     console.log("approvarType" + approvarType);
                     approvalId = managerApproval[i].id
                     approvarType = managerApproval[i].type
