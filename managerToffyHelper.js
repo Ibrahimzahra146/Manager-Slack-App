@@ -335,7 +335,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     console.log("employeeEmail" + employeeEmail)
     managerToffyHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
         managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
-            getWorkingDays(fromMilliseconds, toMilliseconds, employeeEmail, function (body) {
+            getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, function (body) {
                 var workingDays = parseFloat(body).toFixed(1);
 
                 getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
@@ -389,9 +389,10 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     })
 }
 
-function getWorkingDays(startDate, endDate, email, callback) {
-    managerToffyHelper.getIdFromEmail(email, function (Id) {
+function getWorkingDays(startDate, endDate, email, employeeEmail, callback) {
+    managerToffyHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         var vacationBody = {
+            "employee_id": Id,
             "from": startDate,
             "to": endDate
 
