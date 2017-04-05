@@ -413,7 +413,7 @@ function getWorkingDays(startDate, endDate, email, employeeEmail, callback) {
                 console.log(" getWorkingDays" + response.statusCode)
                 console.log("getWorkingDays" + body);
                 console.log("getWorkingDays" + JSON.stringify(body));
-                callback(body)
+                callback((JSON.parse(body)).workingPeriod)
             })
 
         })
