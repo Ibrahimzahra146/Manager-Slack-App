@@ -574,7 +574,7 @@ function managerAction(msg, value, typeOfaction) {
       var i = 0
       while (managerApproval[i]) {
         if (managerApproval[i].manager == managerId) {
-          var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + managerEmail
+          var value = employeeEmail + ";" + vacationId + ";" + managerApproval[i].id + ";" + managerEmail
           console.log("value: :" + value)
           managerApproval1(msg, value, "Approved")
           break;
