@@ -528,7 +528,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                             'Content-Type': 'application/json',
 
                         },
-                        body: managerEmail
+                        body: emailFromId
                         //Set the body as a stringcc
                     }, function (error, response, body) {
 
