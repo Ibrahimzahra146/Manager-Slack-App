@@ -470,6 +470,7 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
 
 }
 module.exports.sendVacationToManager = function sendVacationToManager(startDate, endDate, email, type, vacationId, managerApproval, toWho, workingDays) {
+    console.log("arrive at send vacation to maangers" + email)
     var message12 = ""
     var approvarType = ""
     var approvalId = ""
@@ -508,6 +509,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
          */
 
             var x = managerToffyHelper.getEmailById('employee/email/' + managerApproval[i].manager, email, function (emailFromId) {
+                console.log("email != emailFromId)" + email + "!=" + emailFromId)
                 if (email != emailFromId) {
                     console.log("Arrive  after get emailFromId:: " + i)
 
