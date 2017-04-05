@@ -555,6 +555,8 @@ function managerAction(msg, value, typeOfaction) {
           if (!managerApproval[0]) {
             msg.say("You dont have any manager right now ");
           } else {
+            console.log("fromDate:::-->" + fromDate)
+            console.log("toDate:::-->" + toDate)
             managerToffyHelper.sendVacationToManager(fromDate, toDate, managerEmail, type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
