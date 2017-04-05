@@ -409,7 +409,7 @@ function getWorkingDays(startDate, endDate, email, callback) {
                 body: vacationBody
                 //Set the body as a stringcc
             }, function (error, response, body) {
-                console.log("getWorkingDays" + response.statusCode)
+                console.log(" getWorkingDays" + response.statusCode)
                 console.log("getWorkingDays" + body);
                 console.log("getWorkingDays" + JSON.stringify(body));
                 callback(body)
