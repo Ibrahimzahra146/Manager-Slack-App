@@ -575,7 +575,7 @@ function managerAction(msg, value, typeOfaction) {
       while (managerApproval[i]) {
         if (managerApproval[i].manager == managerId) {
           var value = employeeEmail + ";" + vacationId + ";" + managerApproval.id + ";" + managerEmail
-          console.log("i1" + i)
+          console.log("i1" + value)
           managerApproval1(msg, value, "Approved")
           break;
         }
@@ -598,7 +598,7 @@ function managerApproval1(msg, value, approvalType) {
   var approvalId = arr[2]
   var managerEmail = arr[3]
   console.log("userEmail ::" + userEmail)
-  console.log("managerEmail::"+managerEmail)
+  console.log("managerEmail::" + managerEmail)
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
   request({
     url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
