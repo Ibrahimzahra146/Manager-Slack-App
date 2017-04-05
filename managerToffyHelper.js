@@ -2,6 +2,7 @@ var requestify = require('requestify');
 const request = require('request');
 var server = require('./server')
 var generalCookies = "initial"
+var async = require('async');
 exports.generalCookies = generalCookies
 var IP = process.env.SLACK_IP
 var userIdInHr = "initial";
