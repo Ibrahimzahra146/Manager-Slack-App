@@ -514,6 +514,7 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
 
             var x = managerToffyHelper.getEmailById('employee/email/' + managerApproval[i].manager, email, function (emailFromId) {
                 console.log("email != emailFromId)" + email + "!=" + emailFromId)
+                emailFromId = emailFromId.replace(/"/, "")
                 if (email != emailFromId) {
                     console.log("Arrive  after get emailFromId:: " + i)
 
