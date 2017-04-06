@@ -519,11 +519,12 @@ function managerAction(msg, value, typeOfaction) {
   var fromDateInMilliseconds = ""
   var toDateInMilliseconds = ""
   var workingDays = ""
-  var fromDate = ""
-  var toDate = ""
+
   var employeeEmail = ""
   var managerId = ""
   getTodayDate(function (todayDate) {
+    var fromDate = ""
+    var toDate = ""
     arr = value.toString().split(",");
     type = arr[5]
     managerEmail = arr[2];
