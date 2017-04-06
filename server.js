@@ -539,9 +539,11 @@ function managerAction(msg, value, typeOfaction) {
 
 
     managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, type, function (vacationId, managerApproval) {
-
+      console.log("fromDate111113" + fromDate)
+      console.log("toDate1111112" + toDate)
       managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
-
+        console.log("fromDate111114" + fromDate)
+        console.log("toDate1111112" + toDate)
         managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
           console.log("fromDate111112" + fromDate)
           console.log("toDate1111112" + toDate)
