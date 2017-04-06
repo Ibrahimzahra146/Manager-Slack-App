@@ -558,7 +558,7 @@ function managerAction(msg, value, typeOfaction) {
             managerToffyHelper.sendVacationToManager(fromDate, toDate, managerEmail, type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
-              console.log("Mansager approvals sick vacation is ::" + JSON.stringify(managerApproval))
+              console.log("Managers approvals sick vacation is ::" + JSON.stringify(managerApproval))
               msg.respond(msg.body.response_url, "Your request has been submitted . ")
 
             }
@@ -576,7 +576,7 @@ function managerAction(msg, value, typeOfaction) {
         if (managerApproval[i].manager == managerId) {
           var value = employeeEmail + ";" + vacationId + ";" + managerApproval[i].id + ";" + managerEmail
           console.log("value: :" + value)
-          managerApproval1(msg, value, "Approved")
+          managerApproval1(msg, value, "Approved", 1)
           break;
         }
         i++;
@@ -589,7 +589,7 @@ function managerAction(msg, value, typeOfaction) {
   toDate = "";
 
 }
-function managerApproval1(msg, value, approvalType) {
+function managerApproval1(msg, value, approvalType, fromManager) {
   var managerFeedbackmessage = ""
   var userFeedbackmessage = ""
   var arr = value.toString().split(";")
@@ -597,58 +597,62 @@ function managerApproval1(msg, value, approvalType) {
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
+  var fromWho = arr[4];
+
   console.log("userEmail ::" + userEmail)
   console.log("managerEmail::" + managerEmail)
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
-  request({
-    url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-    },
-    body: userEmail
-    //Set the body as a stringcc
-  }, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-    if (approvalType == "ApprovedWithoutDeduction") {
-      userFeedbackmessage = "The approver has accepted your time off request without detuction. Enjoy! "
-      managerFeedbackmessage = "You have accepted the time off request but without detuction"
+  if (fromManager != 1) {
+    request({
+      url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+      },
+      body: userEmail
+      //Set the body as a stringcc
+    }, function (error, response, body) {
 
-    } else if (approvalType == "Approved") {
+      var responseBody = JSON.parse(body);
+      if (approvalType == "ApprovedWithoutDeduction") {
+        userFeedbackmessage = "The approver has accepted your time off request without detuction. Enjoy! "
+        managerFeedbackmessage = "You have accepted the time off request but without detuction"
 
-      userFeedbackmessage = "The approver has accepted your time off request.Take care."
-      managerFeedbackmessage = "You have accepted the time off."
+      } else if (approvalType == "Approved") {
 
-
-    } else if (approvalType == "Regected") {
-      userFeedbackmessage = "The approver has regected your time off request."
-      managerFeedbackmessage = "You have regected the time off."
-    }
-    var message = {
-      'type': 'message',
-      'channel': responseBody.userChannelId,
-      user: responseBody.slackUserId,
-      text: 'what is my name',
-      ts: '1482920918.000057',
-      team: responseBody.teamId,
-      event: 'direct_message'
-    };
-    bot.startConversation(message, function (err, convo) {
+        userFeedbackmessage = "The approver has accepted your time off request.Take care."
+        managerFeedbackmessage = "You have accepted the time off."
 
 
-      if (!err) {
-        var text12 = {
-          "text": userFeedbackmessage,
-        }
-        var stringfy = JSON.stringify(text12);
-        var obj1 = JSON.parse(stringfy);
-        bot.reply(message, obj1);
-
+      } else if (approvalType == "Regected") {
+        userFeedbackmessage = "The approver has regected your time off request."
+        managerFeedbackmessage = "You have regected the time off."
       }
-    });
-  });
+      var message = {
+        'type': 'message',
+        'channel': responseBody.userChannelId,
+        user: responseBody.slackUserId,
+        text: 'what is my name',
+        ts: '1482920918.000057',
+        team: responseBody.teamId,
+        event: 'direct_message'
+      };
+      bot.startConversation(message, function (err, convo) {
 
+
+        if (!err) {
+          var text12 = {
+            "text": userFeedbackmessage,
+          }
+          var stringfy = JSON.stringify(text12);
+          var obj1 = JSON.parse(stringfy);
+          bot.reply(message, obj1);
+
+        }
+      });
+    });
+  }
 }
 
 

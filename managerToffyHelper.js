@@ -360,7 +360,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                             "text": "Yes      ",
                                             "style": "primary",
                                             "type": "button",
-                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id +
                                         },
                                         {
                                             "name": 'reject',
@@ -607,19 +607,19 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                                             "text": "Accept",
                                             "style": "primary",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
                                         },
                                         {
                                             "name": "reject",
                                             "text": "Reject",
                                             "style": "danger",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
                                         }, {
                                             "name": "dont_detuct",
                                             "text": "Don’t Deduct ",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
                                         }
                                     ],
                                     "color": "#F35A00"
