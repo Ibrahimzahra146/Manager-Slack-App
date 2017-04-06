@@ -333,9 +333,13 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     console.log("fromMilliseconds " + fromMilliseconds)
     console.log("toMilliseconds " + toMilliseconds)
     console.log("employeeEmail" + employeeEmail)
+    var typeNum = ""
+    if (type == "sick")
+        typeNum = 4
+    else typeNum = 0
     managerToffyHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
         managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
-            getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, function (body) {
+            getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, typeNum, function (body) {
                 var workingDays = parseFloat(body).toFixed(1);
 
                 getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
@@ -360,7 +364,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                             "text": "Yes      ",
                                             "style": "primary",
                                             "type": "button",
-                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id 
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
                                         },
                                         {
                                             "name": 'reject',
@@ -389,12 +393,13 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     })
 }
 
-function getWorkingDays(startDate, endDate, email, employeeEmail, callback) {
+function getWorkingDays(startDate, endDate, email, employeeEmail, typeNum, callback) {
     managerToffyHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         var vacationBody = {
             "employee_id": Id,
             "from": startDate,
-            "to": endDate
+            "to": endDate,
+            "type": typeNum
 
         }
         vacationBody = JSON.stringify(vacationBody)
