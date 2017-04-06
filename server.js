@@ -497,19 +497,19 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
 
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  managerApproval1(msg, value, "Approved")
+  managerApproval1(msg, value, "Approved", 0)
 })
 
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  managerApproval1(msg, value, "Regected")
+  managerApproval1(msg, value, "Regected", 0)
 })
 
 
 slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
-  managerApproval1(msg, value, "ApprovedWithoutDeduction")
+  managerApproval1(msg, value, "ApprovedWithoutDeduction", 0)
 
 })
 function managerAction(msg, value, typeOfaction) {
