@@ -535,19 +535,12 @@ function managerAction(msg, value, typeOfaction) {
     toDate = arr[8]
     employeeEmail = arr[9]
     managerId = arr[10]
-    console.log("fromDate11111" + fromDate)
-    console.log("toDate111111" + toDate)
-
-
     managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, type, function (vacationId, managerApproval) {
-      console.log("fromDate111113" + fromDate)
-      console.log("toDate1111112" + toDate)
+
       managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
-        console.log("fromDate111114" + fromDate)
-        console.log("toDate1111112" + toDate)
+
         managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
-          console.log("fromDate111112" + fromDate)
-          console.log("toDate1111112" + toDate)
+
           if (arr[0] && (arr[0] != undefined)) {
             fromDate = fromDate + " T " + formattedTime + " " + midday
           } else fromDate = fromDate + " T 08:00 am ";
@@ -566,11 +559,11 @@ function managerAction(msg, value, typeOfaction) {
 
             if (type == "sick") {
               console.log("Mansager approvals sick vacation is ::" + JSON.stringify(managerApproval))
-              msg.respond(msg.body.response_url, "Your request has been submitted to your managers and HR admin. You might asked to provide a sick report. I’ll inform you about this.  ")
+              msg.respond(msg.body.response_url, "Your request has been submitted . ")
 
             }
             else
-              msg.respond(msg.body.response_url, "Your request has been submitted and is awaiting your managers approval ")
+              msg.respond(msg.body.response_url, "Your request has been submitted.")
 
           }
         });
@@ -633,8 +626,6 @@ function managerApproval1(msg, value, approvalType) {
     } else if (approvalType == "Regected") {
       userFeedbackmessage = "The approver has regected your time off request."
       managerFeedbackmessage = "You have regected the time off."
-      console.log("managerFeedbackmessage")
-      msg.say(managerFeedbackmessage);
     }
     var message = {
       'type': 'message',
