@@ -543,8 +543,8 @@ function managerAction(msg, value, typeOfaction) {
       managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
 
         managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
-
-          toDate = toDate
+          console.log("fromDate111112" + fromDate)
+          console.log("toDate1111112" + toDate)
           if (arr[0] && (arr[0] != undefined)) {
             fromDate = fromDate + " T " + formattedTime + " " + midday
           } else fromDate = fromDate + " T 08:00 am ";
