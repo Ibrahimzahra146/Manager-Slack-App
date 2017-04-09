@@ -597,7 +597,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromWho = arr[4];
   var fromDate = arr[5];
   var toDate = arr[6];
-
+  console.log("fromManager" + fromManager)
   console.log("userEmail  ::" + userEmail)
   console.log("managerEmail::" + managerEmail)
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType)
