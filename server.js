@@ -595,6 +595,8 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var approvalId = arr[2]
   var managerEmail = arr[3]
   var fromWho = arr[4];
+  var fromDate = arr[5];
+  var toDate = arr[6];
 
   console.log("userEmail ::" + userEmail)
   console.log("managerEmail::" + managerEmail)
@@ -613,18 +615,18 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
       var responseBody = JSON.parse(body);
       if (approvalType == "ApprovedWithoutDeduction") {
-        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction. Enjoy! "
+        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Enjoy! "
         managerFeedbackmessage = "You have accepted the time off request but without detuction"
         msg.say(managerFeedbackmessage)
       } else if (approvalType == "Approved") {
 
-        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request.Take care."
+        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request ( " + fromDate + " - " + toDate + " ).Take care."
         managerFeedbackmessage = "You have accepted the time off."
         msg.say(managerFeedbackmessage)
 
 
       } else if (approvalType == "Regected") {
-        userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request."
+        userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request ( " + fromDate + " - " + toDate + " )."
         managerFeedbackmessage = "You have regected the time off."
         msg.say(managerFeedbackmessage)
 
