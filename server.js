@@ -500,7 +500,7 @@ slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  managerApproval1(msg, value, "Regected", 0)
+  managerApproval1(msg, value, "Rejected", 0)
 })
 
 
