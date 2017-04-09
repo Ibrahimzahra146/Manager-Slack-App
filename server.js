@@ -618,13 +618,13 @@ function managerApproval1(msg, value, approvalType, fromManager) {
         msg.say(managerFeedbackmessage)
       } else if (approvalType == "Approved") {
 
-        userFeedbackmessage = "The approver" + managerEmail + " has accepted your time off request.Take care."
+        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request.Take care."
         managerFeedbackmessage = "You have accepted the time off."
         msg.say(managerFeedbackmessage)
 
 
       } else if (approvalType == "Regected") {
-        userFeedbackmessage = "The approver " + managerEmail + "has regected your time off request."
+        userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request."
         managerFeedbackmessage = "You have regected the time off."
         msg.say(managerFeedbackmessage)
 
