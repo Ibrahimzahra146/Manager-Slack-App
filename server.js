@@ -626,7 +626,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
         msg.say(managerFeedbackmessage)
 
 
-      } else if (approvalType == "Regected") {
+      } else if (approvalType == "Rejected") {
         userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request ( " + fromDate + " - " + toDate + " )."
         managerFeedbackmessage = "You have regected the time off."
         msg.say(managerFeedbackmessage)
