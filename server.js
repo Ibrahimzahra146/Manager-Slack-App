@@ -613,18 +613,18 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
       var responseBody = JSON.parse(body);
       if (approvalType == "ApprovedWithoutDeduction") {
-        userFeedbackmessage = "The approver has accepted your time off request without detuction. Enjoy! "
+        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction. Enjoy! "
         managerFeedbackmessage = "You have accepted the time off request but without detuction"
         msg.say(managerFeedbackmessage)
       } else if (approvalType == "Approved") {
 
-        userFeedbackmessage = "The approver has accepted your time off request.Take care."
+        userFeedbackmessage = "The approver" + managerEmail + " has accepted your time off request.Take care."
         managerFeedbackmessage = "You have accepted the time off."
         msg.say(managerFeedbackmessage)
 
 
       } else if (approvalType == "Regected") {
-        userFeedbackmessage = "The approver has regected your time off request."
+        userFeedbackmessage = "The approver " + managerEmail + "has regected your time off request."
         managerFeedbackmessage = "You have regected the time off."
         msg.say(managerFeedbackmessage)
 
