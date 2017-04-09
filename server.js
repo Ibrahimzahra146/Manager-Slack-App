@@ -612,6 +612,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       body: userEmail
       //Set the body as a stringcc
     }, function (error, response, body) {
+      console.log("Gee")
 
       var responseBody = JSON.parse(body);
       if (approvalType == "ApprovedWithoutDeduction") {
