@@ -33,6 +33,8 @@ var managerIdInHr = ""
 var vacation_type1 = ""
 var fromDate = ""
 var toDate = "";
+var generalEmail = "";
+var generalAny = ""
 
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
@@ -262,7 +264,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = today
             var date1 = today
             var timeOffCase = -1
-            if (!(response.result.parameters.email || response.result.parameters.any)) {
+            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "" || generalAny != "")) {
               msg.say("please specify the user email with request")
             } else {
               if (response.result.parameters.email) {
@@ -273,14 +275,19 @@ function sendRequestToApiAi(emailValue, msg) {
                   employeeEmail = employeeEmail[1];
                   employeeEmail = employeeEmail.replace(/>/g, "");
                   console.log("Email after split mail to ")
+                  generalEmail = employeeEmail
                 }
-                else employeeEmail = response.result.parameters.email
+                else {
+                  employeeEmail = response.result.parameters.email
+                  generalEmail = employeeEmail;
+                }
 
 
               } else {
                 employeeEmail = response.result.parameters.any
                 employeeEmail = response.result.parameters.any + "@exalt.ps"
                 employeeEmail = employeeEmail.replace(/ /g, ".");
+                generalAny = employeeEmail
               }
 
 
@@ -480,6 +487,8 @@ listen for user messages
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   if (msg.body.event.user == "U3R213B2L") {
+    console.log(msg);
+    console.log(JSON.stringify(msg))
     console.log("message from bot")
 
   } else {
@@ -618,18 +627,18 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       if (approvalType == "ApprovedWithoutDeduction") {
         userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Enjoy! "
         managerFeedbackmessage = "You have accepted the time off request but without detuction"
-        msg.respond(msg.body.response_url, managerFeedbackmessage)
+        msg.say(managerFeedbackmessage)
       } else if (approvalType == "Approved") {
 
         userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request ( " + fromDate + " - " + toDate + " ).Take care."
         managerFeedbackmessage = "You have accepted the time off."
-        msg.respond(msg.body.response_url, managerFeedbackmessage)
+        msg.res(managerFeedbackmessage)
 
 
       } else if (approvalType == "Regected") {
         userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request ( " + fromDate + " - " + toDate + " )."
         managerFeedbackmessage = "You have regected the time off."
-        msg.respond(msg.body.response_url, managerFeedbackmessage)
+        msg.say(managerFeedbackmessage)
 
       }
       var message = {
