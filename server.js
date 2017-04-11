@@ -636,19 +636,23 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       body: userEmail
       //Set the body as a stringcc
     }, function (error, response, body) {
-      var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-      request({
-        url: uri, //URL to hitDs
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
+      managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
 
-        }
-        //Set the body as a stringcc
-      }, function (error, response, body) {
-        console.log("email:" + body)
-        console.log("Vacation state is :::" + JSON.stringify(body))
+
+        var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
+        request({
+          url: uri, //URL to hitDs
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cookie': remember_me_cookie + ";" + session_id
+
+          }
+          //Set the body as a stringcc
+        }, function (error, response, body) {
+          console.log("email:" + body)
+          console.log("Vacation state is :::" + JSON.stringify(body))
+        })
       })
 
       var responseBody = JSON.parse(body);
