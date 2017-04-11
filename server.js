@@ -635,6 +635,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       body: userEmail
       //Set the body as a stringcc
     }, function (error, response, body) {
+      var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
       request({
         url: uri, //URL to hitDs
         method: 'GET',
