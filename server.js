@@ -652,6 +652,8 @@ function managerApproval1(msg, value, approvalType, fromManager) {
         }, function (error, response, body) {
           console.log("email:" + body)
           console.log("Vacation state is :::" + JSON.stringify(body))
+          console.log("body.vacationState" + body.vacationState);
+          console.log("(JSON.parse(body)).vacationState)" + (JSON.parse(body)).vacationState)
         })
       })
 
