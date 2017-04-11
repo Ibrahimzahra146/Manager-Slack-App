@@ -612,19 +612,19 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                                             "text": "Accept",
                                             "style": "primary",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
                                         },
                                         {
                                             "name": "reject",
                                             "text": "Reject",
                                             "style": "danger",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
                                         }, {
                                             "name": "dont_detuct",
                                             "text": "Don’t Deduct ",
                                             "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager"
+                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
                                         }
                                     ],
                                     "color": "#F35A00"
@@ -654,7 +654,6 @@ module.exports.sendVacationToManager = function sendVacationToManager(startDate,
                     });
                 }
                 i++;
-                console.log("hhhhhhhhhhhhhhhhhhhhhh " + i)
             })
 
             setTimeout(callback, 5000);
