@@ -284,7 +284,7 @@ function sendRequestToApiAi(emailValue, msg) {
                 }
 
 
-              } else {
+              } else if (response.result.parameters.any) {
                 employeeEmail = response.result.parameters.any
                 employeeEmail = response.result.parameters.any + "@exalt.ps"
                 employeeEmail = employeeEmail.replace(/ /g, ".");
@@ -309,6 +309,8 @@ function sendRequestToApiAi(emailValue, msg) {
 
                 vacation_type1 = "sick"
 
+              } else if (!(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
+                msg.say("Please specify the date and/or time ")
               }
               else {
 
@@ -413,7 +415,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
                   })
 
-                }else msg.say("Error in request")
+                } else msg.say("Error in request")
 
               }
             }
