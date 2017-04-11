@@ -503,8 +503,7 @@ listen for user messages
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   if (msg.body.event.user == "U3R213B2L") {
-    console.log(msg);
-    console.log(JSON.stringify(msg))
+
     console.log("message from bot")
 
   } else {
@@ -648,7 +647,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
         }
         //Set the body as a stringcc
       }, function (error, response, body) {
-        printLogs("email:" + body)
+        console.log("email:" + body)
         console.log("Vacation state is :::" + JSON.stringify(body))
       })
 
