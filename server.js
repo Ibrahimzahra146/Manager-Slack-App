@@ -425,8 +425,11 @@ function sendRequestToApiAi(emailValue, msg) {
           })
 
         }
-        else msg.say(responseText);
+        else {
+          msg.say(responseText);
+          generalEmail = ""
 
+        }
 
       });
       apiaiRequest.on('error', (error) => console.error(error));
