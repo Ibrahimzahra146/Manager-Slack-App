@@ -636,6 +636,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       body: userEmail
       //Set the body as a stringcc
     }, function (error, response, body) {
+      var responseBody = JSON.parse(body);
       managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
 
 
@@ -657,7 +658,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
 
 
-          var responseBody = JSON.parse(body);
+
           if (approvalType == "ApprovedWithoutDeduction") {
             if ((JSON.parse(body)).vacationState == "Rejected") {
               userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
