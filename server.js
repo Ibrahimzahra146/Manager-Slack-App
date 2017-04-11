@@ -95,6 +95,8 @@ function sendFeedBackMessage(responseBody) {
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status) {
 
   managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
+    managerToffyHelper.general_remember_me = remember_me_cookie;
+    managerToffyHelper.general_session_Id = session_id
     var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
     console.log("uri::" + uri)
     var approvalBody = {
@@ -641,7 +643,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Cookie': remember_me_cookie + ";" + session_Id
+          'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
 
         }
         //Set the body as a stringcc
