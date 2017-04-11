@@ -264,7 +264,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = today
             var date1 = today
             var timeOffCase = -1
-            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "" || generalAny != "")) {
+            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "")) {
               msg.say("please specify the user email with request")
             } else {
               if (response.result.parameters.email) {
@@ -287,7 +287,7 @@ function sendRequestToApiAi(emailValue, msg) {
                 employeeEmail = response.result.parameters.any
                 employeeEmail = response.result.parameters.any + "@exalt.ps"
                 employeeEmail = employeeEmail.replace(/ /g, ".");
-                generalAny = employeeEmail
+                generalEmail = employeeEmail
               }
 
 
@@ -401,8 +401,9 @@ function sendRequestToApiAi(emailValue, msg) {
                     var timeMilliseconds = new Date(fromDate);
                     timeMilliseconds = timeMilliseconds.getTime();
                     console.log("timeMilliseconds :::" + timeMilliseconds)
-                    managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, employeeEmail, vacation_type1, timeOffCase)
+                    managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
                     vacation_type1 = ""
+                    generalEmail = ""
                   })
 
                 })
