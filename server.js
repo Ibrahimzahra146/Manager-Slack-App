@@ -214,6 +214,7 @@ function sendRequestToApiAi(emailValue, msg) {
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
         if (responseText == "showEmployeeInfo") {
+          generalEmail = ""
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
