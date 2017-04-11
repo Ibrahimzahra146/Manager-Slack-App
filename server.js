@@ -636,73 +636,89 @@ function managerApproval1(msg, value, approvalType, fromManager) {
       //Set the body as a stringcc
     }, function (error, response, body) {
       console.log()
+      managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_Id) {
+        var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
+        printLogs("uri " + uri)
 
-      var responseBody = JSON.parse(body);
-      if (approvalType == "ApprovedWithoutDeduction") {
-        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Enjoy! "
-        managerFeedbackmessage = "You have accepted the time off request but without detuction"
-        msg.say(managerFeedbackmessage)
-      } else if (approvalType == "Approved") {
+        request({
+          url: uri, //URL to hitDs
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cookie': remember_me_cookie + ";" + session_Id
 
-        userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request ( " + fromDate + " - " + toDate + " ).Take care."
-        managerFeedbackmessage = "You have accepted the time off."
-        msg.say(managerFeedbackmessage)
-
-
-      } else if (approvalType == "Rejected") {
-        userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request ( " + fromDate + " - " + toDate + " )."
-        managerFeedbackmessage = "You have regected the time off."
-        msg.say(managerFeedbackmessage)
-
-      }
-      var message = {
-        'type': 'message',
-        'channel': responseBody.userChannelId,
-        user: responseBody.slackUserId,
-        text: 'what is my name',
-        ts: '1482920918.000057',
-        team: responseBody.teamId,
-        event: 'direct_message'
-      };
-      bot.startConversation(message, function (err, convo) {
-
-
-        if (!err) {
-          var text12 = {
-            "text": userFeedbackmessage,
           }
-          var stringfy = JSON.stringify(text12);
-          var obj1 = JSON.parse(stringfy);
-          bot.reply(message, obj1);
+          //Set the body as a stringcc
+        }, function (error, response, body) {
+          printLogs("email:" + body)
+          console.log("Vacation state is :::" + JSON.stringify(body))
+        })
+        var responseBody = JSON.parse(body);
+        if (approvalType == "ApprovedWithoutDeduction") {
+          userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Enjoy! "
+          managerFeedbackmessage = "You have accepted the time off request but without detuction"
+          msg.say(managerFeedbackmessage)
+        } else if (approvalType == "Approved") {
+
+          userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request ( " + fromDate + " - " + toDate + " ).Take care."
+          managerFeedbackmessage = "You have accepted the time off."
+          msg.say(managerFeedbackmessage)
+
+
+        } else if (approvalType == "Rejected") {
+          userFeedbackmessage = "The approver " + managerEmail + " has regected your time off request ( " + fromDate + " - " + toDate + " )."
+          managerFeedbackmessage = "You have regected the time off."
+          msg.say(managerFeedbackmessage)
 
         }
+        var message = {
+          'type': 'message',
+          'channel': responseBody.userChannelId,
+          user: responseBody.slackUserId,
+          text: 'what is my name',
+          ts: '1482920918.000057',
+          team: responseBody.teamId,
+          event: 'direct_message'
+        };
+        bot.startConversation(message, function (err, convo) {
+
+
+          if (!err) {
+            var text12 = {
+              "text": userFeedbackmessage,
+            }
+            var stringfy = JSON.stringify(text12);
+            var obj1 = JSON.parse(stringfy);
+            bot.reply(message, obj1);
+
+          }
+        });
       });
-    });
-  }
+    }
 }
 
 
 
 
 
-slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
-  managerAction(msg, value, "Approved")
-})
-slapp.action('leave_with_vacation_confirm_reject', 'confirm_without_detuction', (msg, value) => {
-  managerAction(msg, value, "ApprovedWithoutDeduction")
-})
-slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
-  msg.say("Ok, operation aborted.")
-  fromDate = "";
-  toDate = "";
-})
-app.get('/', function (req, res) {
-  var clientIp = requestIp.getClientIp(req);
-  console.log("new request ");
-  console.log(clientIp)
-  res.send('Hello1')
-})
+  slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
+    managerAction(msg, value, "Approved")
+  })
+  slapp.action('leave_with_vacation_confirm_reject', 'confirm_without_detuction', (msg, value) => {
+    managerAction(msg, value, "ApprovedWithoutDeduction")
+  })
+  slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
+    msg.say("Ok, operation aborted.")
+    fromDate = "";
+    toDate = "";
+  })
+  app.get('/', function (req, res) {
+    var clientIp = requestIp.getClientIp(req);
+    console.log("new request ");
+    console.log(clientIp)
+    res.send('Hello1')
+  })
 
 
-console.log('Listening on :' + process.env.PORT)
-app.listen(process.env.PORT)
+  console.log('Listening on :' + process.env.PORT)
+  app.listen(process.env.PORT)
