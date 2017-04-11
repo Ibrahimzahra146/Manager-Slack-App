@@ -665,7 +665,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
             } else if ((JSON.parse(body)).vacationState == "Approved") {
               userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
             } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-              userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
+              userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction. "
 
 
             } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approversto take an action"
@@ -679,7 +679,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
             } else if ((JSON.parse(body)).vacationState == "Approved") {
               userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
             } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-              userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
+              userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction. "
 
 
             } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
