@@ -668,7 +668,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
 
 
-            } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " )."
+            } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approversto take an action"
 
             managerFeedbackmessage = "You have accepted the time off request but without detuction"
             msg.say(managerFeedbackmessage)
@@ -682,7 +682,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
 
 
-            } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " )."
+            } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
             managerFeedbackmessage = "You have accepted the time off."
             msg.say(managerFeedbackmessage)
@@ -697,7 +697,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
 
 
-            } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " )."
+            } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approversto take an action"
 
             managerFeedbackmessage = "You have regected the time off."
             msg.say(managerFeedbackmessage)
