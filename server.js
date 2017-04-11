@@ -264,6 +264,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = today
             var date1 = today
             var timeOffCase = -1
+            var flag = 1
             if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "")) {
               msg.say("please specify the user email with request")
             } else {
@@ -378,37 +379,41 @@ function sendRequestToApiAi(emailValue, msg) {
                   time = response.result.parameters.time
                   timeOffCase = 10
 
+                } else {
+                  flag = 0
                 }
-                date1 = date1.replace(/-/g, "/")
-                date = date.replace(/-/g, "/")
+                if (flag == 1) {
+                  date1 = date1.replace(/-/g, "/")
+                  date = date.replace(/-/g, "/")
 
 
-                if (vacation_type1 == "") {
-                  vacation_type1 = "personal"
-                }
-                //get the milliseconds for the  end of the vacation 
-                managerToffyHelper.convertTimeFormat(time, function (x, y, convertedTime) {
-                  managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
+                  if (vacation_type1 == "") {
+                    vacation_type1 = "personal"
+                  }
+                  //get the milliseconds for the  end of the vacation 
+                  managerToffyHelper.convertTimeFormat(time, function (x, y, convertedTime) {
+                    managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
 
-                    var toDate = date1 + " " + convertedTime1
-                    var fromDate = date + " " + convertedTime;
-                    console.log("toDate::" + toDate);
-                    console.log("fromDate::" + fromDate);
-                    toDate = new Date(toDate);
-                    var dateMilliSeconds = toDate.getTime();
+                      var toDate = date1 + " " + convertedTime1
+                      var fromDate = date + " " + convertedTime;
+                      console.log("toDate::" + toDate);
+                      console.log("fromDate::" + fromDate);
+                      toDate = new Date(toDate);
+                      var dateMilliSeconds = toDate.getTime();
 
 
-                    var timeMilliseconds = new Date(fromDate);
-                    timeMilliseconds = timeMilliseconds.getTime();
-                    console.log("timeMilliseconds :::" + timeMilliseconds)
-                    managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
-                    vacation_type1 = ""
-                    generalEmail = ""
+                      var timeMilliseconds = new Date(fromDate);
+                      timeMilliseconds = timeMilliseconds.getTime();
+                      console.log("timeMilliseconds :::" + timeMilliseconds)
+                      managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
+                      vacation_type1 = ""
+                      generalEmail = ""
+
+                    })
+
                   })
 
-                })
-
-
+                }else msg.say("Error in request")
 
               }
             }
