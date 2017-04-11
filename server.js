@@ -402,10 +402,12 @@ function sendRequestToApiAi(emailValue, msg) {
                       console.log("fromDate::" + fromDate);
                       toDate = new Date(toDate);
                       var dateMilliSeconds = toDate.getTime();
+                      dateMilliSeconds = dateMilliSeconds - (3 * 60 * 60 * 1000);
 
 
                       var timeMilliseconds = new Date(fromDate);
                       timeMilliseconds = timeMilliseconds.getTime();
+                      timeMilliseconds = timeMilliseconds - (3 * 60 * 60 * 1000);
                       console.log("timeMilliseconds :::" + timeMilliseconds)
                       managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
                       vacation_type1 = ""
