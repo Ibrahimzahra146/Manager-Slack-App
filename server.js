@@ -626,7 +626,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromDate = arr[5];
   var toDate = arr[6];
   var type = arr[7]
-  console.log("WORKIng from home type" == type)
+  console.log("WORKIng from home type" + type)
   console.log("fromManager" + fromManager)
   console.log("userEmail  ::" + userEmail)
   console.log("managerEmail::" + managerEmail)
