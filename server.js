@@ -625,6 +625,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromWho = arr[4];
   var fromDate = arr[5];
   var toDate = arr[6];
+  var type = arr[7]
   console.log("fromManager" + fromManager)
   console.log("userEmail  ::" + userEmail)
   console.log("managerEmail::" + managerEmail)
@@ -682,8 +683,11 @@ function managerApproval1(msg, value, approvalType, fromManager) {
                 managerFeedbackmessage = "You have accepted the time off request but without detuction"
                 msg.say(managerFeedbackmessage)
               } else if (approvalType == "Approved") {
+                if (type == "WFH") {
+                  userFeedbackmessage = "The approver " + managerEmail + " has Approved your working from home request ( " + fromDate + " - " + toDate + " )."
+                }
 
-                if ((JSON.parse(body)).vacationState == "Rejected") {
+                else if ((JSON.parse(body)).vacationState == "Rejected") {
                   userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
                 } else if ((JSON.parse(body)).vacationState == "Approved") {
                   userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
@@ -698,7 +702,10 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
 
               } else if (approvalType == "Rejected") {
-                if ((JSON.parse(body)).vacationState == "Rejected") {
+                if (type == "WFH") {
+                  userFeedbackmessage = "The approver " + managerEmail + " has rejected your working from home request ( " + fromDate + " - " + toDate + " )."
+                }
+                else if ((JSON.parse(body)).vacationState == "Rejected") {
                   userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
                 } else if ((JSON.parse(body)).vacationState == "Approved") {
                   userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
