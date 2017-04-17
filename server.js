@@ -681,7 +681,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have accepted the time off request but without detuction"
+                managerFeedbackmessage = "You have accepted the time off request but without detuction for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
               } else if (approvalType == "Approved") {
                 if (type == "WFH") {
@@ -698,7 +698,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have accepted the time off."
+                managerFeedbackmessage = "You have accepted the time off for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
 
@@ -716,7 +716,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have regected the time off."
+                managerFeedbackmessage = "You have regected the time off for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
               }
