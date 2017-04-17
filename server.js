@@ -219,7 +219,14 @@ function sendRequestToApiAi(emailValue, msg) {
 
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
-        if (responseText == "showEmployeeInfo") {
+        if (responseText == "WhoIsOff") {
+          if (response.result.parameters.off_synonyms && response.result.parameters.date) {
+            var date = response.result.parameters.date;
+            managerToffyHelper.showWhoIsOff(msg, email, "2017-4-16", date)
+
+          }
+        }
+        else if (responseText == "showEmployeeInfo") {
           generalEmail = ""
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)

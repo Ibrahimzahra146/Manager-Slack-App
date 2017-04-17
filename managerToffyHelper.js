@@ -696,3 +696,24 @@ function makeGetRequest(path, email, callback) {
     })
 
 }
+module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
+    managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
+        var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
+        printLogs("uri " + uri)
+
+        request({
+            url: uri, //URL to hitDs
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': remember_me_cookie + ";" + session_Id
+
+            }
+            //Set the body as a stringcc
+        }, function (error, response, body) {
+            printLogs("email:" + JSON.stringify(body))
+        })
+
+    })
+
+}
