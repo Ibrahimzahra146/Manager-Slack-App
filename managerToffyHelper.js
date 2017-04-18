@@ -723,6 +723,7 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
                 i++;
             }
             stringMessage = stringMessage + "]"
+            console.log("stringMessage",stringMessage)
             var messageBody = {
                 "text": "Off employees are ",
                 "attachments": [
