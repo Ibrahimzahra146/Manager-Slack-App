@@ -221,10 +221,16 @@ function sendRequestToApiAi(emailValue, msg) {
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
         if (responseText == "WhoIsOff") {
-          if (response.result.parameters.off_synonyms && response.result.parameters.date) {
+          if (response.result.parameters.off_synonyms && response.result.parameters.date && response.result.parameters.date1) {
+            var date = response.result.parameters.date
+            var date1 = response.result.parameters.date1
+            managerToffyHelper.showWhoIsOff(msg, emailValue, date, date1)
+
+          }
+          else if (response.result.parameters.off_synonyms && response.result.parameters.date) {
             var date = response.result.parameters.date;
             DateHelper.getPreviousDate(date, -1, function (previousDate) {
-            managerToffyHelper.showWhoIsOff(msg, emailValue, previousDate, date)
+              managerToffyHelper.showWhoIsOff(msg, emailValue, previousDate, date)
 
             })
 

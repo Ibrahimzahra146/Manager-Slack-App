@@ -1,6 +1,5 @@
-
+//getting date after a specific date 
 module.exports.getPreviousDate = function getPreviousDate(date, numberOfDaysToAddOrDelete, callback) {
-    console.log("Getting previos date")
     var someDate = new Date(date);
     someDate.setDate(someDate.getDate() + numberOfDaysToAddOrDelete);
 
