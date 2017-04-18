@@ -711,7 +711,31 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
+            var obj = JSON.parse(body);
+            var stringMessage = "["
+            var i = 0
             printLogs("email:" + JSON.stringify(body))
+            while (obj[i]) {
+                if (i > 0) {
+                    stringMessage = stringMessage + ","
+                }
+                stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+                i++;
+            }
+            stringMessage = stringMessage + "]"
+            var messageBody = {
+                "text": "Off employees are ",
+                "attachments": [
+                    {
+                        "attachment_type": "default",
+                        "text": " ",
+                        "fallback": "ReferenceError",
+                        "fields": stringMessage,
+                        "color": "#F35A00"
+                    }
+                ]
+            }
+            msg.say(messageBody);
         })
 
     })
