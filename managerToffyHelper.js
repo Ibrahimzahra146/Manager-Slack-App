@@ -723,7 +723,7 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
                 i++;
             }
             stringMessage = stringMessage + "]"
-            console.log("stringMessage",stringMessage)
+            console.log("stringMessage", stringMessage)
             var messageBody = {
                 "text": "Off employees are ",
                 "attachments": [
@@ -736,7 +736,14 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
                     }
                 ]
             }
-            msg.say(messageBody);
+            var stringfy = JSON.stringify(messageBody);
+
+            printLogs("stringfy " + stringfy)
+            stringfy = stringfy.replace(/\\/g, "")
+            stringfy = stringfy.replace(/]\"/, "]")
+            stringfy = stringfy.replace(/\"\[/, "[")
+            stringfy = JSON.parse(stringfy)
+            msg.say(stringfy);
         })
 
     })
