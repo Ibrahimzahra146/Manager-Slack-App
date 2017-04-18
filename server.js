@@ -11,6 +11,7 @@ const request = require('request');
 const requestify = require('requestify');
 const JSONbig = require('json-bigint');
 const managerToffyHelper = require('./managerToffyHelper.js')
+const DateHelper = require('./DatesFunctions/datesFunctions.js')
 const async = require('async');
 const apiai = require('apiai');
 const APIAI_LANG = 'en';
@@ -222,7 +223,10 @@ function sendRequestToApiAi(emailValue, msg) {
         if (responseText == "WhoIsOff") {
           if (response.result.parameters.off_synonyms && response.result.parameters.date) {
             var date = response.result.parameters.date;
-            managerToffyHelper.showWhoIsOff(msg, emailValue, "2017-4-18", date)
+            DateHelper.getPreviousDate(date, -1, function (previousDate) {
+            managerToffyHelper.showWhoIsOff(msg, emailValue, previousDate, date)
+
+            })
 
           }
         }
