@@ -222,7 +222,7 @@ function sendRequestToApiAi(emailValue, msg) {
         if (responseText == "WhoIsOff") {
           if (response.result.parameters.off_synonyms && response.result.parameters.date) {
             var date = response.result.parameters.date;
-            managerToffyHelper.showWhoIsOff(msg, emailValue, "2017-4-16", date)
+            managerToffyHelper.showWhoIsOff(msg, emailValue, "2017-4-17", date)
 
           }
         }
