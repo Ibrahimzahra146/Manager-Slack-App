@@ -648,6 +648,15 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromDate = arr[5];
   var toDate = arr[6];
   var type = arr[7]
+  var typeText = " you asked for a time off"
+  if (type == "sick") {
+    typeText = " sick time off "
+  } else if (type == "Maternity") {
+    typeText = " maternity" + " time off"
+  } else if (type == "Paternity") {
+    typeText = " paternity" + " time off"
+  } else if (type == "WFH")
+    typeText = " work from home"
   console.log("WORKIng from home type" + type)
   console.log("fromManager" + fromManager)
   console.log("userEmail  ::" + userEmail)
@@ -703,7 +712,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have accepted the time off request but without detuction for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
+                managerFeedbackmessage = "You have accepted the" + typeText + " request but without detuction for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
               } else if (approvalType == "Approved") {
                 if (type == "WFH") {
@@ -720,7 +729,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have accepted the time off for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
+                managerFeedbackmessage = "You have accepted the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
 
@@ -738,7 +747,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have regected the time off for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
+                managerFeedbackmessage = "You have regected the" + typeText + "  for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
               }
