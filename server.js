@@ -648,7 +648,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromDate = arr[5];
   var toDate = arr[6];
   var type = arr[7]
-  var typeText = " you asked for a time off"
+  var typeText = " time off"
   if (type == "sick") {
     typeText = " sick time off "
   } else if (type == "Maternity") {
