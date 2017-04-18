@@ -715,37 +715,43 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
             var stringMessage = "["
             var i = 0
             printLogs("email:" + JSON.stringify(body))
-            while (obj[i]) {
-                if (i > 0) {
-                    stringMessage = stringMessage + ","
-                }
-                stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
-                i++;
-            }
-            stringMessage = stringMessage + "]"
-            console.log("stringMessage", stringMessage)
-            var messageBody = {
-                "text": "Off employees are ",
-                "attachments": [
-                    {
-                        "attachment_type": "default",
-                        "text": " ",
-                        "fallback": "ReferenceError",
-                        "fields": stringMessage,
-                        "color": "#F35A00"
+            if (!obj[0])
+                msg.say("There are no off employees.")
+            else {
+                while (obj[i]) {
+                    if (i > 0) {
+                        stringMessage = stringMessage + ","
                     }
-                ]
-            }
-            var stringfy = JSON.stringify(messageBody);
+                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+                    i++;
+                }
+                stringMessage = stringMessage + "]"
+                console.log("stringMessage", stringMessage)
+                var messageBody = {
+                    "text": "Off employees are ",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "text": " ",
+                            "fallback": "ReferenceError",
+                            "fields": stringMessage,
+                            "color": "#F35A00"
+                        }
+                    ]
+                }
+                var stringfy = JSON.stringify(messageBody);
 
-            printLogs("stringfy " + stringfy)
-            stringfy = stringfy.replace(/\\/g, "")
-            stringfy = stringfy.replace(/]\"/, "]")
-            stringfy = stringfy.replace(/\"\[/, "[")
-            stringfy = JSON.parse(stringfy)
-            msg.say(stringfy);
+                printLogs("stringfy " + stringfy)
+                stringfy = stringfy.replace(/\\/g, "")
+                stringfy = stringfy.replace(/]\"/, "]")
+                stringfy = stringfy.replace(/\"\[/, "[")
+                stringfy = JSON.parse(stringfy)
+                msg.say(stringfy);
+            }
         })
 
+
     })
+
 
 }
