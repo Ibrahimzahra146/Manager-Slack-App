@@ -8,7 +8,7 @@ module.exports.getPreviousDate = function getPreviousDate(date, numberOfDaysToAd
     var mm = someDate.getMonth() + 1;
     var y = someDate.getFullYear();
 
-    date = y + '/' + mm + '/' + dd;
-    console.log("previous date" + date)
+    date = y + '-' + mm + '-' + dd;
+    console.log("previous date:" + date)
     callback(date)
 }
