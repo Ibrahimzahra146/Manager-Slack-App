@@ -728,7 +728,7 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
                 stringMessage = stringMessage + "]"
                 console.log("stringMessage", stringMessage)
                 var messageBody = {
-                    "text": "These  employees are off :",
+                    "text": "These employees are off :",
                     "attachments": [
                         {
                             "attachment_type": "default",
