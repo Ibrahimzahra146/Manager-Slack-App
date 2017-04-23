@@ -67,31 +67,7 @@ var hr_bot = controller.spawn({
 }).startRTM();
 exports.hr_bot = hr_bot
 //******************
-function sendFeedBackMessage(responseBody) {
 
-  console.log("Arrive sendFeedBackMessage  ")
-  var message = {
-    'type': 'message',
-    'channel': responseBody.userChannelId,
-    user: responseBody.slackUserId,
-    text: 'what is my name',
-    ts: '1482920918.000057',
-    team: responseBody.teamId,
-    event: 'direct_message'
-  };
-  bot.startConversation(message, function (err, convo) {
-
-    if (!err) {
-      var text12 = {
-        "text": "The approver has accepted your time off request.Take care.",
-      }
-      var stringfy = JSON.stringify(text12);
-      var obj1 = JSON.parse(stringfy);
-      bot.reply(message, obj1);
-
-    }
-  });
-}
 
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status, callback) {
   var isDeleted = false;
@@ -232,7 +208,7 @@ function sendRequestToApiAi(emailValue, msg) {
           }
           else if (response.result.parameters.off_synonyms && response.result.parameters.date) {
             var date = response.result.parameters.date;
-            DateHelper.getPreviousDate(date, -1, function (previousDate) {
+            DateHelper.getPreviousDate(date, 1, function (previousDate) {
               WhoIsOffCase = 2
               managerToffyHelper.showWhoIsOff(msg, emailValue, previousDate, date)
 
@@ -747,7 +723,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have regected the" + typeText + "  for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
+                managerFeedbackmessage = "You have regected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
               }
