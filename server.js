@@ -210,7 +210,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = response.result.parameters.date;
             DateHelper.getPreviousDate(date, 1, function (previousDate) {
               WhoIsOffCase = 2
-              managerToffyHelper.showWhoIsOff(msg, emailValue, previousDate, date)
+              managerToffyHelper.showWhoIsOff(msg, emailValue, date, previousDate)
 
             })
 
