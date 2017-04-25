@@ -23,6 +23,7 @@ var db = require('node-localdb');
 var userdb = db('./userDetails1.json')
 var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY;
 var SLACK_ACCESS_TOKEN = process.env.SLACK_APP_ACCESS_KEY;
+exports.SLACK_ACCESS_TOKEN = SLACK_ACCESS_TOKEN
 var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
 var fs = require('fs');
 var userId = ""
