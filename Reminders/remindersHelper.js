@@ -10,7 +10,7 @@ module.exports.setReminder = function setReminder(msg, email, time, reminderFor,
     console.log("set reminder")
     getUserId(email, function (userSlackId) {
         console.log("userSlackId" + userSlackId)
-        var uri = 'https://slack.com/api/reminders.add?token=' + server.SLACK_ACCESS_TOKEN + '&text=' + reminderFor + '&time=12:04pm&'  + 'user=' + userSlackId + '&pretty=1'
+        var uri = 'https://slack.com/api/reminders.add?token=' + server.SLACK_ACCESS_TOKEN + '&text=' + reminderFor + '&time=12:10pm&'  + 'user=' + userSlackId + '&pretty=1'
         console.log("uri", uri)
         request({
             url: uri,
