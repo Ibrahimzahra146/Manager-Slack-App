@@ -619,7 +619,7 @@ function managerAction(msg, value, typeOfaction) {
 
             }
             else
-              msg.respond(msg.body.response_url, "Your time off request for " + employeeEmail + "from ( " + fromDate + "- " + toDate + " ) has been submitted.")
+              msg.respond(msg.body.response_url, "Your time off request for " + employeeEmail + " from ( " + fromDate + "- " + toDate + " ) has been submitted.")
 
           }
         });
