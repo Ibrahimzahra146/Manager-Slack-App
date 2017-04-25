@@ -341,8 +341,10 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
         managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
             getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, typeNum, function (body) {
                 var workingDays = parseFloat(body).toFixed(1);
+                var wordFromDate = new Date(fromDate).toDateString();
+                var wordTodate = new Date(ToDate).toDateString();
 
-                getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
+                getmessage(formattedFromTime, middayFrom, wordFromDate, formattedTime, midday, wordTodate, email, employeeEmail, type, timeOffcase, workingDays, function (messagetext) {
                     getIdByEmail(email, function (Id) {
 
 
@@ -364,14 +366,14 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                             "text": "Yes      ",
                                             "style": "primary",
                                             "type": "button",
-                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + wordFromDate + "," + wordTodate + "," + employeeEmail + "," + Id
                                         },
                                         {
                                             "name": 'reject',
                                             "text": "No      ",
                                             "style": "danger",
                                             "type": "button",
-                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + wordFromDate + "," + wordTodate + "," + employeeEmail + "," + Id
                                         }
                                         ,
                                         {
@@ -379,7 +381,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                             "text": "don't detuct",
                                             "style": "good",
                                             "type": "button",
-                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + fromDate + "," + ToDate + "," + employeeEmail + "," + Id
+                                            "value": fromTime + "," + toTime + "," + email + "," + fromMilliseconds + "," + toMilliseconds + "," + type + "," + workingDays + "," + wordFromDate + "," + wordTodate + "," + employeeEmail + "," + Id
                                         }
                                     ]
                                 }
