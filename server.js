@@ -607,7 +607,7 @@ function managerAction(msg, value, typeOfaction) {
 
 
           if (!managerApproval[0]) {
-            msg.say("You dont have any manager right now ");
+            msg.say(" dont have any manager right now ");
           } else {
             console.log("fromDate:::-->" + fromDate)
             console.log("toDate:::-->" + toDate)
@@ -615,11 +615,11 @@ function managerAction(msg, value, typeOfaction) {
 
             if (type == "sick") {
               console.log("Managers approvals sick vacation is ::" + JSON.stringify(managerApproval))
-              msg.respond(msg.body.response_url, "Your request has been submitted . ")
+              msg.respond(msg.body.response_url, "Your  request has been submitted . ")
 
             }
             else
-              msg.respond(msg.body.response_url, "Your request has been submitted.")
+              msg.respond(msg.body.response_url, "Your time off request for " + employeeEmail + "from ( " + fromDate + "- " + toDate + " ) has been submitted.")
 
           }
         });
