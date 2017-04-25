@@ -12,6 +12,7 @@ const requestify = require('requestify');
 const JSONbig = require('json-bigint');
 const managerToffyHelper = require('./managerToffyHelper.js')
 const DateHelper = require('./DatesFunctions/datesFunctions.js')
+var reminderHelper = require('./Reminders/remindersHelper.js')
 const async = require('async');
 const apiai = require('apiai');
 const APIAI_LANG = 'en';
@@ -429,6 +430,37 @@ function sendRequestToApiAi(emailValue, msg) {
           })
 
         }
+        else if (responseText == "Reminders") {
+          getTodayDate(function (today) {
+            var date = today
+            var time = ""
+            var reminderFor = ""
+            var isReminder = ""
+            if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date && response.result.parameters.any) {
+              date = response.result.parameters.date
+              time = response.result.parameters.time
+              reminderFor = response.result.parameters.any
+
+
+            } else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date) {
+              date = response.result.parameters.date
+              time = response.result.parameters.time
+
+            }
+            else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.any) {
+              time = response.result.parameters.time
+              reminderFor = response.result.parameters.any
+
+            }
+            else if (response.result.parameters.reminder && response.result.parameters.time) {
+              time = response.result.parameters.time
+
+            }
+            reminderHelper.setReminder(msg, emailValue, time, reminderFor, msg.meta.app_token)
+          })
+
+
+        }
         else {
           msg.say(responseText);
           generalEmail = ""
@@ -723,7 +755,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
 
                 } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
-                managerFeedbackmessage = "You have regected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
+                managerFeedbackmessage = "You have rejected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
                 msg.say(managerFeedbackmessage)
 
               }
