@@ -56,3 +56,68 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
     }
     msg.respond(msg.body.response_url, messageBody)
 }
+//return original message when click on undo
+module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+    var dont_detuct_button = ""
+    if (type != "WFH") {
+        dont_detuct_button = {
+            "name": "dont_detuct",
+            "text": "Don’t Deduct ",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+        }
+    }
+    var messageBody = {
+        "text": "This folk has pending time off request:",
+        "attachments": [
+            {
+                "attachment_type": "default",
+                "callback_id": "manager_confirm_reject",
+                "text": userEmail,
+                "fallback": "ReferenceError",
+                "fields": [
+                    {
+                        "title": "From",
+                        "value": startDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Days/Time ",
+                        "value": workingDays + " day",
+                        "short": true
+                    },
+                    {
+                        "title": "to",
+                        "value": endDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Type",
+                        "value": type,
+                        "short": true
+                    }
+                ],
+                "actions": [
+                    {
+                        "name": "confirm",
+                        "text": "Accept",
+                        "style": "primary",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
+                    {
+                        "name": "reject",
+                        "text": "Reject",
+                        "style": "danger",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }, dont_detuct_button
+                ],
+                "color": "#F35A00",
+                "thumb_url": ImageUrl,
+            }
+        ]
+    }
+    msg.respond(msg.body.response_url, messageBody)
+}
+
