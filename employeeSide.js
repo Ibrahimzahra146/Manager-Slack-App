@@ -181,6 +181,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
     printLogs("showEmployeeStats")
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         var uri = 'http://' + IP + '/api/v1/employee/' + Id + '/vacations/2017'
+        console.log("uri" + uri)
 
         request({
             url: uri,
@@ -194,6 +195,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
             var i = 0;
             //check if no history ,so empty response
             if (!error && response.statusCode === 200) {
+                console.log("HSON." + JSON.stringify(body))
                 if (!(JSON.parse(body)[i])) {
                     msg.say("There are no requested vacations for you");
                 }
