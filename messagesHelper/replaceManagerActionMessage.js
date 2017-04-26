@@ -103,7 +103,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         "text": "Accept",
                         "style": "primary",
                         "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     },
                     {
                         "name": "reject",
