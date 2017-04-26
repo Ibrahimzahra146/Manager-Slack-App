@@ -201,7 +201,8 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 }
                 else {
                     //build message Json result to send it to slack
-                    while ((JSON.parse(body)[i])) {
+                    while ((body)[i]) {
+                        console.log("body))[i].fromDate" + body[i].fromDate)
                         var stringMessage = "["
                         var fromDate = new Date((JSON.parse(body))[i].fromDate);
                         fromDate = fromDate.toString().split("GMT")
