@@ -192,6 +192,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
             }
         }, function (error, response, body) {
+
             var i = 0;
             //check if no history ,so empty response
             if (!error && response.statusCode === 200) {
@@ -202,23 +203,23 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 else {
                     //build message Json result to send it to slack
                     while ((body)[i]) {
-                        console.log("body))[i].fromDate" + body[i].fromDate)
+                        var parsedBody = body[i]
                         var stringMessage = "["
-                        var fromDate = new Date((JSON.parse(body))[i].fromDate);
+                        var fromDate = new Date(parsedBody.fromDate);
                         fromDate = fromDate.toString().split("GMT")
                         fromDate = fromDate[0]
-                        var toDate = new Date((JSON.parse(body))[i].toDate)
+                        var toDate = new Date(parsedBody.toDate)
                         toDate = toDate.toString().split("GMT")
                         toDate = toDate[0]
                         stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
                         stringMessage = stringMessage + ","
                         stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
                         stringMessage = stringMessage + ","
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].vacationState + "\"" + ",\"short\":true}"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + parsedBody.vacationState + "\"" + ",\"short\":true}"
                         var typeOfVacation = ""
-                        if ((JSON.parse(body))[i].type == 0)
+                        if (parsedBody.type == 0)
                             typeOfVacation = "Time off"
-                        else if ((JSON.parse(body))[i].type == 4)
+                        else if (parsedBodytype == 4)
                             typeOfVacation = "Sick time off"
                         printLogs("stringMessage::" + stringMessage);
                         stringMessage = stringMessage + "]"
