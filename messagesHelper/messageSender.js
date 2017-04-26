@@ -56,7 +56,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
         } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
         managerFeedbackmessage = "You have rejected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-        msg.say(managerFeedbackmessage)
+        //msg.say(managerFeedbackmessage)
 
 
 
