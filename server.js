@@ -699,7 +699,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               }
               //Set the body as a stringcc
             }, function (error, response, body) {
-              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType);
+              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType,body);
             });
           })
         })
