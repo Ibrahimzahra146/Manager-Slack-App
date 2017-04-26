@@ -155,7 +155,7 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                                     "short": false
                                 },
 
-                               
+
 
 
                                 {
@@ -174,6 +174,81 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
                 msg.say(obj1);
             }
         });
+    })
+}
+//show employee history 
+module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEmail, msg) {
+    printLogs("showEmployeeStats")
+    managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
+        var uri = 'http://' + IP + '/api/v1/employee/' + Id + '/vacations/2017'
+
+        request({
+            url: uri,
+            json: true,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
+            }
+        }, function (error, response, body) {
+            var i = 0;
+            //check if no history ,so empty response
+            if (!error && response.statusCode === 200) {
+                if (!(JSON.parse(body)[i])) {
+                    msg.say("There are no requested vacations for you");
+                }
+                else {
+                    //build message Json result to send it to slack
+                    while ((JSON.parse(body)[i])) {
+                        var stringMessage = "["
+                        var fromDate = new Date((JSON.parse(body))[i].fromDate);
+                        fromDate = fromDate.toString().split("GMT")
+                        fromDate = fromDate[0]
+                        var toDate = new Date((JSON.parse(body))[i].toDate)
+                        toDate = toDate.toString().split("GMT")
+                        toDate = toDate[0]
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
+                        stringMessage = stringMessage + ","
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
+                        stringMessage = stringMessage + ","
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].vacationState + "\"" + ",\"short\":true}"
+                        var typeOfVacation = ""
+                        if ((JSON.parse(body))[i].type == 0)
+                            typeOfVacation = "Time off"
+                        else if ((JSON.parse(body))[i].type == 4)
+                            typeOfVacation = "Sick time off"
+                        printLogs("stringMessage::" + stringMessage);
+                        stringMessage = stringMessage + "]"
+                        var messageBody = {
+                            "text": "*" + typeOfVacation + "*",
+                            "attachments": [
+                                {
+                                    "attachment_type": "default",
+                                    "text": " ",
+                                    "fallback": "ReferenceError",
+                                    "fields": stringMessage,
+                                    "color": "#F35A00"
+                                }
+                            ]
+                        }
+                        printLogs("messageBody" + messageBody)
+                        var stringfy = JSON.stringify(messageBody);
+
+                        printLogs("stringfy" + stringfy)
+                        stringfy = stringfy.replace(/\\/g, "")
+                        stringfy = stringfy.replace(/]\"/, "]")
+                        stringfy = stringfy.replace(/\"\[/, "[")
+                        stringfy = JSON.parse(stringfy)
+
+                        msg.say(stringfy)
+                        i++;
+
+                    }
+
+                }
+            }
+
+        })
     })
 }
 
