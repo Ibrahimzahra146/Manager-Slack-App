@@ -21,7 +21,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
         } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
         managerFeedbackmessage = "You have accepted the" + typeText + " request but without detuction for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-        msg.say(managerFeedbackmessage)
+      //  msg.say(managerFeedbackmessage)
     } else if (approvalType == "Approved") {
         if (type == "WFH") {
             userFeedbackmessage = "The approver " + managerEmail + " has Approved your working from home request ( " + fromDate + " - " + toDate + " )."
@@ -38,7 +38,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
         } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
 
         managerFeedbackmessage = "You have accepted the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-        msg.say(managerFeedbackmessage)
+       // msg.say(managerFeedbackmessage)
 
 
     } else if (approvalType == "Rejected") {

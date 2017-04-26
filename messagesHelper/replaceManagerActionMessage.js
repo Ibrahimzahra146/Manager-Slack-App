@@ -78,7 +78,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                 "fields": [
                     {
                         "title": "From",
-                        "value": startDate,
+                        "value": fromDate,
                         "short": true
                     },
                     {
@@ -88,7 +88,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                     },
                     {
                         "title": "to",
-                        "value": endDate,
+                        "value": toDate,
                         "short": true
                     },
                     {
