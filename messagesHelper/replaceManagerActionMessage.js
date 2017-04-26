@@ -16,7 +16,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                 "fields": [
                     {
                         "title": "From",
-                        "value": startDate,
+                        "value": fromDate,
                         "short": true
                     },
                     {
@@ -26,7 +26,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     },
                     {
                         "title": "to",
-                        "value": endDate,
+                        "value": toDate,
                         "short": true
                     },
                     {
@@ -46,7 +46,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "text": "Undo",
                         "style": "primary",
                         "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }
                 ],
                 "color": "#F35A00",
