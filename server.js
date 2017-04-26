@@ -38,6 +38,7 @@ var fromDate = ""
 var toDate = "";
 var generalEmail = "";
 var generalAny = ""
+var messageSender = require('./messagesHelper/messageSender.js')
 
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
@@ -212,7 +213,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date = response.result.parameters.date;
             DateHelper.getPreviousDate(date, 1, function (previousDate) {
               WhoIsOffCase = 2
-              managerToffyHelper.showWhoIsOff(msg, emailValue, date, previousDate)
+              managerToffyHelper.showWhoIsOff(msg, emailValue, date, date)
 
             })
 
@@ -650,8 +651,7 @@ function managerAction(msg, value, typeOfaction) {
 
 }
 function managerApproval1(msg, value, approvalType, fromManager) {
-  var managerFeedbackmessage = ""
-  var userFeedbackmessage = ""
+
   var arr = value.toString().split(";")
   var userEmail = arr[0];
   var vacationId = arr[1];
@@ -670,16 +670,9 @@ function managerApproval1(msg, value, approvalType, fromManager) {
     typeText = " paternity" + " time off"
   } else if (type == "WFH")
     typeText = " work from home"
-  console.log("WORKIng from home type" + type)
-  console.log("fromManager" + fromManager)
-  console.log("userEmail  ::" + userEmail)
-  console.log("managerEmail::" + managerEmail)
+
   sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
     if (isDeleted == false) {
-
-
-
-
       if (fromManager != 1) {
         request({
           url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
@@ -706,87 +699,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               }
               //Set the body as a stringcc
             }, function (error, response, body) {
-              console.log("email:" + body)
-              console.log("Vacation state is :::" + JSON.stringify(body))
-
-              console.log("(JSON.parse(body)).vacationState)" + (JSON.parse(body)).vacationState)
-
-
-
-
-              if (approvalType == "ApprovedWithoutDeduction") {
-                if ((JSON.parse(body)).vacationState == "Rejected") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
-                } else if ((JSON.parse(body)).vacationState == "Approved") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
-                } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction. "
-
-
-                } else userFeedbackmessage = "The approver " + managerEmail + " has accepted your time off request without detuction ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
-
-                managerFeedbackmessage = "You have accepted the" + typeText + " request but without detuction for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-                msg.say(managerFeedbackmessage)
-              } else if (approvalType == "Approved") {
-                if (type == "WFH") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has Approved your working from home request ( " + fromDate + " - " + toDate + " )."
-                }
-
-                else if ((JSON.parse(body)).vacationState == "Rejected") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
-                } else if ((JSON.parse(body)).vacationState == "Approved") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
-                } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction. "
-
-
-                } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
-
-                managerFeedbackmessage = "You have accepted the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-                msg.say(managerFeedbackmessage)
-
-
-              } else if (approvalType == "Rejected") {
-                if (type == "WFH") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has rejected your working from home request ( " + fromDate + " - " + toDate + " )."
-                }
-                else if ((JSON.parse(body)).vacationState == "Rejected") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected. "
-                } else if ((JSON.parse(body)).vacationState == "Approved") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. "
-                } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-                  userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. "
-
-
-                } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action"
-
-                managerFeedbackmessage = "You have rejected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
-                msg.say(managerFeedbackmessage)
-
-              }
-              var message = {
-                'type': 'message',
-                'channel': responseBody.userChannelId,
-                user: responseBody.slackUserId,
-                text: 'what is my name',
-                ts: '1482920918.000057',
-                team: responseBody.teamId,
-                event: 'direct_message'
-              };
-              bot.startConversation(message, function (err, convo) {
-
-
-                if (!err) {
-                  var text12 = {
-                    "text": userFeedbackmessage,
-                  }
-                  var stringfy = JSON.stringify(text12);
-                  var obj1 = JSON.parse(stringfy);
-                  bot.reply(message, obj1);
-
-                }
-
-              });
+              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot);
             });
           })
         })
