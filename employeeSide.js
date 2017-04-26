@@ -219,7 +219,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                         var typeOfVacation = ""
                         if (parsedBody.type == 0)
                             typeOfVacation = "Time off"
-                        else if (parsedBodytype == 4)
+                        else if (parsedBody.type == 4)
                             typeOfVacation = "Sick time off"
                         printLogs("stringMessage::" + stringMessage);
                         stringMessage = stringMessage + "]"
