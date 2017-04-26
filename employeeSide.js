@@ -192,10 +192,11 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
             }
         }, function (error, response, body) {
+              console.log("HSON." + JSON.stringify(body))
             var i = 0;
             //check if no history ,so empty response
             if (!error && response.statusCode === 200) {
-                console.log("HSON." + JSON.stringify(body))
+              
                 if (!(JSON.parse(body)[i])) {
                     msg.say("There are no requested vacations for you");
                 }
