@@ -39,6 +39,7 @@ var toDate = "";
 var generalEmail = "";
 var generalAny = ""
 var messageSender = require('./messagesHelper/messageSender.js')
+var replaceMessage = require('./messagesHelper/replaceManagerActionMessage.js')
 
 pg.defaults.ssl = true;
 if (!process.env.PORT) throw Error('PORT missing but required')
@@ -661,6 +662,8 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var fromDate = arr[5];
   var toDate = arr[6];
   var type = arr[7]
+  var workingDays = arr[8]
+  var ImageUrl = arr[9]
   var typeText = " time off"
   if (type == "sick") {
     typeText = " sick time off "
@@ -700,6 +703,8 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               //Set the body as a stringcc
             }, function (error, response, body) {
               messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody);
+              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays)
+
             });
           })
         })
