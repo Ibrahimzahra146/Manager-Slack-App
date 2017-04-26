@@ -177,7 +177,7 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
     })
 }
 //show employee history 
-module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEmail, msg) {
+module.exports.showEmployeeHistory = function showEmployeeHistory(email, employeeEmail, msg) {
     printLogs("showEmployeeStats")
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         var uri = 'http://' + IP + '/api/v1/employee/' + Id + '/vacations/2017'
