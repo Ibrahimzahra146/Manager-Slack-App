@@ -7,7 +7,7 @@ var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays) {
     console.log("ImageUrl" + ImageUrl)
     var messageBody = {
-        "text": "This folk has pending time off request:",
+        "text": "Time off request:",
         "attachments": [
             {
                 "attachment_type": "default",
@@ -36,7 +36,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "short": true
                     },
                     {
-                        "title": "State of vacation ",
+                        "title": "Time off state",
                         "value": approvalType,
                         "short": true
                     }
@@ -45,7 +45,6 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     {
                         "name": "Undo",
                         "text": "Undo",
-                        "style": "primary",
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }
