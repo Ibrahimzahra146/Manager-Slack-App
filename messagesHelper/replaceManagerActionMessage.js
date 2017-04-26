@@ -5,6 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays) {
+    console.log("ImageUrl" + ImageUrl)
     var messageBody = {
         "text": "This folk has pending time off request:",
         "attachments": [

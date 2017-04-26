@@ -664,6 +664,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  console.log("ImageUrl" + ImageUrl)
   var typeText = " time off"
   if (type == "sick") {
     typeText = " sick time off "
