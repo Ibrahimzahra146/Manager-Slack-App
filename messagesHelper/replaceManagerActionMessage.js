@@ -68,7 +68,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
         }
     }
     var messageBody = {
-        "text": "This folk has pending time off request:",
+        "text": "Time off request:",
         "attachments": [
             {
                 "attachment_type": "default",
