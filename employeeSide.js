@@ -196,7 +196,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
             //check if no history ,so empty response
             if (!error && response.statusCode === 200) {
 
-                if (1 == 0) {
+                if (!(body[i])) {
                     msg.say("There are no requested vacations for you");
                 }
                 else {
