@@ -128,3 +128,74 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
     msg.respond(msg.body.response_url, messageBody)
 }
 
+module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+    var dont_detuct_button = ""
+
+    var messageBody = {
+        "text": "Time off request:",
+        "attachments": [
+            {
+                "attachment_type": "default",
+                "callback_id": "manager_confirm_reject",
+                "text": userEmail,
+                "fallback": "ReferenceError",
+                "fields": [
+                    {
+                        "title": "From",
+                        "value": fromDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Days/Time ",
+                        "value": workingDays + " day",
+                        "short": true
+                    },
+                    {
+                        "title": "to",
+                        "value": toDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Type",
+                        "value": type,
+                        "short": true
+                    }
+                ],
+                "actions": [
+                    {
+                        "name": "Sorry",
+                        "text": "Sorry",
+                        "style": "danger",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
+                    {
+                        "name": "Project_deadline",
+                        "text": "Project deadline",
+                        "style": "primary",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
+
+                    {
+                        "name": "Discuss_it_privately",
+                        "text": "Discuss it privately",
+                        "style": "primary",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
+                    {
+                        "name": "No_replaceable_emp",
+                        "text": "No replaceable emp",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }
+
+                ],
+                "color": "#F35A00",
+                "thumb_url": ImageUrl,
+            }
+        ]
+    }
+    msg.respond(msg.body.response_url, messageBody)
+}

@@ -744,6 +744,20 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var ImageUrl = arr[9]
   replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 })
+slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  var fromWho = arr[4];
+  var fromDate = arr[5];
+  var toDate = arr[6];
+  var type = arr[7]
+  var workingDays = arr[8]
+  var ImageUrl = arr[9]
+  replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+})
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request ");
