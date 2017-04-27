@@ -572,7 +572,7 @@ slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
 
 slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 
-  managerApproval1(msg, value, "ApprovedWithoutDeduction", 0)
+  managerApproval1(msg, value, "ApprovedWithoutDeduction", 0, "")
 
 })
 function managerAction(msg, value, typeOfaction) {
@@ -639,7 +639,7 @@ function managerAction(msg, value, typeOfaction) {
         if (managerApproval[i].manager == managerId) {
           var value = employeeEmail + ";" + vacationId + ";" + managerApproval[i].id + ";" + managerEmail
           console.log("value: :" + value)
-          managerApproval1(msg, value, "Approved", 1)
+          managerApproval1(msg, value, "Approved", 1,"")
           break;
         }
         i++;
