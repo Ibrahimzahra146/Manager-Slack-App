@@ -117,7 +117,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         "text": "Reject with comment",
                         "style": "danger",
                         "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }, dont_detuct_button
                 ],
                 "color": "#F35A00",
