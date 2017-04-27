@@ -189,6 +189,11 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                         "text": "No replaceable emp",
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }, {
+                        "name": "Undo",
+                        "text": "Undo",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }
 
                 ],

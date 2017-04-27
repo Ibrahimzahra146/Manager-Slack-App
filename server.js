@@ -756,7 +756,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+  replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
