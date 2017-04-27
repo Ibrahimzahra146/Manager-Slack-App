@@ -559,14 +559,15 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
 
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  managerApproval1(msg, value, "Approved", 0)
+  managerApproval1(msg, value, "Approved", 0, "")
 })
 
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  managerApproval1(msg, value, "Rejected", 0)
+  managerApproval1(msg, value, "Rejected", 0, "")
 })
+
 
 
 slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
@@ -651,7 +652,7 @@ function managerAction(msg, value, typeOfaction) {
   toDate = "";
 
 }
-function managerApproval1(msg, value, approvalType, fromManager) {
+function managerApproval1(msg, value, approvalType, fromManager, comment) {
 
   var arr = value.toString().split(";")
   var userEmail = arr[0];
@@ -664,6 +665,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+
   console.log("ImageUrl" + ImageUrl)
   var typeText = " time off"
   if (type == "sick") {
@@ -703,7 +705,7 @@ function managerApproval1(msg, value, approvalType, fromManager) {
               }
               //Set the body as a stringcc
             }, function (error, response, body) {
-              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody);
+              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
               replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays)
 
             });
@@ -757,6 +759,12 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var workingDays = arr[8]
   var ImageUrl = arr[9]
   replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+})
+slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
+  var arr = value.toString().split(";")
+  var comment = arr[10]
+
+  managerApproval1(msg, value, "Rejected", 0, comment)
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
