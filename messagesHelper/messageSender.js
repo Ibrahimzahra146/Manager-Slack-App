@@ -10,7 +10,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
     var userFeedbackmessage = ""
     var comment = ""
     if (comment1 != "") {
-        comment = "Comment:" + comment1
+        comment = "Approval comment: " + comment1
     }
 
     if (approvalType == "ApprovedWithoutDeduction") {
@@ -32,14 +32,14 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
         }
 
         else if ((JSON.parse(body)).vacationState == "Rejected") {
-            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected." + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected.\n" + comment
         } else if ((JSON.parse(body)).vacationState == "Approved") {
-            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. " + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved.\n " + comment
         } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction." + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but without detuction.\n" + comment
 
 
-        } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action. " + comment
+        } else userFeedbackmessage = "The approver " + managerEmail + " has Approved your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action.\n " + comment
 
         managerFeedbackmessage = "You have accepted the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
         // msg.say(managerFeedbackmessage)
@@ -50,14 +50,14 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
             userFeedbackmessage = "The approver " + managerEmail + " has rejected your working from home request ( " + fromDate + " - " + toDate + " )."
         }
         else if ((JSON.parse(body)).vacationState == "Rejected") {
-            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected. " + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected.\n " + comment
         } else if ((JSON.parse(body)).vacationState == "Approved") {
-            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved. " + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved.\n " + comment
         } else if ((JSON.parse(body)).vacationState == "ApprovedWithoutDeduction") {
-            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction. " + comment
+            userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ). Your time off is approved but withoit detuction.\n " + comment
 
 
-        } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action. " + comment
+        } else userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off request ( " + fromDate + " - " + toDate + " ).Please wait other approvers to take an action.\n " + comment
 
         managerFeedbackmessage = "You have rejected the" + typeText + " for " + userEmail + " ( " + fromDate + "-" + toDate + " )."
         //msg.say(managerFeedbackmessage)

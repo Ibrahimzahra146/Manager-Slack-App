@@ -713,6 +713,7 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
+            console/log()
             var obj = JSON.parse(body);
             var stringMessage = "["
             var i = 0

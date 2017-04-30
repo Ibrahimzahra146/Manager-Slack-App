@@ -46,6 +46,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "name": "Undo",
                         "text": "Undo",
                         "type": "button",
+                        "style": "danger",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }
                 ],
@@ -165,14 +166,14 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                     {
                         "name": "Send_comment",
                         "text": "Sorry",
-                        "style": "danger",
+
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Sorry!"
                     },
                     {
                         "name": "Send_comment",
                         "text": "Project deadline",
-                        "style": "primary",
+
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Project deadline"
                     },
@@ -180,7 +181,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                     {
                         "name": "Send_comment",
                         "text": "Discuss it privately",
-                        "style": "primary",
+
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Discuss it privately"
                     },
@@ -192,6 +193,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                     }, {
                         "name": "Undo",
                         "text": "Undo",
+                        "style": "danger",
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }
