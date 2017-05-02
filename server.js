@@ -230,37 +230,42 @@ function sendRequestToApiAi(emailValue, msg) {
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
           if (response.result.parameters.any || generalEmailForEmpInfo != "") {
-            employeeEmail = response.result.parameters.any + "@exalt.ps"
-            employeeEmail = employeeEmail.replace(/ /g, ".");
+            if (response.result.parameters.any.indexOf('.') < 0) {
 
-            generalEmailForEmpInfo = employeeEmail
-
-            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-
+              msg.say("Sorry ,I cant understand you ")
             }
-            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
-              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-
-            }
-            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
-              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-
-            }
-            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else {
-              msg.say("Please specify on of the following :profile,stats or history ")
+              employeeEmail = response.result.parameters.any + "@exalt.ps"
+              employeeEmail = employeeEmail.replace(/ /g, ".");
+
+              generalEmailForEmpInfo = employeeEmail
+
+              if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+                employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+                employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+                employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+
+              }
+              // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              else {
+                msg.say("Please specify on of the following :profile,stats or history ")
+              }
+
+
+
             }
-
-
-
-
           }
           else if (response.result.parameters.email || generalEmailForEmpInfo != "") {
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
