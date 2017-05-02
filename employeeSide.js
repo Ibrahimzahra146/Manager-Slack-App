@@ -258,3 +258,26 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
 }
 
 
+module.exports.determineInfoType = function determineInfoType(managerEmail, employeeEmail, infoType, msg) {
+    if (infoType == "stats") {
+        employee.showEmployeeStats(managerEmail, employeeEmail, msg);
+        generalEmailForEmpInfo = ""
+        generalEmpInfo = ""
+
+
+    }
+    else if (infoType == "profile") {
+        employee.showEmployeeProfile(managerEmail, employeeEmail, msg)
+        generalEmailForEmpInfo = ""
+        generalEmpInfo = ""
+
+
+    }
+    else if (infoType == "history") {
+        employee.showEmployeeHistory(managerEmail, employeeEmail, msg)
+        generalEmailForEmpInfo = ""
+        generalEmpInfo = ""
+
+    }
+
+}

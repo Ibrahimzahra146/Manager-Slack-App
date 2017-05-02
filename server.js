@@ -38,6 +38,7 @@ var fromDate = ""
 var toDate = "";
 var generalEmail = "";
 var generalEmailForEmpInfo = ""
+var isInfo = ""
 var generalEmpInfo = ""
 var generalAny = ""
 var messageSender = require('./messagesHelper/messageSender.js')
@@ -233,20 +234,23 @@ function sendRequestToApiAi(emailValue, msg) {
             employeeEmail = employeeEmail.replace(/ /g, ".");
 
             generalEmailForEmpInfo = employeeEmail
-         
-            if (response.result.parameters.employee_info_types == "stats") {
-              employee.showEmployeeStats(emailValue, employeeEmail, msg);
+
+            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
 
             }
-            else if (response.result.parameters.employee_info_types == "profile") {
-              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
 
             }
-            else if (response.result.parameters.employee_info_types == "history") {
-              employee.showEmployeeHistory(emailValue, employeeEmail, msg)
+            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
 
             }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
@@ -278,19 +282,24 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
 
-            if (response.result.parameters.employee_info_types == "stats") {
-              employee.showEmployeeStats(emailValue, employeeEmail, msg);
+            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+
 
             }
-            else if (response.result.parameters.employee_info_types == "profile") {
-              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+
 
             }
-            else if (response.result.parameters.employee_info_types == "history") {
-              employee.showEmployeeHistory(emailValue, employeeEmail, msg)
+            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
 
             }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
@@ -300,6 +309,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
           } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types)
             msg.say("Please specify employee email")
+          generalEmpInfo = response.result.parameters.any
         }
 
 
@@ -327,6 +337,7 @@ function sendRequestToApiAi(emailValue, msg) {
                   employeeEmail = employeeEmail.replace(/>/g, "");
                   console.log("Email after split mail to ")
                   generalEmail = employeeEmail
+                  isInfo = 1
                 }
                 else {
                   employeeEmail = response.result.parameters.email
@@ -339,14 +350,23 @@ function sendRequestToApiAi(emailValue, msg) {
                 employeeEmail = response.result.parameters.any + "@exalt.ps"
                 employeeEmail = employeeEmail.replace(/ /g, ".");
                 generalEmail = employeeEmail
+                isInfo = 1
+
+
+
               }
 
 
               if (response.result.parameters.sick_synonyms) {
                 vacation_type1 = "sick"
               }
+              if (generalEmpInfo == 1 && employeeEmail) {
+                employee.determineInfoType(emailValue, memployeeEmail, generalEmpInfo, msg)
 
-              if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
+
+              }
+
+              else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
 
                 msg.say("Please specify the date and/or time ")
 
