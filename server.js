@@ -200,28 +200,28 @@ function sendRequestToApiAi(emailValue, msg) {
 
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
-        if (responseText == "WhoIsOff") {
-          var WhoIsOffCase = ""
-          if (response.result.parameters.off_synonyms && response.result.parameters.date && response.result.parameters.date1) {
-            var date = response.result.parameters.date
-            var date1 = response.result.parameters.date1
-            WhoIsOffCase = 1
-            managerToffyHelper.showWhoIsOff(msg, emailValue, date, date1)
-
-
-          }
-          else if (response.result.parameters.off_synonyms && response.result.parameters.date) {
-            var date = response.result.parameters.date;
-            DateHelper.getPreviousDate(date, 1, function (previousDate) {
-              WhoIsOffCase = 2
-              managerToffyHelper.showWhoIsOff(msg, emailValue, date, date)
-
-            })
-
-          }
-          console.log("WhoIsOffCase" + WhoIsOffCase)
-        }
-        else if (responseText == "showEmployeeInfo") {
+        /* if (responseText == "WhoIsOff") {
+           var WhoIsOffCase = ""
+           if (response.result.parameters.off_synonyms && response.result.parameters.date && response.result.parameters.date1) {
+             var date = response.result.parameters.date
+             var date1 = response.result.parameters.date1
+             WhoIsOffCase = 1
+             managerToffyHelper.showWhoIsOff(msg, emailValue, date, date1)
+ 
+ 
+           }
+           else if (response.result.parameters.off_synonyms && response.result.parameters.date) {
+             var date = response.result.parameters.date;
+             DateHelper.getPreviousDate(date, 1, function (previousDate) {
+               WhoIsOffCase = 2
+               managerToffyHelper.showWhoIsOff(msg, emailValue, date, date)
+ 
+             })
+ 
+           }
+           console.log("WhoIsOffCase" + WhoIsOffCase)
+         }*/
+        if (responseText == "showEmployeeInfo") {
           generalEmail = ""
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
@@ -278,7 +278,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date1 = today
             var timeOffCase = -1
             var flag = 1
-            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "")) {
+            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "" || response.result.parameters.whoIsOff)) {
               msg.say("please specify the user email with request")
             } else {
               if (response.result.parameters.email) {
@@ -422,9 +422,15 @@ function sendRequestToApiAi(emailValue, msg) {
                       timeMilliseconds = timeMilliseconds.getTime();
                       timeMilliseconds = timeMilliseconds - (3 * 60 * 60 * 1000);
                       console.log("timeMilliseconds :::" + timeMilliseconds)
-                      managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
-                      vacation_type1 = ""
-                      generalEmail = ""
+                      if (response.result.parameters.whoIsOff) {
+                        managerToffyHelper.showWhoIsOff(msg, emailValue, timeMilliseconds, timeMilliseconds)
+
+                      } else {
+
+                        managerToffyHelper.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, generalEmail, vacation_type1, timeOffCase)
+                        vacation_type1 = ""
+                        generalEmail = ""
+                      }
 
                     })
 
@@ -639,7 +645,7 @@ function managerAction(msg, value, typeOfaction) {
         if (managerApproval[i].manager == managerId) {
           var value = employeeEmail + ";" + vacationId + ";" + managerApproval[i].id + ";" + managerEmail
           console.log("value: :" + value)
-          managerApproval1(msg, value, "Approved", 1,"")
+          managerApproval1(msg, value, "Approved", 1, "")
           break;
         }
         i++;
