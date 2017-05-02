@@ -307,9 +307,10 @@ function sendRequestToApiAi(emailValue, msg) {
               msg.say("Please specify on of the following :profile,stats or history ")
             }
 
-          } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types)
+          } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
             msg.say("Please specify employee email")
-          generalEmpInfo = response.result.parameters.any
+            generalEmpInfo = response.result.parameters.any
+          }
         }
 
 
