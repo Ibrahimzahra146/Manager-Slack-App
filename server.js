@@ -325,7 +325,7 @@ function sendRequestToApiAi(emailValue, msg) {
             var date1 = today
             var timeOffCase = -1
             var flag = 1
-            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "" || response.result.parameters.whoIsOff) && generalEmpInfo != "") {
+            if (!(response.result.parameters.email || response.result.parameters.any || generalEmail != "" || response.result.parameters.whoIsOff) && generalEmpInfo == "") {
               msg.say("please specify the user email with request")
             } else {
               if (response.result.parameters.email) {
