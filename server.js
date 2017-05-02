@@ -273,7 +273,7 @@ function sendRequestToApiAi(emailValue, msg) {
           var employeeEmail = ""
           managerToffyHelper.getTodayDate(function (today) {
             var time1 = "17:00:00";
-            var time = "5:00:00";
+            var time = "05:00:00";
             var date = today
             var date1 = today
             var timeOffCase = -1
