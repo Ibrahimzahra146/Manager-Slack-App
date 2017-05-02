@@ -309,7 +309,8 @@ function sendRequestToApiAi(emailValue, msg) {
 
           } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
             msg.say("Please specify employee email")
-            generalEmpInfo = response.result.parameters.any
+            generalEmpInfo = response.result.parameters.employee_info_types
+            console.log("Arriveee" + generalEmpInfo)
           }
         }
 
