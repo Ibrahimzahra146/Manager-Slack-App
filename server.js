@@ -225,7 +225,6 @@ function sendRequestToApiAi(emailValue, msg) {
            console.log("WhoIsOffCase" + WhoIsOffCase)
          }*/
         if (responseText == "showEmployeeInfo") {
-          generalEmail = ""
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
