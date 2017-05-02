@@ -362,7 +362,7 @@ function sendRequestToApiAi(emailValue, msg) {
               if (response.result.parameters.sick_synonyms) {
                 vacation_type1 = "sick"
               }
-              if (generalEmpInfo == 1 && employeeEmail) {
+              if (isInfo == 1 && generalEmpInfo != "") {
                 employee.determineInfoType(emailValue, employeeEmail, generalEmpInfo, msg)
                 generalEmpInfo = ""
                 employeeEmail = ""
