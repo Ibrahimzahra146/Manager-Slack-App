@@ -426,7 +426,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
                       timeMilliseconds = timeMilliseconds.getTime();
                       timeMilliseconds = timeMilliseconds - (3 * 60 * 60 * 1000);
-                      console.log("timeMilliseconds :::" + timeMilliseconds)
+                      console.log("timeMilliseconds :: :" + timeMilliseconds)
                       if (response.result.parameters.whoIsOff) {
                         managerToffyHelper.showWhoIsOff(msg, emailValue, timeMilliseconds, timeMilliseconds)
 
