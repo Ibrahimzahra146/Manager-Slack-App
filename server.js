@@ -230,7 +230,8 @@ function sendRequestToApiAi(emailValue, msg) {
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
           if (response.result.parameters.any || generalEmailForEmpInfo != "") {
-            if (response.result.parameters.any.indexOf('.') < 0) {
+            console.log("response.result.parameters.any).indexOf('.') " + response.result.parameters.any).indexOf('.')
+            if ((response.result.parameters.any).indexOf('.') < 0) {
 
               msg.say("Sorry ,I cant understand you ")
             }
