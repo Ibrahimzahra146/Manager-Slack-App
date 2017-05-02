@@ -4,6 +4,7 @@ var server = require('./server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
+var employee = require("./employeeSide.js")
 
 module.exports.showEmployeeProfile = function showEmployeeProfile(email, employeeEmail, msg) {
     var Approver2 = "---";
@@ -260,6 +261,8 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
 
 module.exports.determineInfoType = function determineInfoType(managerEmail, employeeEmail, infoType, msg) {
     console.log("determineInfoType")
+    console.log("employeeEmail" + employeeEmail)
+    console.log("infoType" + infoType)
     if (infoType == "stats") {
         employee.showEmployeeStats(managerEmail, employeeEmail, msg);
         generalEmailForEmpInfo = ""

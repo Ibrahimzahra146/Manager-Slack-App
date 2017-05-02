@@ -3,6 +3,7 @@ var managerHelper = require('.././managerToffyHelper.js')
 var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
+
 var IP = process.env.SLACK_IP
 module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment1) {
     console.log("SendDDDDD");

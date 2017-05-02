@@ -366,6 +366,7 @@ function sendRequestToApiAi(emailValue, msg) {
                 console.log
                 employee.determineInfoType(emailValue, employeeEmail, generalEmpInfo, msg)
                 console.log("generalEmpInfo" + generalEmpInfo)
+                console.log("employeeEmail" + employeeEmail)
                 generalEmpInfo = ""
                 employeeEmail = ""
 
