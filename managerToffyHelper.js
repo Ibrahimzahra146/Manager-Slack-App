@@ -238,10 +238,15 @@ module.exports.convertTimeFormat = function convertTimeFormat(time, callback) {
         formattedTime = "04:" + arr[1];
         TimeforMilliseconds = "16:" + arr[1]
     }
-    else if (arr[0] == "17" || arr[0] == "05" || arr[0] == "05") {
+    else if (arr[0] == "05" || arr[0] == "05") {
+        formattedTime = "05:" + arr[1];
+        TimeforMilliseconds = "05:" + arr[1]
+    }
+    else if (arr[0] == "17") {
         formattedTime = "05:" + arr[1];
         TimeforMilliseconds = "17:" + arr[1]
     }
+
     else if (arr[0] == "20" || arr[0] == "08" || arr[0] == "8") {
         formattedTime = "08:" + arr[1];
         midday = "am"
@@ -251,7 +256,7 @@ module.exports.convertTimeFormat = function convertTimeFormat(time, callback) {
     else if (arr[0] == "21" || arr[0] == "09" || arr[0] == "9") {
         formattedTime = "09:" + arr[1];
         midday = "am"
-        TimeforMilliseconds = "9:" + arr[1]
+        TimeforMilliseconds = "21:" + arr[1]
     }
     else if (arr[0] == "22" || arr[0] == "10") {
         formattedTime = "10:" + arr[1];
