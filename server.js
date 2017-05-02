@@ -351,19 +351,20 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
               } else if (response.result.parameters.any) {
-                if ((response.result.parameters.any).indexOf('.') < 0) {
+                /* if ((response.result.parameters.any).indexOf('.') < 0) {
+ 
+                   msg.say("Sorry ,I cant understand you ")
+                 } else {*/
 
-                  msg.say("Sorry ,I cant understand you ")
-                } else {
+
+                employeeEmail = response.result.parameters.any
+                employeeEmail = response.result.parameters.any + "@exalt.ps"
+                employeeEmail = employeeEmail.replace(/ /g, ".");
+                generalEmail = employeeEmail
+                isInfo = 1
 
 
-                  employeeEmail = response.result.parameters.any
-                  employeeEmail = response.result.parameters.any + "@exalt.ps"
-                  employeeEmail = employeeEmail.replace(/ /g, ".");
-                  generalEmail = employeeEmail
-                  isInfo = 1
 
-                }
 
               }
 
@@ -381,10 +382,10 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
               }
-              else if ((response.result.parameters.any).indexOf('.') < 0 || (response.result.parameters.any).indexOf('tareq') < 0 || (response.result.parameters.any).indexOf('Tareq') < 0) {
-                console.log("response.result.parameters.any).indexOf('.') " + (response.result.parameters.any).indexOf('.'))
-                msg.say("Sorry ,I cant understand you ")
-              }
+              /*  else if ((response.result.parameters.any).indexOf('.') < 0 || (response.result.parameters.any).indexOf('tareq') < 0 || (response.result.parameters.any).indexOf('Tareq') < 0) {
+                  console.log("response.result.parameters.any).indexOf('.') " + (response.result.parameters.any).indexOf('.'))
+                  msg.say("Sorry ,I cant understand you ")
+                }*/
 
               else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
 
