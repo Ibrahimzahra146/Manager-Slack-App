@@ -382,7 +382,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
               }
               else if ((response.result.parameters.any).indexOf('.') < 0 || (response.result.parameters.any).indexOf('tareq') < 0 || (response.result.parameters.any).indexOf('Tareq') < 0) {
-
+                console.log("response.result.parameters.any).indexOf('.') " + (response.result.parameters.any).indexOf('.'))
                 msg.say("Sorry ,I cant understand you ")
               }
 
