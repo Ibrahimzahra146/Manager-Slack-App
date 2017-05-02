@@ -381,6 +381,10 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
               }
+              else if ((response.result.parameters.any).indexOf('.') < 0 || (response.result.parameters.any).indexOf('tareq') < 0 || (response.result.parameters.any).indexOf('Tareq') < 0) {
+
+                msg.say("Sorry ,I cant understand you ")
+              }
 
               else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
 
