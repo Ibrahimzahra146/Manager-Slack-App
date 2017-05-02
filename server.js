@@ -229,7 +229,7 @@ function sendRequestToApiAi(emailValue, msg) {
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
-          if (response.result.parameters.any || generalEmailForEmpInfo != "") {
+          if (response.result.parameters.any || generalEmailForEmpInfo != "" || generalEmail != "") {
             console.log("response.result.parameters.any).indexOf('.') " + response.result.parameters.any).indexOf('.')
 
 
@@ -237,23 +237,29 @@ function sendRequestToApiAi(emailValue, msg) {
             employeeEmail = employeeEmail.replace(/ /g, ".");
 
             generalEmailForEmpInfo = employeeEmail
+            if (generalEmail != "") {
+              generalEmailForEmpInfo = generalEmail
+            }
 
             if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
               employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
             }
             else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
               employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
             }
             else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
               employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
             }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
@@ -265,7 +271,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
           }
-          else if (response.result.parameters.email || generalEmailForEmpInfo != "") {
+          else if (response.result.parameters.email || generalEmailForEmpInfo != "" || generalEmail != "") {
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
               employeeEmail = response.result.parameters.email
               employeeEmail = employeeEmail.toString().split('|')
@@ -281,6 +287,9 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
             }
+            if (generalEmail != "") {
+              generalEmailForEmpInfo = generalEmail
+            }
 
 
 
@@ -289,6 +298,7 @@ function sendRequestToApiAi(emailValue, msg) {
               employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
 
             }
@@ -296,6 +306,7 @@ function sendRequestToApiAi(emailValue, msg) {
               employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
 
             }
@@ -303,6 +314,7 @@ function sendRequestToApiAi(emailValue, msg) {
               employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
+              generalEmail = ""
 
             }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
