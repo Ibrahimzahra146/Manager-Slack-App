@@ -389,6 +389,7 @@ function sendRequestToApiAi(emailValue, msg) {
                 console.log("employeeEmail" + employeeEmail)
                 generalEmpInfo = ""
                 employeeEmail = ""
+                generalEmail = ""
 
 
               }
