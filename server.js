@@ -410,7 +410,7 @@ function sendRequestToApiAi(emailValue, msg) {
                     managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                       var fromDate = date + " " + convertedTime;
                       var toDate = date1 + " " + convertedTime1
-
+                      toDate.setHours(17);
                       console.log("toDate::" + toDate);
                       console.log("fromDate::" + fromDate);
                       toDate = new Date(toDate);
