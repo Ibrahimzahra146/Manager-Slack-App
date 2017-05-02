@@ -259,6 +259,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
 
 
 module.exports.determineInfoType = function determineInfoType(managerEmail, employeeEmail, infoType, msg) {
+    console.log("determineInfoType")
     if (infoType == "stats") {
         employee.showEmployeeStats(managerEmail, employeeEmail, msg);
         generalEmailForEmpInfo = ""

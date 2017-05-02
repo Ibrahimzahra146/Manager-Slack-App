@@ -363,7 +363,9 @@ function sendRequestToApiAi(emailValue, msg) {
                 vacation_type1 = "sick"
               }
               if (isInfo == 1 && generalEmpInfo != "") {
+                console.log
                 employee.determineInfoType(emailValue, employeeEmail, generalEmpInfo, msg)
+                console.log("generalEmpInfo" + generalEmpInfo)
                 generalEmpInfo = ""
                 employeeEmail = ""
 
