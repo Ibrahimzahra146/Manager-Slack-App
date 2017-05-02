@@ -238,9 +238,9 @@ module.exports.convertTimeFormat = function convertTimeFormat(time, callback) {
         formattedTime = "04:" + arr[1];
         TimeforMilliseconds = "16:" + arr[1]
     }
-    else if (arr[0] == "05" || arr[0] == "05") {
+    else if (arr[0] == "05" || arr[0] == "17") {
         formattedTime = "05:" + arr[1];
-        TimeforMilliseconds = "05:" + arr[1]
+        TimeforMilliseconds = "17:" + arr[1]
     }
     else if (arr[0] == "17") {
         formattedTime = "05:" + arr[1];
