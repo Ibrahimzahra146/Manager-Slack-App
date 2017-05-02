@@ -37,6 +37,8 @@ var vacation_type1 = ""
 var fromDate = ""
 var toDate = "";
 var generalEmail = "";
+var generalEmailForEmpInfo = ""
+var generalEmpInfo = ""
 var generalAny = ""
 var messageSender = require('./messagesHelper/messageSender.js')
 var replaceMessage = require('./messagesHelper/replaceManagerActionMessage.js')
@@ -226,43 +228,78 @@ function sendRequestToApiAi(emailValue, msg) {
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
-          if (response.result.parameters.any) {
+          if (response.result.parameters.any || generalEmailForEmpInfo != "") {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
 
-            if (response.result.parameters.employee_info_types == "stats")
+            generalEmailForEmpInfo = employeeEmail
+         
+            if (response.result.parameters.employee_info_types == "stats") {
               employee.showEmployeeStats(emailValue, employeeEmail, msg);
-            else if (response.result.parameters.employee_info_types == "profile")
+              generalEmailForEmpInfo = ""
+
+            }
+            else if (response.result.parameters.employee_info_types == "profile") {
               employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-            else if (response.result.parameters.employee_info_types == "history")
+              generalEmailForEmpInfo = ""
+
+            }
+            else if (response.result.parameters.employee_info_types == "history") {
               employee.showEmployeeHistory(emailValue, employeeEmail, msg)
-            else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              generalEmailForEmpInfo = ""
+
+            }
+            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+            else {
+              msg.say("Please specify on of the following :profile,stats or history ")
+            }
+
 
 
 
           }
-          else if (response.result.parameters.email) {
+          else if (response.result.parameters.email || generalEmailForEmpInfo != "") {
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
               employeeEmail = response.result.parameters.email
               employeeEmail = employeeEmail.toString().split('|')
               employeeEmail = employeeEmail[1];
               employeeEmail = employeeEmail.replace(/>/g, "");
               console.log("Email after split mail to ")
+              generalEmailForEmpInfo = employeeEmail
+
             }
-            else employeeEmail = response.result.parameters.email
+            else {
+              employeeEmail = response.result.parameters.email
+              generalEmailForEmpInfo = employeeEmail
+
+
+            }
 
 
 
 
-            if (response.result.parameters.employee_info_types == "stats")
+            if (response.result.parameters.employee_info_types == "stats") {
               employee.showEmployeeStats(emailValue, employeeEmail, msg);
-            else if (response.result.parameters.employee_info_types == "profile")
-              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-            else if (response.result.parameters.employee_info_types == "history")
-              employee.showEmployeeHistory(emailValue, employeeEmail, msg)
-            else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              generalEmailForEmpInfo = ""
 
-          } else msg.say("There is an error in user ID ")
+            }
+            else if (response.result.parameters.employee_info_types == "profile") {
+              employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              generalEmailForEmpInfo = ""
+
+            }
+            else if (response.result.parameters.employee_info_types == "history") {
+              employee.showEmployeeHistory(emailValue, employeeEmail, msg)
+              generalEmailForEmpInfo = ""
+
+            }
+            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+            else {
+              msg.say("Please specify on of the following :profile,stats or history ")
+            }
+
+          } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types)
+            msg.say("Please specify employee email")
         }
 
 
@@ -410,7 +447,7 @@ function sendRequestToApiAi(emailValue, msg) {
                     managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                       var fromDate = date + " " + convertedTime;
                       var toDate = date1 + " " + convertedTime1
-                   
+
                       console.log("toDate::" + toDate);
                       console.log("fromDate::" + fromDate);
                       toDate = new Date(toDate);
