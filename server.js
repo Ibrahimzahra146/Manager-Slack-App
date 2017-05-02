@@ -231,42 +231,39 @@ function sendRequestToApiAi(emailValue, msg) {
           var employeeEmail = "";
           if (response.result.parameters.any || generalEmailForEmpInfo != "") {
             console.log("response.result.parameters.any).indexOf('.') " + response.result.parameters.any).indexOf('.')
-            if ((response.result.parameters.any).indexOf('.') < 0) {
 
-              msg.say("Sorry ,I cant understand you ")
+
+            employeeEmail = response.result.parameters.any + "@exalt.ps"
+            employeeEmail = employeeEmail.replace(/ /g, ".");
+
+            generalEmailForEmpInfo = employeeEmail
+
+            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
+              generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+
             }
+            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
+              generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+
+            }
+            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+              generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+
+            }
+            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else {
-              employeeEmail = response.result.parameters.any + "@exalt.ps"
-              employeeEmail = employeeEmail.replace(/ /g, ".");
-
-              generalEmailForEmpInfo = employeeEmail
-
-              if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-                employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-
-              }
-              else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
-                employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-
-              }
-              else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
-                employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-
-              }
-              // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-              else {
-                msg.say("Please specify on of the following :profile,stats or history ")
-              }
-
-
-
+              msg.say("Please specify on of the following :profile,stats or history ")
             }
+
+
+
+
           }
           else if (response.result.parameters.email || generalEmailForEmpInfo != "") {
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
@@ -354,13 +351,19 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
               } else if (response.result.parameters.any) {
-                employeeEmail = response.result.parameters.any
-                employeeEmail = response.result.parameters.any + "@exalt.ps"
-                employeeEmail = employeeEmail.replace(/ /g, ".");
-                generalEmail = employeeEmail
-                isInfo = 1
+                if ((response.result.parameters.any).indexOf('.') < 0) {
+
+                  msg.say("Sorry ,I cant understand you ")
+                } else {
 
 
+                  employeeEmail = response.result.parameters.any
+                  employeeEmail = response.result.parameters.any + "@exalt.ps"
+                  employeeEmail = employeeEmail.replace(/ /g, ".");
+                  generalEmail = employeeEmail
+                  isInfo = 1
+
+                }
 
               }
 
