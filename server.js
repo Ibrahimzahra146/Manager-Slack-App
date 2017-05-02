@@ -230,7 +230,6 @@ function sendRequestToApiAi(emailValue, msg) {
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           var employeeEmail = "";
           if (response.result.parameters.any || generalEmailForEmpInfo != "" || generalEmail != "") {
-            console.log("response.result.parameters.any).indexOf('.') " + response.result.parameters.any).indexOf('.')
 
 
             employeeEmail = response.result.parameters.any + "@exalt.ps"
