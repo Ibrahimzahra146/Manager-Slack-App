@@ -415,6 +415,8 @@ function sendRequestToApiAi(emailValue, msg) {
                       console.log("fromDate::" + fromDate);
                       toDate = new Date(toDate);
 
+                      console.log("timeMilliseconds" + toDate)
+
                       var dateMilliSeconds = toDate.getTime();
                       dateMilliSeconds = dateMilliSeconds - (3 * 60 * 60 * 1000);
 
