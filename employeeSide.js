@@ -67,11 +67,7 @@ module.exports.showEmployeeProfile = function showEmployeeProfile(email, employe
                                     "short": true
                                 },
 
-                                {
-                                    "title": "Emp.type ",
-                                    "value": body.employeeType,
-                                    "short": true
-                                },
+                             
                                 {
                                     "title": "Approver 2",
                                     "value": Approver2,
