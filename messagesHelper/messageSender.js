@@ -48,7 +48,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
 
     } else if (approvalType == "Rejected") {
         if (type == "WFH") {
-            userFeedbackmessage = "The approver " + managerEmail + " has rejected your working from home request ( " + fromDate + " - " + toDate + " )."
+            userFeedbackmessage = "The approver " + managerEmail + " has rejected your working from home request ( " + fromDate + " - " + toDate + " ).\n" + comment
         }
         else if ((JSON.parse(body)).vacationState == "Rejected") {
             userFeedbackmessage = "The approver " + managerEmail + " has rejected your time off ( " + fromDate + " - " + toDate + " ). Your time off is rejected.\n " + comment
