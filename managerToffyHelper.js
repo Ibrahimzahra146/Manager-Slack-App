@@ -721,7 +721,7 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
             var obj = JSON.parse(body);
             var stringMessage = "["
             var i = 0
-            printLogs("email:" + JSON.stringify(body))
+            printLogs("email :" + JSON.stringify(body))
             if (!obj[0])
                 msg.say("There are no off employees.")
             else {
