@@ -11,7 +11,7 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
     var userFeedbackmessage = ""
     var comment = ""
     if (comment1 != "") {
-        comment = "Approval comment: " + comment1
+        comment = "Approvar comment: " + comment1
     }
 
     if (approvalType == "ApprovedWithoutDeduction") {
