@@ -543,6 +543,10 @@ function sendRequestToApiAi(emailValue, msg) {
           })
 
         }
+        else if ((responseText) == "Help") {
+
+          managerToffyHelper.sendHelpOptions(msg);
+        }
         else if (responseText == "Reminders") {
           getTodayDate(function (today) {
             var date = today

@@ -762,3 +762,38 @@ module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
 
 
 }
+//Help menu
+module.exports.sendHelpOptions = function sendHelpOptions(msg) {
+    var messageBody = {
+        "text": "",
+        "attachments": [
+            {
+
+                "pretext": "You can use on of the following expressions to engage with me:",
+                "color": "#3AA3E3",
+                "attachment_type": "default",
+                "fields": [
+                    {
+                        "title": "Submit time off for emp.name@exalt.ps today or on 10 May or from 10 May to 15 May",
+                        "value": "",
+                        "short": false
+                    },
+                    {
+                        "title": "Show emp.name@exalt.ps profile or stats or history ",
+                        "value": "",
+                        "short": false
+                    },
+                    {
+                        "title": "Who is off today or tomorrow or from 4 May to 10 May",
+                        "value": "",
+                        "short": false
+                    },
+                   
+                ]
+            }
+        ]
+    }
+    var stringfy = JSON.stringify(messageBody);
+    var obj1 = JSON.parse(stringfy);
+    msg.say(obj1)
+}
