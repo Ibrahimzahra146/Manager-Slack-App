@@ -54,6 +54,9 @@ var Botkit = require('./lib/Botkit.js');
 var controller = Botkit.slackbot({
   debug: true,
 });
+var controller2 = Botkit.slackbot({
+  debug: true,
+});
 console.log("the token is " + APIAI_ACCESS_TOKEN)
 var bot = controller.spawn({
   token: SLACK_BOT_TOKEN
@@ -61,7 +64,7 @@ var bot = controller.spawn({
 }).startRTM();
 exports.bot = bot
 //*********
-var manager_bot = controller.spawn({
+var manager_bot = controller2.spawn({
   token: process.env.MANAGER_BOT_ACCESS_KEY
 
 }).startRTM();
@@ -875,6 +878,9 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
   var comment = arr[10]
 
   managerApproval1(msg, value, "Rejected", 0, comment)
+})
+controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
+  console.log("Sufferring")
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
