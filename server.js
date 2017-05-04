@@ -886,6 +886,19 @@ controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (b
   console.log("Sufferring")
   console.log(JSON.stringify(message))
 })
+controller.on('message_received',function(bot,message) {
+
+  console.log("Sufferring11")
+  console.log(JSON.stringify(message))
+
+})
+controller.on('direct_message',function(bot,message) {
+
+  console.log("Sufferring11222")
+  console.log(JSON.stringify(message))
+
+})
+
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request ");
