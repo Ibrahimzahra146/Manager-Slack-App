@@ -881,6 +881,7 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
 })
 controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
   console.log("Sufferring")
+  console.log(JSON.stringify(message))
 })
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
