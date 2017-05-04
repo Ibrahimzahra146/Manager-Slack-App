@@ -659,6 +659,9 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
   if (msg.body.event.user == "U3R213B2L") {
 
     console.log("message from bot")
+    var stringfy = JSON.stringify(msg);
+    console.log("the message is ");
+    console.log(stringfy);
 
   } else {
 

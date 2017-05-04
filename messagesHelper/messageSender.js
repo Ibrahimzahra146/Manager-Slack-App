@@ -6,12 +6,11 @@ var generalCookies = "initial"
 
 var IP = process.env.SLACK_IP
 module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment1) {
-    console.log("SendDDDDD");
     var managerFeedbackmessage = ""
     var userFeedbackmessage = ""
     var comment = ""
     if (comment1 != "") {
-        comment = "Approvar comment: " + comment1
+        comment = "Approver comment: " + comment1
     }
 
     if (approvalType == "ApprovedWithoutDeduction") {
