@@ -25,6 +25,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
             date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.any) {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
+            employeeEmail = employeeEmail.replace(/ /g, ".");
             console.log("Case3")
             date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.any) {
@@ -92,8 +93,9 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail) {
                 }
                 if (employeeEmail != "") {
                     if (isOffFlag == 1) {
+                        msg.say(employeeEmail + " is off")
 
-                    }
+                    }else msg.say(employeeEmail + " is not off")
                 } else {
                     stringMessage = stringMessage + "]"
                     console.log("stringMessage", stringMessage)
