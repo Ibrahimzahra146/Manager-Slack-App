@@ -20,7 +20,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
             console.log("Case1")
             date = response.result.parameters.date
             date1 = response.result.parameters.date1
-        } else if (response.result.parameters.question && response.result.parameters.in_off && response.result.parameters.date) {
+        } else if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date) {
             console.log("Case2")
             date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.any) {
