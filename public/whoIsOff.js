@@ -1,5 +1,5 @@
 const request = require('request');
-var managerHelper = require('.././managerToffyHelper.js')
+var managerToffyHelper = require('.././managerToffyHelper.js')
 var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
@@ -44,7 +44,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
 function showWhoIsOff(msg, email, date, date1) {
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
         var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
-        printLogs("uri " + uri)
+        console.log("uri " + uri)
 
         request({
             url: uri, //URL to hitDs
@@ -59,7 +59,6 @@ function showWhoIsOff(msg, email, date, date1) {
             var obj = JSON.parse(body);
             var stringMessage = "["
             var i = 0
-            printLogs("email :" + JSON.stringify(body))
             if (!obj[0])
                 msg.say("There are no off employees.")
             else {
@@ -86,7 +85,6 @@ function showWhoIsOff(msg, email, date, date1) {
                 }
                 var stringfy = JSON.stringify(messageBody);
 
-                printLogs("stringfy " + stringfy)
                 stringfy = stringfy.replace(/\\/g, "")
                 stringfy = stringfy.replace(/]\"/, "]")
                 stringfy = stringfy.replace(/\"\[/, "[")
