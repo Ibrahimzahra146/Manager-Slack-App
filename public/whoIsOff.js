@@ -69,6 +69,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
+            console.log("JSON:"+JSON.stringify(body))
             var isOffFlag = 0
             var obj = JSON.parse(body);
             var stringMessage = "["
