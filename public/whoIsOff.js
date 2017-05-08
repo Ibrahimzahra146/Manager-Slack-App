@@ -72,7 +72,11 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail) {
             var stringMessage = "["
             var i = 0
             if (!obj[0])
-                msg.say("There are no off employees.")
+                if (employeeEmail != "") {
+                    console.log(employeeEmail+" is not off.")
+
+                } else
+                    msg.say("There are no off employees.")
             else {
                 while (obj[i]) {
                     if (employeeEmail != "") {
@@ -94,9 +98,9 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail) {
                 }
                 if (employeeEmail != "") {
                     if (isOffFlag == 1) {
-                        msg.say(employeeEmail + " is off")
+                        msg.say(employeeEmail + " is off.")
 
-                    } else msg.say(employeeEmail + " is not off")
+                    } else msg.say(employeeEmail + " is not off.")
                 } else {
                     stringMessage = stringMessage + "]"
                     console.log("stringMessage", stringMessage)
