@@ -32,6 +32,8 @@ var IP = process.env.SLACK_IP
 var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var employee = require("./employeeSide.js")
+var whoIsOff = require("./public/whoIsOff.js")
+
 var managerIdInHr = ""
 var vacation_type1 = ""
 var fromDate = ""
@@ -227,7 +229,11 @@ function sendRequestToApiAi(emailValue, msg) {
            }
            console.log("WhoIsOffCase" + WhoIsOffCase)
          }*/
-        if (responseText == "showEmployeeInfo") {
+        if (responseText == "whoIsOff") {
+          console.log("arrive")
+          whoIsOff.whoIsOff(msg, response, emailValue)
+        }
+        else if (responseText == "showEmployeeInfo") {
           console.log("eresponse:::" + JSON.stringify(response))
           console.log("employeeEmail:  ::" + response.result.parameters.email)
           console.log("response.result.parameters.any" + response.result.parameters.any)
@@ -886,13 +892,13 @@ controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (b
   console.log("Sufferring")
   console.log(JSON.stringify(message))
 })
-controller.on('message_received',function(bot,message) {
+controller.on('message_received', function (bot, message) {
 
   console.log("Sufferring11")
   console.log(JSON.stringify(message))
 
 })
-controller.on('direct_message',function(bot,message) {
+controller.on('direct_message', function (bot, message) {
 
   console.log("Sufferring11222")
   console.log(JSON.stringify(message))

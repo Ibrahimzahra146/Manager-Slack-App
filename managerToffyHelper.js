@@ -703,65 +703,7 @@ function makeGetRequest(path, email, callback) {
     })
 
 }
-module.exports.showWhoIsOff = function showWhoIsOff(msg, email, date, date1) {
-    managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
-        var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
-        printLogs("uri " + uri)
 
-        request({
-            url: uri, //URL to hitDs
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': remember_me_cookie + ";" + session_Id
-
-            }
-            //Set the body as a stringcc
-        }, function (error, response, body) {
-            var obj = JSON.parse(body);
-            var stringMessage = "["
-            var i = 0
-            printLogs("email :" + JSON.stringify(body))
-            if (!obj[0])
-                msg.say("There are no off employees.")
-            else {
-                while (obj[i]) {
-                    if (i > 0) {
-                        stringMessage = stringMessage + ","
-                    }
-                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
-                    i++;
-                }
-                stringMessage = stringMessage + "]"
-                console.log("stringMessage", stringMessage)
-                var messageBody = {
-                    "text": "These employees are off :",
-                    "attachments": [
-                        {
-                            "attachment_type": "default",
-                            "text": " ",
-                            "fallback": "ReferenceError",
-                            "fields": stringMessage,
-                            "color": "#F35A00"
-                        }
-                    ]
-                }
-                var stringfy = JSON.stringify(messageBody);
-
-                printLogs("stringfy " + stringfy)
-                stringfy = stringfy.replace(/\\/g, "")
-                stringfy = stringfy.replace(/]\"/, "]")
-                stringfy = stringfy.replace(/\"\[/, "[")
-                stringfy = JSON.parse(stringfy)
-                msg.say(stringfy);
-            }
-        })
-
-
-    })
-
-
-}
 //Help menu
 module.exports.sendHelpOptions = function sendHelpOptions(msg) {
     var messageBody = {
