@@ -26,10 +26,10 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
 
 
         }
-        date = date + time;
+        date = date + " " + time;
         console.log("date:" + date)
         console.log("date1:" + date1)
-        date1 = date1 + time1
+        date1 = date1 + " " + time1
         console.log("date1:" + date1)
         fromDateMilli = new Date(date)
         console.log("fromDateMilli:" + fromDateMilli)
