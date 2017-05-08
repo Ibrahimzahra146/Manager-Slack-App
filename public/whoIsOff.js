@@ -14,7 +14,9 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         var fromDateMilli = ""
         var toDateMilli = ""
         var employeeEmail = ""
-
+        var type = 0
+        if (response.result.parameters.in_off)
+            type = 7
 
         if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
             console.log("Case1")
@@ -45,16 +47,16 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         toDateMilli = new Date(date1)
         toDateMilli = toDateMilli.getTime();
         toDateMilli = toDateMilli - (3 * 60 * 60 * 1000)
-        showWhoIsOff(msg, email, fromDateMilli, toDateMilli, employeeEmail)
+        showWhoIsOff(msg, email, fromDateMilli, toDateMilli, employeeEmail, type)
 
 
     })
 
 }
 
-function showWhoIsOff(msg, email, date, date1, employeeEmail) {
+function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
-        var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
+        var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1 + '&type=' + type
         console.log("uri " + uri)
 
         request({
@@ -73,7 +75,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail) {
             var i = 0
             if (!obj[0])
                 if (employeeEmail != "") {
-                    console.log(employeeEmail+" is not off.")
+                    console.log(employeeEmail + " is not off.")
 
                 } else
                     msg.say("There are no off employees.")
