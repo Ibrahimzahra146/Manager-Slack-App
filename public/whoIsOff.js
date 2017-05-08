@@ -1,11 +1,10 @@
 const request = require('request');
-var managerHelper = require('.././/managerToffyHelper.js')
-var server = require('./server.js')
+var managerHelper = require('.././managerToffyHelper.js')
+var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
-var employee = require("./employeeSide.js")
-var whoIsOff = require("./public/whoIsOff.js")
+var employee = require(".././employeeSide.js")
 module.exports.whoIsOff = function whoIsOff(msg, response, email) {
     managerToffyHelper.getTodayDate(function (today) {
         var time1 = "17:00:00";
