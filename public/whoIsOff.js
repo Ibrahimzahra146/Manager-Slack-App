@@ -47,7 +47,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
 
 }
 
-function showWhoIsOff(msg, email, date, date1, isOff, employeeEmail) {
+function showWhoIsOff(msg, email, date, date1, employeeEmail) {
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
         var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
         console.log("uri " + uri)
