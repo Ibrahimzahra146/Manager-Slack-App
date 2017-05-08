@@ -72,8 +72,12 @@ function showWhoIsOff(msg, email, date, date1, isOff, employeeEmail) {
                 while (obj[i]) {
                     if (employeeEmail != "") {
                         console.log("employeeEmail11")
-                        if ((JSON.parse(body))[i].email == employeeEmail)
+                        console.log("JSON.parse(body))[i].email" + JSON.parse(body)[i].email)
+                        console.log("employeeEmail::" + employeeEmail)
+                        if ((JSON.parse(body))[i].email == employeeEmail) {
+                            console.log("employeeEmail12")
                             isOffFlag = 1
+                        }
                     }
                     else {
                         if (i > 0) {
