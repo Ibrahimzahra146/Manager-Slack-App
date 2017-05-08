@@ -29,7 +29,8 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
             console.log("Case3")
             date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.any) {
-
+            employeeEmail = response.result.parameters.any + "@exalt.ps"
+            employeeEmail = employeeEmail.replace(/ /g, ".");
 
         }
         date = date + " " + time;
