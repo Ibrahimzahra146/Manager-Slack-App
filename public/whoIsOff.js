@@ -13,6 +13,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         var date1 = today
         var fromDateMilli = ""
         var toDateMilli = ""
+        var employeeEmail = ""
 
 
         if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
@@ -21,7 +22,8 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         } else if (response.result.parameters.question && response.result.parameters.in_off && response.result.parameters.date) {
             date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.any) {
-
+            employeeEmail = response.result.parameters.any + "@exalt.ps"
+            date = response.result.parameters.date
         } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.any) {
 
 
@@ -38,14 +40,14 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         toDateMilli = new Date(date1)
         toDateMilli = toDateMilli.getTime();
         toDateMilli = toDateMilli - (3 * 60 * 60 * 1000)
-        showWhoIsOff(msg, email, fromDateMilli, toDateMilli)
+        showWhoIsOff(msg, email, fromDateMilli, toDateMilli, employeeEmail)
 
 
     })
 
 }
 
-function showWhoIsOff(msg, email, date, date1) {
+function showWhoIsOff(msg, email, date, date1, isOff, employeeEmail) {
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
         var uri = 'http://' + IP + '/api/v1/employee/off?from=' + date + '&to=' + date1
         console.log("uri " + uri)
@@ -60,6 +62,7 @@ function showWhoIsOff(msg, email, date, date1) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
+            var isOffFlag = 0
             var obj = JSON.parse(body);
             var stringMessage = "["
             var i = 0
@@ -67,33 +70,46 @@ function showWhoIsOff(msg, email, date, date1) {
                 msg.say("There are no off employees.")
             else {
                 while (obj[i]) {
-                    if (i > 0) {
-                        stringMessage = stringMessage + ","
+                    if (employeeEmail != "") {
+                        console.log("employeeEmail11")
+                        if ((JSON.parse(body))[i].email == employeeEmail)
+                            isOffFlag = 1
                     }
-                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+                    else {
+                        if (i > 0) {
+                            stringMessage = stringMessage + ","
+                        }
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+                    }
                     i++;
                 }
-                stringMessage = stringMessage + "]"
-                console.log("stringMessage", stringMessage)
-                var messageBody = {
-                    "text": "These employees are off :",
-                    "attachments": [
-                        {
-                            "attachment_type": "default",
-                            "text": " ",
-                            "fallback": "ReferenceError",
-                            "fields": stringMessage,
-                            "color": "#F35A00"
-                        }
-                    ]
-                }
-                var stringfy = JSON.stringify(messageBody);
+                if (employeeEmail != "") {
+                    if (isOffFlag == 1) {
 
-                stringfy = stringfy.replace(/\\/g, "")
-                stringfy = stringfy.replace(/]\"/, "]")
-                stringfy = stringfy.replace(/\"\[/, "[")
-                stringfy = JSON.parse(stringfy)
-                msg.say(stringfy);
+                    }
+                } else {
+                    stringMessage = stringMessage + "]"
+                    console.log("stringMessage", stringMessage)
+                    var messageBody = {
+                        "text": "These employees are off :",
+                        "attachments": [
+                            {
+                                "attachment_type": "default",
+                                "text": " ",
+                                "fallback": "ReferenceError",
+                                "fields": stringMessage,
+                                "color": "#F35A00"
+                            }
+                        ]
+                    }
+                    var stringfy = JSON.stringify(messageBody);
+
+                    stringfy = stringfy.replace(/\\/g, "")
+                    stringfy = stringfy.replace(/]\"/, "]")
+                    stringfy = stringfy.replace(/\"\[/, "[")
+                    stringfy = JSON.parse(stringfy)
+                    msg.say(stringfy);
+                }
             }
         })
 
