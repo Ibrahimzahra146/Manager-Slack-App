@@ -273,6 +273,13 @@ function sendRequestToApiAi(emailValue, msg) {
               generalEmail = ""
 
             }
+            else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
+              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+              generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+              generalEmail = ""
+
+            }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else {
               msg.say("Please specify on of the following :profile,stats or history ")
@@ -330,9 +337,16 @@ function sendRequestToApiAi(emailValue, msg) {
               generalEmail = ""
 
             }
+            else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
+              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+              generalEmailForEmpInfo = ""
+              generalEmpInfo = ""
+              generalEmail = ""
+
+            }
             // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
             else {
-              msg.say("Please specify on of the following :profile,stats or history ")
+              msg.say("Please specify on of the following :profile, stats, history or pending ")
             }
 
           } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
