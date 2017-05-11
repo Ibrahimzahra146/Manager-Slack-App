@@ -713,13 +713,22 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
 })
 // check vacation state
 slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
-
   var arr = value.toString().split(";")
   var userEmail = arr[0];
   var vacationId = arr[1];
   var approvalId = arr[2]
   var managerEmail = arr[3]
-  vacationHelper.getVacationState(managerEmail, vacationId)
+  var fromWho = arr[4];
+  var fromDate = arr[5];
+  var toDate = arr[6];
+  var type = arr[7]
+  var workingDays = arr[8]
+  var ImageUrl = arr[9]
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state) {
+    if (state == 404) {
+      replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+    }
+  })
 })
 function managerAction(msg, value, typeOfaction) {
   var arr = ""

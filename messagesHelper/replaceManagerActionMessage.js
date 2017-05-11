@@ -219,3 +219,55 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
     }
     msg.respond(msg.body.response_url, messageBody)
 }
+
+/**
+ * Refresh the current message
+ */
+
+module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+   
+    }
+    var messageBody = {
+        "text": "Time off request:",
+        "attachments": [
+            {
+                "attachment_type": "default",
+                "callback_id": "manager_confirm_reject",
+                "text": userEmail,
+                "fallback": "ReferenceError",
+                "fields": [
+                    {
+                        "title": "From",
+                        "value": fromDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Days/Time ",
+                        "value": workingDays + " day",
+                        "short": true
+                    },
+                    {
+                        "title": "to",
+                        "value": toDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Type",
+                        "value": type,
+                        "short": true
+                    }
+                    ,
+                    {
+                        "title": "State",
+                        "value": "Canceled by "+userEmail,
+                        "short": true
+                    }
+                ],
+
+                "color": "#F35A00",
+                "thumb_url": ImageUrl,
+            }
+        ]
+    }
+    msg.respond(msg.body.response_url, messageBody)
+}
