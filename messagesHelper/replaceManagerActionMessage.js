@@ -277,7 +277,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  */
 module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
 
-
+    console.log("replaceMessageOnCheckState")
     var messageBody = {
         "text": "Time off request:",
         "attachments": [
