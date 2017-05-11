@@ -259,7 +259,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
                     ,
                     {
                         "title": "State",
-                        "value": "Cancelled by emploee :no_entry_sign:",
+                        "value": "Cancelled by employee :no_entry_sign:",
                         "short": true
                     }
                 ],
