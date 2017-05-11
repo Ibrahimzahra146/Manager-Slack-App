@@ -48,7 +48,13 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "type": "button",
                         "style": "danger",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    }
+                    }, {
+                        "name": "check_state",
+                        "text": "Check status",
+
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
                 ],
                 "color": "#F35A00",
                 "thumb_url": ImageUrl,
@@ -120,6 +126,13 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }, dont_detuct_button
+                    , {
+                        "name": "check_state",
+                        "text": "Check status",
+
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
                 ],
                 "color": "#F35A00",
                 "thumb_url": ImageUrl,
