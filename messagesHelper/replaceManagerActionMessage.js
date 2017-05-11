@@ -225,8 +225,8 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
  */
 
 module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
-
-
+   
+    
     var messageBody = {
         "text": "Time off request:",
         "attachments": [
@@ -259,13 +259,13 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
                     ,
                     {
                         "title": "State",
-                        "value": "Canceled by employee",
+                        "value": "Cancelled by emploee :no_entry_sign:",
                         "short": true
                     }
                 ],
 
                 "color": "#F35A00",
-                "thumb_url": "http://46.43.71.50:19090/files/cancel.jpg",
+                "thumb_url": ImageUrl,
             }
         ]
     }
