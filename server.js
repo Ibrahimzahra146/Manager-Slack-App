@@ -868,7 +868,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
         })
       }
     }
-    else msg.say("Sorry,You can't take an action, since this time off request is already canceled.")
+    else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+
   })
 }
 
