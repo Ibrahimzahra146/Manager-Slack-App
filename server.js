@@ -33,7 +33,7 @@ var managerChannel = "D3RR2RE68"
 var Constants = require('./Constants.js');
 var employee = require("./employeeSide.js")
 var whoIsOff = require("./public/whoIsOff.js")
-
+var vacationHelper = require("./public/Vacation.js")
 var managerIdInHr = ""
 var vacation_type1 = ""
 var fromDate = ""
@@ -711,6 +711,16 @@ slapp.action('manager_confirm_reject', 'dont_detuct', (msg, value) => {
   managerApproval1(msg, value, "ApprovedWithoutDeduction", 0, "")
 
 })
+// check vacation state
+slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
+
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  vacationHelper.getVacationState(managerEmail, vacationId)
+})
 function managerAction(msg, value, typeOfaction) {
   var arr = ""
   var type = ""
@@ -860,6 +870,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
 slapp.action('leave_with_vacation_confirm_reject', 'confirm', (msg, value) => {
   managerAction(msg, value, "Approved")
 })
+
 slapp.action('leave_with_vacation_confirm_reject', 'confirm_without_detuction', (msg, value) => {
   managerAction(msg, value, "ApprovedWithoutDeduction")
 })
