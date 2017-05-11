@@ -276,7 +276,15 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * 
  */
 module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
-
+    var dont_detuct_button = ""
+    if (type != "WFH") {
+        dont_detuct_button = {
+            "name": "dont_detuct",
+            "text": "Don’t Deduct ",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+        }
+    }
     console.log("replaceMessageOnCheckState")
     var messageBody = {
         "text": "Time off request:",
