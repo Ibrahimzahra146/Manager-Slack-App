@@ -17,8 +17,9 @@ module.exports.getVacationState = function getVacationState(email, vacationId) {
         managerToffyHelper.general_session_id = sessionId
 
         var uri = "http://" + IP + "/api/v1/vacation/" + vacationId
+        console.log(uri)
         request({
-            url:  uri, //URL to hitDs
+            url: uri, //URL to hitDs
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
