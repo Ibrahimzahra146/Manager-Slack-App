@@ -265,7 +265,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
                 ],
 
                 "color": "#F35A00",
-                "thumb_url": ImageUrl,
+                "thumb_url": "http://46.43.71.50:19090/files/cancel.jpg",
             }
         ]
     }
