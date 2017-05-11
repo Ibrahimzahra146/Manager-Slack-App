@@ -29,11 +29,7 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
             //Set the body as a stringcc
         }, function (error, response, body) {
             console.log("Response.statusCode:" + response.statusCode)
-     
-                callback(404)
-
-
-            
+            callback(response.statusCode)
 
         })
     });
