@@ -54,7 +54,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
         }, function (error, response, body) {
             console.log("Response.statusCode:" + response.statusCode)
           //  console.log(body.managerApproval[0].managerEmail);
-            console.log(JSON.parse(body)[0].managerEmail)
+            console.log(JSON.parse(body).managerApproval[0].managerEmail)
             callback(JSON.parse(body)[0].managerEmail)
 
         })
