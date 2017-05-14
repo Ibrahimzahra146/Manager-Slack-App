@@ -349,8 +349,8 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     }
                     ,
                     {
-                        "title": "Approver2 ( " + approver2Email + " ) action",
-                        "value": approver2Action,
+                        "title": "Approver2 action",
+                        "value": approver2Email + " : " + approver2Action,
                         "short": true
                     },
                     {
