@@ -58,9 +58,9 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     "actions": [
                         {
                             "name": "Undo",
-                            "text": ":back:",
+                            "text": "back",
                             "type": "button",
-                            "style": "danger",
+                           
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         }, {
                             "name": "check_state_undo",
@@ -259,8 +259,8 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
                         }, {
                             "name": "Undo",
-                            "text": ":back:",
-                            "style": "danger",
+                            "text": "back",
+                            
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         }
@@ -432,10 +432,10 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
 }
 //
 function getEmoji(state, finalState, type, myAction, callback) {
-    var approverActionEmoji = ":speech_balloon:"
+    var approverActionEmoji = ":hourglass_flowing_sand:"
     var typeEmoji = ""
-    var finalStateEmoji = ":speech_balloon:"
-    var myActionEmoji = ":speech_balloon:"
+    var finalStateEmoji = ":hourglass_flowing_sand:"
+    var myActionEmoji = ":hourglass_flowing_sand:"
     if (state == "Rejected") {
         approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
