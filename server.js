@@ -729,9 +729,11 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, function (approver2Email, approver2Action, vacationState) {
-        replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState)
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
+        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 1, function (myEmail, myAction, vacationState) {
+          replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction)
 
+        })
       })
     }
   })

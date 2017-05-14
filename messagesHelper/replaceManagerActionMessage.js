@@ -301,7 +301,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * Check state of not canceled request
  * 
  */
-module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState) {
+module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) {
     var dont_detuct_button = ""
     if (type != "WFH") {
         dont_detuct_button = {
@@ -344,7 +344,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     ,
                     {
                         "title": "Your action ",
-                        "value": "--",
+                        "value": MyAction,
                         "short": true
                     }
                     ,
