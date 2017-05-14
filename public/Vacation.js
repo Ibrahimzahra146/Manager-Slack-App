@@ -58,7 +58,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                 function (callback) {
                     console.log("Response.statusCode:" + response.statusCode)
                     //  console.log(body.managerApproval[0].managerEmail);
-                    console.log("JSON.parse(body).managerApproval[0].managerEmail" + JSON.parse(body).managerApproval[0].managerEmail)
+                    console.log("JSON.parse(body).managerApproval[0].managerEmail" + JSON.parse(body).managerApproval[i].managerEmail)
                     console.log("JSON.parse(body).vacationState" + JSON.parse(body).vacationState)
                     // callback(JSON.parse(body).managerApproval[0].managerEmail)
                     i++
