@@ -63,7 +63,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                         callback1(approver2Email, approver2Action, vacationState)
                     }
                     i++
-                    setTimeout(callback, 5000);
+                    setTimeout(callback, 500);
 
                 },
                 function (err) {
