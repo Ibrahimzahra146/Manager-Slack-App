@@ -61,10 +61,11 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                 function () { return JSON.parse(body).managerApproval[i]; },
                 function (callback) {
                     if (JSON.parse(body).managerApproval[i].managerEmail != email) {
-                        
+
                         approver2Email = JSON.parse(body).managerApproval[i].managerEmail
                         approver2Action = JSON.parse(body).managerApproval[i].state
                         vacationState = JSON.parse(body).vacationState
+                        callback1(approver2Email, approver2Action, vacationState)
                     }
                     i++
                     setTimeout(callback, 5000);
@@ -75,7 +76,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                 }
 
             );
-            callback1(approver2Email, approver2Action, vacationState)
+
 
 
         })
