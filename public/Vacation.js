@@ -5,6 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 var employee = require(".././employeeSide.js")
+var async = require('async');
 var messageReplacer = require('.././messagesHelper/replaceManagerActionMessage.js')
 
 /**
