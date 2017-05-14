@@ -48,13 +48,13 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "type": "button",
                         "style": "danger",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    }, {
+                    },/* {
                         "name": "check_state",
                         "text": "Check status",
 
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    },
+                    },*/
                 ],
                 "color": "#F35A00",
                 "thumb_url": ImageUrl,
@@ -320,7 +320,8 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         "title": "State",
                         "value": "Your action is required",
                         "short": true
-                    }
+                    }, 
+                 
                 ], "actions": [
                     {
                         "name": "confirm",
