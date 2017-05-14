@@ -724,13 +724,13 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  vacationHelper.getVacationState(managerEmail, vacationId, function (state) {
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
-        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 1, function (myEmail, myAction, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(body, , 0, function (approver2Email, approver2Action, vacationState) {
+        vacationHelper.getSecondApproverStateAndFinalState(body, 1, function (myEmail, myAction, vacationState) {
           replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction)
 
         })
@@ -754,13 +754,13 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  vacationHelper.getVacationState(managerEmail, vacationId, function (state) {
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
-        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 1, function (myEmail, myAction, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(body, 0, function (approver2Email, approver2Action, vacationState) {
+        vacationHelper.getSecondApproverStateAndFinalState(body, 1, function (myEmail, myAction, vacationState) {
           replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, approver2Email, approver2Action, vacationState)
 
         })
