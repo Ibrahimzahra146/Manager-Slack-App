@@ -37,7 +37,8 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
 }
 module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email, vacationId, callback1) {
 
-    console.log("getVacationState")
+    var approver2Email = "--"
+    var approver2Action = "--"
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
         managerToffyHelper.general_remember_me = remember_me_cookie
         managerToffyHelper.general_session_id = sessionId
@@ -60,6 +61,8 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                     if (JSON.parse(body).managerApproval[i].managerEmail != email) {
                         console.log("matched email" + JSON.parse(body).managerApproval[i].managerEmail)
                         console.log("matched email" + JSON.parse(body).managerApproval[i].state)
+                        approver2Email = JSON.parse(body).managerApproval[i].managerEmail
+                        approver2Action = JSON.parse(body).managerApproval[i].state
                     }
                     console.log("Response.statusCode:" + response.statusCode)
                     //  console.log(body.managerApproval[0].managerEmail);
