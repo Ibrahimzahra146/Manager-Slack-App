@@ -34,3 +34,29 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
         })
     });
 }
+module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email, vacationId, callback) {
+
+    console.log("getVacationState")
+    managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
+        managerToffyHelper.general_remember_me = remember_me_cookie
+        managerToffyHelper.general_session_id = sessionId
+
+        var uri = "http://" + IP + "/api/v1/vacation/" + vacationId
+        console.log(uri)
+        request({
+            url: uri, //URL to hitDs
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': managerToffyHelper.general_remember_me + ";" + sessionId
+            }
+            //Set the body as a stringcc
+        }, function (error, response, body) {
+            console.log("Response.statusCode:" + response.statusCode)
+            console.log(body.managerApproval[0].managerEmail);
+            console.log(JSON.parse(body)[0].managerEmail)
+            callback(JSON.parse(body)[0].managerEmail)
+
+        })
+    });
+}
