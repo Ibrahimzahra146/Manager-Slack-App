@@ -5,7 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState) {
-    getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+    getEmoji(approver2Action, vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         console.log("ImageUrl" + ImageUrl)
         var messageBody = {
             "text": "Time off request:",
@@ -39,7 +39,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         ,
                         {
                             "title": "Your action ",
-                            "value": approvalType,
+                            "value": approvalType + " " + myActionEmoji,
                             "short": true
                         }
                         ,
@@ -80,7 +80,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
 }
 //return original message when click on undo
 module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Action, vacationState, myAction) {
-    getEmoji(approver2Action, vacationState, type, function (approverActionEmoji, finalStateEmoji, typeEmoji) {
+    getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         var dont_detuct_button = ""
         if (type != "WFH") {
             dont_detuct_button = {
@@ -122,7 +122,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         ,
                         {
                             "title": "Your action ",
-                            "value": myAction,
+                            "value": myAction + " " + myActionEmoji,
                             "short": true
                         }
                         ,
@@ -311,7 +311,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * 
  */
 module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) {
-    getEmoji(approver2Action, vacationState, type, function (approverActionEmoji, finalStateEmoji, typeEmoji) {
+    getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
 
         var dont_detuct_button = ""
@@ -356,7 +356,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         ,
                         {
                             "title": "Your action ",
-                            "value": myAction,
+                            "value": myAction + " " + myActionEmoji,
                             "short": true
                         }
                         ,
