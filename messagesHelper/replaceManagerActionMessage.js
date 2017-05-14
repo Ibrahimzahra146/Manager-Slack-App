@@ -43,7 +43,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     ,
                     {
                         "title": "Approver2 action",
-                        "value":  approver2Action,
+                        "value": approver2Action,
                         "short": true
                     },
                     {
@@ -61,7 +61,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "style": "danger",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                     }, {
-                        "name": "check_state",
+                        "name": "check_state_undo",
                         "text": ":arrows_counterclockwise:",
 
                         "type": "button",
@@ -123,7 +123,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                     ,
                     {
                         "title": "Approver2 action",
-                        "value": approver2Email + " : " + approver2Action,
+                        "value": approver2Action,
                         "short": true
                     },
                     {
@@ -353,7 +353,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     ,
                     {
                         "title": "Approver2 action",
-                        "value": approver2Email + " : " + approver2Action,
+                        "value": approver2Action,
                         "short": true
                     },
                     {
@@ -400,5 +400,6 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
     }
     msg.respond(msg.body.response_url, messageBody)
 }
+//
 
 
