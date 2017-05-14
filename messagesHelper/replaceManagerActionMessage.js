@@ -39,7 +39,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         ,
                         {
                             "title": "Your action ",
-                            "value": myAction,
+                            "value": approvalType,
                             "short": true
                         }
                         ,
