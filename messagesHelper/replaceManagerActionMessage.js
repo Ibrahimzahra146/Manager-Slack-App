@@ -4,7 +4,7 @@ var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
-module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays) {
+module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState) {
     console.log("ImageUrl" + ImageUrl)
     var messageBody = {
         "text": "Time off request:",
@@ -43,14 +43,15 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     ,
                     {
                         "title": "Approver2 action",
-                        "value": "--",
+                        "value": approver2Email + " : " + approver2Action,
                         "short": true
                     },
                     {
                         "title": "Final state",
-                        "value": "--",
+                        "value": vacationState,
                         "short": true
                     }
+
                 ],
                 "actions": [
                     {
@@ -75,7 +76,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
     msg.respond(msg.body.response_url, messageBody)
 }
 //return original message when click on undo
-module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Action, vacationState, myAction) {
     var dont_detuct_button = ""
     if (type != "WFH") {
         dont_detuct_button = {
@@ -113,22 +114,24 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         "title": "Type",
                         "value": type,
                         "short": true
-                    }, {
+                    },
+                    {
                         "title": "Your action ",
-                        "value": "--",
+                        "value": myAction,
                         "short": true
                     }
                     ,
                     {
                         "title": "Approver2 action",
-                        "value": "--",
+                        "value": approver2Email + " : " + approver2Action,
                         "short": true
                     },
                     {
                         "title": "Final state",
-                        "value": "--",
+                        "value": vacationState,
                         "short": true
                     }
+
                 ],
                 "actions": [
                     {

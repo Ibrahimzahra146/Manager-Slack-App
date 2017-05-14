@@ -828,56 +828,62 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-
-  console.log("ImageUrl" + ImageUrl)
-  var typeText = " time off"
-  if (type == "sick") {
-    typeText = " sick time off "
-  } else if (type == "Maternity") {
-    typeText = " maternity" + " time off"
-  } else if (type == "Paternity") {
-    typeText = " paternity" + " time off"
-  } else if (type == "WFH")
-    typeText = " work from home"
-
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-    if (isDeleted == false) {
-      if (fromManager != 1) {
-        request({
-          url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-          },
-          body: userEmail
-          //Set the body as a stringcc
-        }, function (error, response, body) {
-          var responseBody = JSON.parse(body);
-          managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
+  //var approver2Email = arr[10]
+  //var approver2Action = arr[11]
+  //var vacationState = arr[12]
+  vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
 
 
-            var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-            request({
-              url: uri, //URL to hitDs
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Cookie': remember_me_cookie + ";" + session_id
+    console.log("ImageUrl" + ImageUrl)
+    var typeText = " time off"
+    if (type == "sick") {
+      typeText = " sick time off "
+    } else if (type == "Maternity") {
+      typeText = " maternity" + " time off"
+    } else if (type == "Paternity") {
+      typeText = " paternity" + " time off"
+    } else if (type == "WFH")
+      typeText = " work from home"
 
-              }
-              //Set the body as a stringcc
-            }, function (error, response, body) {
-              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays)
+    sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+      if (isDeleted == false) {
+        if (fromManager != 1) {
+          request({
+            url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+            },
+            body: userEmail
+            //Set the body as a stringcc
+          }, function (error, response, body) {
+            var responseBody = JSON.parse(body);
+            managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
 
-            });
+
+              var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
+              request({
+                url: uri, //URL to hitDs
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Cookie': remember_me_cookie + ";" + session_id
+
+                }
+                //Set the body as a stringcc
+              }, function (error, response, body) {
+                messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+                replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
+
+              });
+            })
           })
-        })
+        }
       }
-    }
-    else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+      else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
+    })
   })
 }
 
