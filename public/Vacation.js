@@ -53,7 +53,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
             //Set the body as a stringcc
         }, function (error, response, body) {
             console.log("Response.statusCode:" + response.statusCode)
-            console.log(body.managerApproval[0].managerEmail);
+          //  console.log(body.managerApproval[0].managerEmail);
             console.log(JSON.parse(body)[0].managerEmail)
             callback(JSON.parse(body)[0].managerEmail)
 
