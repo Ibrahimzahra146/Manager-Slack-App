@@ -52,11 +52,25 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
-            console.log("Response.statusCode:" + response.statusCode)
-            //  console.log(body.managerApproval[0].managerEmail);
-            console.log(JSON.parse(body).managerApproval[0].managerEmail)
-            console.log(JSON.parse(body).vacationState)
-            callback(JSON.parse(body).managerApproval[0].managerEmail)
+            var i = 0;
+            async.whilst(
+                function () { return JSON.parse(body).managerApproval[i]; },
+                function (callback) {
+                    console.log("Response.statusCode:" + response.statusCode)
+                    //  console.log(body.managerApproval[0].managerEmail);
+                    console.log("JSON.parse(body).managerApproval[0].managerEmail" + JSON.parse(body).managerApproval[0].managerEmail)
+                    console.log("JSON.parse(body).vacationState" + JSON.parse(body).vacationState)
+                    // callback(JSON.parse(body).managerApproval[0].managerEmail)
+                    i++
+                    setTimeout(callback, 5000);
+
+                },
+                function (err) {
+                    // 5 seconds have passed
+                }
+
+            );
+
 
         })
     });
