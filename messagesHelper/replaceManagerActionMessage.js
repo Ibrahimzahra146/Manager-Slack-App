@@ -58,7 +58,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     "actions": [
                         {
                             "name": "Undo",
-                            "text": "Undo",
+                            "text": ":back:",
                             "type": "button",
                             "style": "danger",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
@@ -240,7 +240,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
                     }, {
                         "name": "Undo",
-                        "text": "Undo",
+                        "text": ":back:",
                         "style": "danger",
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
@@ -412,10 +412,10 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
 }
 //
 function getEmoji(state, finalState, type, myAction, callback) {
-    var approverActionEmoji = ""
+    var approverActionEmoji = ":speech_balloon:"
     var typeEmoji = ""
-    var finalStateEmoji = ""
-    var myActionEmoji = ""
+    var finalStateEmoji = ":speech_balloon:"
+    var myActionEmoji = ":speech_balloon:"
     if (state == "Rejected") {
         approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
@@ -427,7 +427,7 @@ function getEmoji(state, finalState, type, myAction, callback) {
     if (finalState == "Rejected") {
         finalStateEmoji = ":no_entry_sign:"
     } else if (finalState == "Approved") {
-        approverActionEmoji = ":white_check_mark:"
+        finalStateEmoji = ":white_check_mark:"
     }
     if (myAction == "Rejected") {
         myActionEmoji = ":no_entry_sign:"
