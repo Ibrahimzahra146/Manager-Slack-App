@@ -432,9 +432,9 @@ function getEmoji(state, finalState, type, callback, myAction) {
     if (myAction == "Rejected") {
         myActionEmoji = ":no_entry_sign:"
     } else if (myAction == "Approved") {
-        approverAcmyActionEmojitionEmoji = ":white_check_mark:"
+        myActionEmoji = ":white_check_mark:"
     }
-    myActionEmoji
+
     callback(approverActionEmoji, finalStateEmoji, typeEmoji)
 
 }
