@@ -5,7 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState) {
-    getEmoji(approver2Action, vacationState, type, function (approverActionEmoji, finalStateEmoji, typeEmoji) {
+    getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         console.log("ImageUrl" + ImageUrl)
         var messageBody = {
             "text": "Time off request:",
@@ -411,12 +411,13 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
     })
 }
 //
-function getEmoji(state, finalState, type, callback) {
+function getEmoji(state, finalState, type, callback, myAction) {
     var approverActionEmoji = ""
     var typeEmoji = ""
     var finalStateEmoji = ""
+    var myActionEmoji = ""
     if (state == "Rejected") {
-        approverActionEmoji = ":x:"
+        approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
         approverActionEmoji = ":white_check_mark:"
     }
@@ -424,10 +425,16 @@ function getEmoji(state, finalState, type, callback) {
         typeEmoji = ":ambulance:"
     }
     if (finalState == "Rejected") {
-        finalStateEmoji = ":x:"
+        finalStateEmoji = ":no_entry_sign:"
     } else if (finalState == "Approved") {
         approverActionEmoji = ":white_check_mark:"
     }
+    if (myAction == "Rejected") {
+        myActionEmoji = ":no_entry_sign:"
+    } else if (myAction == "Approved") {
+        approverAcmyActionEmojitionEmoji = ":white_check_mark:"
+    }
+    myActionEmoji
     callback(approverActionEmoji, finalStateEmoji, typeEmoji)
 
 }
