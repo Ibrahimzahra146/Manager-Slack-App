@@ -113,6 +113,21 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         "title": "Type",
                         "value": type,
                         "short": true
+                    }, {
+                        "title": "Your action ",
+                        "value": "--",
+                        "short": true
+                    }
+                    ,
+                    {
+                        "title": "Approver2 action",
+                        "value": "--",
+                        "short": true
+                    },
+                    {
+                        "title": "Final state",
+                        "value": "--",
+                        "short": true
                     }
                 ],
                 "actions": [
