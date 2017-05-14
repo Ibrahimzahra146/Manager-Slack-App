@@ -36,8 +36,19 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "short": true
                     },
                     {
-                        "title": "Time off state",
+                        "title": "Your action ",
                         "value": approvalType,
+                        "short": true
+                    }
+                    ,
+                    {
+                        "title": "Approver2 action",
+                        "value": "--",
+                        "short": true
+                    },
+                    {
+                        "title": "Final state",
+                        "value": "--",
                         "short": true
                     }
                 ],
@@ -320,8 +331,8 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         "title": "State",
                         "value": "Your action is required",
                         "short": true
-                    }, 
-                 
+                    },
+
                 ], "actions": [
                     {
                         "name": "confirm",
