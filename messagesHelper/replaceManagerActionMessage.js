@@ -411,7 +411,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
     })
 }
 //
-function getEmoji(state, finalState, type, callback, myAction) {
+function getEmoji(state, finalState, type, myAction, callback) {
     var approverActionEmoji = ""
     var typeEmoji = ""
     var finalStateEmoji = ""
