@@ -985,6 +985,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
   request({
     url: uri, //URL to hitDs
     method: 'GET',
@@ -998,7 +999,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
     vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
       vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
 
-        replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) 
+        replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction)
       })
     })
   })
