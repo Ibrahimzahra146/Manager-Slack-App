@@ -177,82 +177,102 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
     })
 }
 
-module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
-    var dont_detuct_button = ""
+module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) {
+    getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
-    var messageBody = {
-        "text": "Time off request:",
-        "attachments": [
-            {
-                "attachment_type": "default",
-                "callback_id": "manager_confirm_reject",
-                "text": userEmail,
-                "fallback": "ReferenceError",
-                "fields": [
-                    {
-                        "title": "From",
-                        "value": fromDate,
-                        "short": true
-                    },
-                    {
-                        "title": "Days/Time ",
-                        "value": workingDays + " day",
-                        "short": true
-                    },
-                    {
-                        "title": "to",
-                        "value": toDate,
-                        "short": true
-                    },
-                    {
-                        "title": "Type",
-                        "value": type,
-                        "short": true
-                    }
-                ],
-                "actions": [
-                    {
-                        "name": "Send_comment",
-                        "text": "Sorry",
+        var dont_detuct_button = ""
 
-                        "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Sorry!."
-                    },
-                    {
-                        "name": "Send_comment",
-                        "text": "Project deadline",
+        var messageBody = {
+            "text": "Time off request:",
+            "attachments": [
+                {
+                    "attachment_type": "default",
+                    "callback_id": "manager_confirm_reject",
+                    "text": userEmail,
+                    "fallback": "ReferenceError",
+                    "fields": [
+                        {
+                            "title": "From",
+                            "value": fromDate,
+                            "short": true
+                        },
+                        {
+                            "title": "Days/Time ",
+                            "value": workingDays + " day",
+                            "short": true
+                        },
+                        {
+                            "title": "to",
+                            "value": toDate,
+                            "short": true
+                        },
+                        {
+                            "title": "Type",
+                            "value": type + " " + typeEmoji,
+                            "short": true
+                        }
+                        ,
+                        {
+                            "title": "Your action ",
+                            "value": myAction + " " + myActionEmoji,
+                            "short": true
+                        }
+                        ,
+                        {
+                            "title": "Approver2 action",
+                            "value": approver2Action + " " + approverActionEmoji,
+                            "short": true
+                        },
+                        {
+                            "title": "Final state",
+                            "value": vacationState + " " + finalStateEmoji,
+                            "short": true
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "name": "Send_comment",
+                            "text": "Sorry",
 
-                        "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Project deadline."
-                    },
+                            "type": "button",
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Sorry!."
+                        },
+                        {
+                            "name": "Send_comment",
+                            "text": "Project deadline",
 
-                    {
-                        "name": "Send_comment",
-                        "text": "Discuss it privately",
+                            "type": "button",
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Project deadline."
+                        },
 
-                        "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Discuss it privately."
-                    },
-                    {
-                        "name": "Send_comment",
-                        "text": "No replaceable emp",
-                        "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
-                    }, {
-                        "name": "Undo",
-                        "text": ":back:",
-                        "style": "danger",
-                        "type": "button",
-                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    }
+                        {
+                            "name": "Send_comment",
+                            "text": "Discuss it privately",
 
-                ],
-                "color": "#F35A00",
-                "thumb_url": ImageUrl,
-            }
-        ]
-    }
-    msg.respond(msg.body.response_url, messageBody)
+                            "type": "button",
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Discuss it privately."
+                        },
+                        {
+                            "name": "Send_comment",
+                            "text": "No replaceable emp",
+                            "type": "button",
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
+                        }, {
+                            "name": "Undo",
+                            "text": ":back:",
+                            "style": "danger",
+                            "type": "button",
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                        }
+
+                    ],
+                    "color": "#F35A00",
+                    "thumb_url": ImageUrl,
+                }
+            ]
+        }
+        msg.respond(msg.body.response_url, messageBody)
+    })
 }
 
 /**

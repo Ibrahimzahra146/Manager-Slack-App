@@ -985,8 +985,23 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  request({
+    url: uri, //URL to hitDs
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
 
-  replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+    }
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
+
+        replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) 
+      })
+    })
+  })
 })
 slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
   var arr = value.toString().split(";")
