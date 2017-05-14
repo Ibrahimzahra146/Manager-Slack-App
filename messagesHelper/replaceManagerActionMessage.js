@@ -435,7 +435,7 @@ function getEmoji(state, finalState, type, myAction, callback) {
         myActionEmoji = ":white_check_mark:"
     }
 
-    callback(approverActionEmoji, finalStateEmoji, typeEmoji)
+    callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
 
 }
 
