@@ -75,7 +75,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                 }
 
             );
-            callback(approver2Email, approver2Action, vacationState)
+            callback1(approver2Email, approver2Action, vacationState)
 
 
         })
