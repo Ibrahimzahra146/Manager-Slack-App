@@ -972,51 +972,52 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
 
     })
   })
-  slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
-    var arr = value.toString().split(";")
-    var userEmail = arr[0];
-    var vacationId = arr[1];
-    var approvalId = arr[2]
-    var managerEmail = arr[3]
-    var fromWho = arr[4];
-    var fromDate = arr[5];
-    var toDate = arr[6];
-    var type = arr[7]
-    var workingDays = arr[8]
-    var ImageUrl = arr[9]
+})
+slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  var fromWho = arr[4];
+  var fromDate = arr[5];
+  var toDate = arr[6];
+  var type = arr[7]
+  var workingDays = arr[8]
+  var ImageUrl = arr[9]
 
-    replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-  })
-  slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
-    var arr = value.toString().split(";")
-    var comment = arr[10]
+  replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+})
+slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
+  var arr = value.toString().split(";")
+  var comment = arr[10]
 
-    managerApproval1(msg, value, "Rejected", 0, comment)
-  })
-  controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
-    console.log("Sufferring")
-    console.log(JSON.stringify(message))
-  })
-  controller.on('message_received', function (bot, message) {
+  managerApproval1(msg, value, "Rejected", 0, comment)
+})
+controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
+  console.log("Sufferring")
+  console.log(JSON.stringify(message))
+})
+controller.on('message_received', function (bot, message) {
 
-    console.log("Sufferring11")
-    console.log(JSON.stringify(message))
+  console.log("Sufferring11")
+  console.log(JSON.stringify(message))
 
-  })
-  controller.on('direct_message', function (bot, message) {
+})
+controller.on('direct_message', function (bot, message) {
 
-    console.log("Sufferring11222")
-    console.log(JSON.stringify(message))
+  console.log("Sufferring11222")
+  console.log(JSON.stringify(message))
 
-  })
+})
 
-  app.get('/', function (req, res) {
-    var clientIp = requestIp.getClientIp(req);
-    console.log("new request ");
-    console.log(clientIp)
-    res.send('Hello1')
-  })
+app.get('/', function (req, res) {
+  var clientIp = requestIp.getClientIp(req);
+  console.log("new request ");
+  console.log(clientIp)
+  res.send('Hello1')
+})
 
 
-  console.log('Listening on :' + process.env.PORT)
-  app.listen(process.env.PORT)
+console.log('Listening on :' + process.env.PORT)
+app.listen(process.env.PORT)
