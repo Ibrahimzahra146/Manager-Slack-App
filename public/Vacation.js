@@ -35,7 +35,7 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
         })
     });
 }
-module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(body, state, callback1) {
+module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email,body, state, callback1) {
 
     var approver2Email = "--"
     var approver2Action = "--"
