@@ -344,7 +344,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     ,
                     {
                         "title": "Your action ",
-                        "value": MyAction,
+                        "value": myAction,
                         "short": true
                     }
                     ,
