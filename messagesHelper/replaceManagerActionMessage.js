@@ -59,13 +59,13 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         "type": "button",
                         "style": "danger",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    },/* {
+                    }, {
                         "name": "check_state",
-                        "text": "Check status",
+                        "text": ":arrows_counterclockwise:",
 
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                    },*/
+                    },
                 ],
                 "color": "#F35A00",
                 "thumb_url": ImageUrl,
@@ -154,7 +154,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                     }, dont_detuct_button
                     , {
                         "name": "check_state",
-                        "text": "Check status",
+                        "text": ":arrows_counterclockwise:",
 
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
@@ -343,10 +343,21 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     }
                     ,
                     {
-                        "title": "State",
-                        "value": "Your action is required",
+                        "title": "Your action ",
+                        "value": "--",
+                        "short": true
+                    }
+                    ,
+                    {
+                        "title": "Approver2 action",
+                        "value": "--",
                         "short": true
                     },
+                    {
+                        "title": "Final state",
+                        "value": "--",
+                        "short": true
+                    }
 
                 ], "actions": [
                     {
@@ -372,7 +383,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                     }, dont_detuct_button
                     , {
                         "name": "check_state",
-                        "text": "Check status",
+                        "text": ":arrows_counterclockwise:",
 
                         "type": "button",
                         "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
