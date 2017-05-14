@@ -949,52 +949,74 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-})
-slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  var fromWho = arr[4];
-  var fromDate = arr[5];
-  var toDate = arr[6];
-  var type = arr[7]
-  var workingDays = arr[8]
-  var ImageUrl = arr[9]
-  replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-})
-slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
-  var arr = value.toString().split(";")
-  var comment = arr[10]
 
-  managerApproval1(msg, value, "Rejected", 0, comment)
-})
-controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
-  console.log("Sufferring")
-  console.log(JSON.stringify(message))
-})
-controller.on('message_received', function (bot, message) {
+  var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
+  request({
+    url: uri, //URL to hitDs
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
 
-  console.log("Sufferring11")
-  console.log(JSON.stringify(message))
-
-})
-controller.on('direct_message', function (bot, message) {
-
-  console.log("Sufferring11222")
-  console.log(JSON.stringify(message))
-
-})
-
-app.get('/', function (req, res) {
-  var clientIp = requestIp.getClientIp(req);
-  console.log("new request ");
-  console.log(clientIp)
-  res.send('Hello1')
-})
+    }
+    //Set the body as a stringcc
+  }, function (error, response, body) {
+    vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
+        replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Action, vacationState, myAction)
+      })
 
 
-console.log('Listening on :' + process.env.PORT)
-app.listen(process.env.PORT)
+
+
+
+    })
+  })
+  slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
+    var arr = value.toString().split(";")
+    var userEmail = arr[0];
+    var vacationId = arr[1];
+    var approvalId = arr[2]
+    var managerEmail = arr[3]
+    var fromWho = arr[4];
+    var fromDate = arr[5];
+    var toDate = arr[6];
+    var type = arr[7]
+    var workingDays = arr[8]
+    var ImageUrl = arr[9]
+
+    replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+  })
+  slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
+    var arr = value.toString().split(";")
+    var comment = arr[10]
+
+    managerApproval1(msg, value, "Rejected", 0, comment)
+  })
+  controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
+    console.log("Sufferring")
+    console.log(JSON.stringify(message))
+  })
+  controller.on('message_received', function (bot, message) {
+
+    console.log("Sufferring11")
+    console.log(JSON.stringify(message))
+
+  })
+  controller.on('direct_message', function (bot, message) {
+
+    console.log("Sufferring11222")
+    console.log(JSON.stringify(message))
+
+  })
+
+  app.get('/', function (req, res) {
+    var clientIp = requestIp.getClientIp(req);
+    console.log("new request ");
+    console.log(clientIp)
+    res.send('Hello1')
+  })
+
+
+  console.log('Listening on :' + process.env.PORT)
+  app.listen(process.env.PORT)
