@@ -729,7 +729,7 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(body, , 0, function (approver2Email, approver2Action, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(body, 0, function (approver2Email, approver2Action, vacationState) {
         vacationHelper.getSecondApproverStateAndFinalState(body, 1, function (myEmail, myAction, vacationState) {
           replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction)
 
@@ -858,64 +858,64 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  //var approver2Email = arr[10]
-  //var approver2Action = arr[11]
-  //var vacationState = arr[12]
-  vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
+  var approver2Email = arr[10]
+  var approver2Action = arr[11]
+  var vacationState = arr[12]
+  // vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
 
 
-    console.log("ImageUrl" + ImageUrl)
-    var typeText = " time off"
-    if (type == "sick") {
-      typeText = " sick time off "
-    } else if (type == "Maternity") {
-      typeText = " maternity" + " time off"
-    } else if (type == "Paternity") {
-      typeText = " paternity" + " time off"
-    } else if (type == "WFH")
-      typeText = " work from home"
+  console.log("ImageUrl" + ImageUrl)
+  var typeText = " time off"
+  if (type == "sick") {
+    typeText = " sick time off "
+  } else if (type == "Maternity") {
+    typeText = " maternity" + " time off"
+  } else if (type == "Paternity") {
+    typeText = " paternity" + " time off"
+  } else if (type == "WFH")
+    typeText = " work from home"
 
-    sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-      if (isDeleted == false) {
-        if (fromManager != 1) {
+  sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+    if (isDeleted == false) {
+      if (fromManager != 1) {
+        request({
+          url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+          },
+          body: userEmail
+          //Set the body as a stringcc
+        }, function (error, response, body) {
+          var responseBody = JSON.parse(body);
+
+
+
+          var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
           request({
-            url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-            method: 'POST',
+            url: uri, //URL to hitDs
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-            },
-            body: userEmail
+              'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
+
+            }
             //Set the body as a stringcc
           }, function (error, response, body) {
-            var responseBody = JSON.parse(body);
+            replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
 
+            messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
+          });
 
-            var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-            request({
-              url: uri, //URL to hitDs
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
-
-              }
-              //Set the body as a stringcc
-            }, function (error, response, body) {
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
-
-              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-
-            });
-
-          })
-        }
+        })
       }
-      else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+    }
+    else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
-    })
   })
+  //})
 }
 
 
