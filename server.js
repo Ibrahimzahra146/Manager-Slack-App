@@ -729,8 +729,8 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail,body, 0, function (approver2Email, approver2Action, vacationState) {
-        vacationHelper.getSecondApproverStateAndFinalState(managerEmail,body, 1, function (myEmail, myAction, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
+        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
           replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction)
 
         })
@@ -759,8 +759,8 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail,body, 0, function (approver2Email, approver2Action, vacationState) {
-        vacationHelper.getSecondApproverStateAndFinalState(managerEmail,body, 1, function (myEmail, myAction, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
+        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
           replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, approver2Email, approver2Action, vacationState)
 
         })
@@ -861,7 +861,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   var approver2Email = arr[10]
   var approver2Action = arr[11]
   var vacationState = arr[12]
-  // vacationHelper.getSecondApproverStateAndFinalState(managerEmail, vacationId, 0, function (approver2Email, approver2Action, vacationState) {
+
+
 
 
   console.log("ImageUrl" + ImageUrl)
@@ -903,8 +904,10 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
             }
             //Set the body as a stringcc
           }, function (error, response, body) {
-            replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
+            vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
 
+              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
+            })
             messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
           });
@@ -914,8 +917,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
     }
     else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
+
   })
-  //})
 }
 
 
