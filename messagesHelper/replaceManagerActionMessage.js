@@ -60,7 +60,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             "name": "Undo",
                             "text": "back",
                             "type": "button",
-                           
+
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         }, {
                             "name": "check_state_undo",
@@ -260,7 +260,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                         }, {
                             "name": "Undo",
                             "text": "back",
-                            
+
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         }
@@ -436,11 +436,15 @@ function getEmoji(state, finalState, type, myAction, callback) {
     var typeEmoji = ""
     var finalStateEmoji = ":hourglass_flowing_sand:"
     var myActionEmoji = ":hourglass_flowing_sand:"
-    if (state == "Rejected") {
-        approverActionEmoji = ":no_entry_sign:"
-    } else if (state == "Approved") {
-        approverActionEmoji = ":white_check_mark:"
+    if (state == "--"){
+    var approverActionEmoji = ""
+        
     }
+        if (state == "Rejected") {
+            approverActionEmoji = ":no_entry_sign:"
+        } else if (state == "Approved") {
+            approverActionEmoji = ":white_check_mark:"
+        }
     if (type == "sick") {
         typeEmoji = ":ambulance:"
     }
