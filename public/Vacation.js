@@ -44,7 +44,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
     var vacationState = "--"
     //no second Approver 
     if (!(JSON.parse(body).managerApproval[1])) {
-        callback("--", "--", "--")
+        callback1("--", "--", "--")
     } else {
         var i = 0;
         async.whilst(
