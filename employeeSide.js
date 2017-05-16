@@ -283,7 +283,8 @@ module.exports.determineInfoType = function determineInfoType(managerEmail, empl
 
 }
 module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(email, employeeEmail, msg) {
-    console.log("showEmployeePendingRequest")
+    console.log("showEmployeePendingRequest" + email)
+     console.log("showEmployeePendingRequest" + employeeEmail)
     managerHelper.getIdFromEmail(email, employeeEmail, function (employeeId) {
         managerHelper.getIdFromEmail(email, email, function (managerEmail) {
             var uri = 'http://' + IP + '/api/v1/employee/emp-pending-vacations?empId=' + employeeId + '&managerId=' + managerEmail
