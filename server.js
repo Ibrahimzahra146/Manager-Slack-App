@@ -274,7 +274,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
             }
             else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
-              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+              employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
               generalEmail = ""
@@ -338,7 +338,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
             }
             else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
-              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+              employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
               generalEmail = ""

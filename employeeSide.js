@@ -67,7 +67,7 @@ module.exports.showEmployeeProfile = function showEmployeeProfile(email, employe
                                     "short": true
                                 },
 
-                             
+
                                 {
                                     "title": "Approver 2",
                                     "value": Approver2,
@@ -280,5 +280,34 @@ module.exports.determineInfoType = function determineInfoType(managerEmail, empl
         generalEmpInfo = ""
 
     }
+
+}
+module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(email, employeeEmail, msg) {
+    console.log("showEmployeePendingRequest")
+    managerHelper.getIdFromEmail(email, employeeEmail, function (employeeId) {
+        managerHelper.getIdFromEmail(email, email, function (managerEmail) {
+            var uri = 'http://' + IP + '/api/v1/employee/emp-pending-vacations?empId=' + employeeId + '&managerId=' + managerEmail
+            console.log("uri" + uri)
+
+            request({
+                url: uri,
+                json: true,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
+                }
+            }, function (error, response, body) {
+
+                var i = 0;
+                //check if no history ,so empty response
+                if (!error && response.statusCode === 200) {
+                    console.log("showEmployeePendingRequest")
+                    console.log(body)
+                    console.log(JSON.stringify(body))
+                }
+            })
+        })
+    })
 
 }
