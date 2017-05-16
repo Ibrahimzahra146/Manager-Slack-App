@@ -432,10 +432,10 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
 }
 //
 function getEmoji(state, finalState, type, myAction, callback) {
-    var approverActionEmoji = ":hourglass_flowing_sand:"
+    var approverActionEmoji = ":thinking_face:"
     var typeEmoji = ""
-    var finalStateEmoji = ":hourglass_flowing_sand:"
-    var myActionEmoji = ":hourglass_flowing_sand:"
+    var finalStateEmoji = ":thinking_face:"
+    var myActionEmoji = ":thinking_face:"
     if (state == "--"){
     var approverActionEmoji = ""
         
