@@ -422,7 +422,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
     })
 
 }
-function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
+function getManagerEmailForPendingVacation(managerApprovels, email, callback1) {
     var i = 0
     console.log("getManagerEmailForPendingVacation" + JSON.stringify(managerApprovels))
     async.whilst(
@@ -430,7 +430,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function (callback) {
             if (managerApprovels[i].managerEmail == email && managerApprovels[i].type == "Manager") {
                 console.log("managerApprovels[i].id," + managerApprovels[i].id)
-                callback(managerApprovels[i].id, managerApprovels[i].manager)
+                callback1(managerApprovels[i].id, managerApprovels[i].manager)
 
             }
           
