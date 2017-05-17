@@ -303,7 +303,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
             }, function (error, response, body) {
                 getManagerEmailForPendingVacation(body[0].managerApproval, email, function (Id, manager) {
                     console.log("getManagerEmailForPendingVacation " + Id + "" + manager)
-
+                    console.log("Ibrahimmm"+Id )
 
                     var i = 0;
                     //check if no history ,so empty response
