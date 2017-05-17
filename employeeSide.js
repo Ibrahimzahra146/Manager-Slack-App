@@ -311,8 +311,8 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                         async.whilst(
                             function () { return body[i]; },
                             function (callback) {
-                                console.log("body[i].id" + (body[i].id))
-                                console.log("body[i].fromDate" + (body[i].fromDate))
+                               /* console.log("body[i].id" + (body[i].id))
+                                console.log("body[i].fromDate" + (body[i].fromDate))*/
                                 i++;
                                 setTimeout(callback, 2500);
 
@@ -433,7 +433,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
                 callback(managerApprovels[i].id, managerApprovels[i].manager)
 
             }
-            console.log("body[i].id" + (managerApprovels[i].id))
+          
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
             setTimeout(callback, 2500);
