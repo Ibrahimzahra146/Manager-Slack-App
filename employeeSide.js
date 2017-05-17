@@ -301,8 +301,8 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                     'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
                 }
             }, function (error, response, body) {
-                getManagerEmailForPendingVacation(body[0].managerApproval, email, function (Id) {
-                    console.log("getManagerEmailForPendingVacation " + Id)
+                getManagerEmailForPendingVacation(body[0].managerApproval, email, function (Id, manager) {
+                    console.log("getManagerEmailForPendingVacation " + Id + "" + manager)
 
 
                     var i = 0;
@@ -428,8 +428,10 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
     async.whilst(
         function () { return managerApprovels[i]; },
         function (callback) {
-            if (managerApprovels[i].managerEmail == email && managerApprovels[i].type == "Manager")
-                console.log("managerApprovels[i].id)" + managerApprovels[i].id)
+            if (managerApprovels[i].managerEmail == email && managerApprovels[i].type == "Manager") {
+                callback(managerApprovels[i].id, managerApprovels[i].manager)
+
+            }
             console.log("body[i].id" + (managerApprovels[i].id))
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
@@ -439,5 +441,5 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function (err) {
             // 5 seconds have passed
         });
-    callback(1)
+
 }
