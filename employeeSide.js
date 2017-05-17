@@ -301,7 +301,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                     'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
                 }
             }, function (error, response, body) {
-                getManagerEmailForPendingVacation(body.managerApproval, email, function (Id) {
+                getManagerEmailForPendingVacation(body[0].managerApproval, email, function (Id) {
                     console.log("getManagerEmailForPendingVacation " + Id)
 
 
