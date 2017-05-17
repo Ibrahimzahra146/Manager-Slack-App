@@ -301,119 +301,141 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                     'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
                 }
             }, function (error, response, body) {
+                getManagerEmailForPendingVacation(body.managerApproval, email, function (Id) {
+                    console.log("getManagerEmailForPendingVacation " + Id)
 
-                var i = 0;
-                //check if no history ,so empty response
-                if (!error && response.statusCode === 200) {
-                    async.whilst(
-                        function () { return body[i]; },
-                        function (callback) {
-                            console.log("body[i].id" + (body[i].id))
-                            console.log("body[i].fromDate" + (body[i].fromDate))
-                            i++;
-                            setTimeout(callback, 2500);
 
-                        },
-                        function (err) {
-                            // 5 seconds have passed
-                        });
+                    var i = 0;
+                    //check if no history ,so empty response
+                    if (!error && response.statusCode === 200) {
+                        async.whilst(
+                            function () { return body[i]; },
+                            function (callback) {
+                                console.log("body[i].id" + (body[i].id))
+                                console.log("body[i].fromDate" + (body[i].fromDate))
+                                i++;
+                                setTimeout(callback, 2500);
 
-                    /*  if (type != "WFH") {
-                          dont_detuct_button = {
-                              "name": "dont_detuct",
-                              "text": "Don’t Deduct ",
-                              "type": "button",
-                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                          }
-                      }
-  
-  
-  
-  
-                      var messageBody = {
-                          "text": "This folk has pending time off request:",
-                          "attachments": [
-                              {
-                                  "attachment_type": "default",
-                                  "callback_id": "manager_confirm_reject",
-                                  "text": userEmail,
-                                  "fallback": "ReferenceError",
-                                  "fields": [
-                                      {
-                                          "title": "From",
-                                          "value": startDate,
-                                          "short": true
-                                      },
-                                      {
-                                          "title": "Days/Time ",
-                                          "value": workingDays + " day",
-                                          "short": true
-                                      },
-                                      {
-                                          "title": "to",
-                                          "value": endDate,
-                                          "short": true
-                                      },
-                                      {
-                                          "title": "Type",
-                                          "value": type,
-                                          "short": true
-                                      }, commentFieldInManagerMessage,
-                                      {
-                                          "title": "Your action ",
-                                          "value": "Pending :thinking_face:",
-                                          "short": true
-                                      }
-                                      ,
-                                      {
-                                          "title": "Approver2 action",
-                                          "value": approver2State,
-                                          "short": true
-                                      },
-                                      {
-                                          "title": "Final state",
-                                          "value": "PendingManagerApproval :thinking_face:",
-                                          "short": true
-                                      }
-                                  ],
-                                  "actions": [
-                                      {
-                                          "name": "confirm",
-                                          "text": "Accept",
-                                          "style": "primary",
-                                          "type": "button",
-                                          "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                      },
-                                      {
-                                          "name": "reject",
-                                          "text": "Reject",
-                                          "style": "danger",
-                                          "type": "button",
-                                          "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                      },
-                                      {
-                                          "name": "reject_with_comment",
-                                          "text": "Reject with comment",
-                                          "style": "danger",
-                                          "type": "button",
-                                          "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                      }, dont_detuct_button,
-                                      {
-                                          "name": "check_state",
-                                          "text": ":arrows_counterclockwise:",
-  
-                                          "type": "button",
-                                          "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                      },
-                                  ],
-                                  "color": "#F35A00",
-                                  "thumb_url": ImageUrl,
+                            },
+                            function (err) {
+                                // 5 seconds have passed
+                            });
+
+                        /*  if (type != "WFH") {
+                              dont_detuct_button = {
+                                  "name": "dont_detuct",
+                                  "text": "Don’t Deduct ",
+                                  "type": "button",
+                                  "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                               }
-                          ]
-                      }*/
-                }
+                          }
+      
+      
+      
+      
+                          var messageBody = {
+                              "text": "This folk has pending time off request:",
+                              "attachments": [
+                                  {
+                                      "attachment_type": "default",
+                                      "callback_id": "manager_confirm_reject",
+                                      "text": userEmail,
+                                      "fallback": "ReferenceError",
+                                      "fields": [
+                                          {
+                                              "title": "From",
+                                              "value": startDate,
+                                              "short": true
+                                          },
+                                          {
+                                              "title": "Days/Time ",
+                                              "value": workingDays + " day",
+                                              "short": true
+                                          },
+                                          {
+                                              "title": "to",
+                                              "value": endDate,
+                                              "short": true
+                                          },
+                                          {
+                                              "title": "Type",
+                                              "value": type,
+                                              "short": true
+                                          }, commentFieldInManagerMessage,
+                                          {
+                                              "title": "Your action ",
+                                              "value": "Pending :thinking_face:",
+                                              "short": true
+                                          }
+                                          ,
+                                          {
+                                              "title": "Approver2 action",
+                                              "value": approver2State,
+                                              "short": true
+                                          },
+                                          {
+                                              "title": "Final state",
+                                              "value": "PendingManagerApproval :thinking_face:",
+                                              "short": true
+                                          }
+                                      ],
+                                      "actions": [
+                                          {
+                                              "name": "confirm",
+                                              "text": "Accept",
+                                              "style": "primary",
+                                              "type": "button",
+                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                          },
+                                          {
+                                              "name": "reject",
+                                              "text": "Reject",
+                                              "style": "danger",
+                                              "type": "button",
+                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                          },
+                                          {
+                                              "name": "reject_with_comment",
+                                              "text": "Reject with comment",
+                                              "style": "danger",
+                                              "type": "button",
+                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                          }, dont_detuct_button,
+                                          {
+                                              "name": "check_state",
+                                              "text": ":arrows_counterclockwise:",
+      
+                                              "type": "button",
+                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                          },
+                                      ],
+                                      "color": "#F35A00",
+                                      "thumb_url": ImageUrl,
+                                  }
+                              ]
+                          }*/
+                    }
+                })
             })
+
         })
     })
 
+}
+function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
+    var i = 0
+    async.whilst(
+        function () { return managerApprovels[i]; },
+        function (callback) {
+            if (managerApprovels[i].managerEmail == email)
+                callback(managerApprovels[i].id)
+            console.log("body[i].id" + (managerApprovels[i].id))
+            console.log("body[i].fromDate" + (managerApprovels[i].email))
+            i++;
+            setTimeout(callback, 2500);
+
+        },
+        function (err) {
+            // 5 seconds have passed
+        });
 }
