@@ -429,7 +429,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function () { return managerApprovels[i]; },
         function (callback) {
             if (managerApprovels[i].managerEmail == email)
-                callback(managerApprovels[i].id)
+                console.log("managerApprovels[i].id)" + managerApprovels[i].id)
             console.log("body[i].id" + (managerApprovels[i].id))
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
@@ -439,4 +439,5 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function (err) {
             // 5 seconds have passed
         });
+        callback(1)
 }
