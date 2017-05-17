@@ -312,8 +312,14 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                 var vacationId = body[i].id
                                 var approvalId = Id
                                 var managerEmail = email;
-                                var startDate = new Date(body[i].fromDate)
-                                var endDate = new Date(body[i].toDate)
+                                var wordFromDate = new Date(body[i].fromDate).toDateString();
+                                var wordTodate = new Date(body[i].toDate).toDateString();
+                                var arr = wordFromDate.toString().split(" ")
+                                wordFromDate = arr[0] + ", " + arr[1] + " " + arr[2]
+                                arr = wordTodate.toString().split(" ")
+                                wordTodate = arr[0] + ", " + arr[1] + " " + arr[2]
+                                startDate = wordFromDate
+                                endDate = wordTodate
                                 var type = "personal"
                                 if (body[i].type == 4)
                                     type = "sick"
