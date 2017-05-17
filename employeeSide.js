@@ -428,7 +428,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
     async.whilst(
         function () { return managerApprovels[i]; },
         function (callback) {
-            if (managerApprovels[i].managerEmail == email)
+            if (managerApprovels[i].managerEmail == email && managerApprovels[i].type == "Manager")
                 console.log("managerApprovels[i].id)" + managerApprovels[i].id)
             console.log("body[i].id" + (managerApprovels[i].id))
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
@@ -439,5 +439,5 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function (err) {
             // 5 seconds have passed
         });
-        callback(1)
+    callback(1)
 }
