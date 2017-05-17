@@ -424,13 +424,14 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
 }
 function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
     var i = 0
+    console.log("getManagerEmailForPendingVacation" + JSON.stringify(managerApprovels))
     async.whilst(
         function () { return managerApprovels[i]; },
         function (callback) {
             if (managerApprovels[i].managerEmail == email)
                 callback(managerApprovels[i].id)
             console.log("body[i].id" + (managerApprovels[i].id))
-            console.log("body[i].fromDate" + (managerApprovels[i].email))
+            //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
             setTimeout(callback, 2500);
 
