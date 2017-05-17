@@ -88,7 +88,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status, ca
     managerToffyHelper.general_remember_me = remember_me_cookie;
     managerToffyHelper.general_session_Id = session_id
     var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
-    console.log("uri::" + uri)
+    console.log("uri: :" + uri)
     var approvalBody = {
       "id": approvalId,
       "comments": "From Ibrahim",
