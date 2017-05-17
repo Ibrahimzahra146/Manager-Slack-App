@@ -359,7 +359,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                                     "title": "Type",
                                                     "value": type,
                                                     "short": true
-                                                }, commentFieldInManagerMessage,
+                                                },
                                                 {
                                                     "title": "Your action ",
                                                     "value": "Pending :thinking_face:",
