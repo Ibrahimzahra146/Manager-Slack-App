@@ -429,7 +429,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback) {
         function () { return managerApprovels[i]; },
         function (callback) {
             if (managerApprovels[i].managerEmail == email && managerApprovels[i].type == "Manager") {
-                console.log("managerApprovels[i].id," + managerApprovels[i].id, )
+                console.log("managerApprovels[i].id," + managerApprovels[i].id)
                 callback(managerApprovels[i].id, managerApprovels[i].manager)
 
             }
