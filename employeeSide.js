@@ -368,7 +368,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                                 ,
                                                 {
                                                     "title": "Approver2 action",
-                                                    "value": approver2State,
+                                                    "value": "--",
                                                     "short": true
                                                 },
                                                 {
