@@ -284,8 +284,7 @@ module.exports.determineInfoType = function determineInfoType(managerEmail, empl
 
 }
 module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(email, employeeEmail, msg) {
-    console.log("showEmployeePendingRequest" + email)
-    console.log("showEmployeePendingRequest" + employeeEmail)
+
     var dont_detuct_button = ""
     managerHelper.getIdFromEmail(email, employeeEmail, function (employeeId) {
         managerHelper.getIdFromEmail(email, email, function (managerEmail) {
@@ -302,17 +301,118 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                 }
             }, function (error, response, body) {
                 getManagerEmailForPendingVacation(body[0].managerApproval, email, function (Id, manager) {
-                    console.log("getManagerEmailForPendingVacation " + Id + "" + manager)
-                    console.log("Ibrahimmm"+Id )
-
                     var i = 0;
+
                     //check if no history ,so empty response
                     if (!error && response.statusCode === 200) {
                         async.whilst(
                             function () { return body[i]; },
                             function (callback) {
-                               /* console.log("body[i].id" + (body[i].id))
-                                console.log("body[i].fromDate" + (body[i].fromDate))*/
+                                var userEmail = employeeEmail
+                                var vacationId = body[i].id
+                                var approvalId = Id
+                                var managerEmail = email;
+                                var startDate = new Date(body[i].fromDate)
+                                var endDate = new Date(body[i].toDate)
+                                var type = "personal"
+                                if (body[i].type == 4)
+                                    type = "sick"
+                                var workingDays = body[i].days
+                                var ImageUrl = body[i].employee.profilePicture
+                                if (type != "WFH") {
+                                    dont_detuct_button = {
+                                        "name": "dont_detuct",
+                                        "text": "Don’t Deduct ",
+                                        "type": "button",
+                                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                    }
+                                }
+
+
+
+
+                                var messageBody = {
+                                    "text": "This folk has pending time off request:",
+                                    "attachments": [
+                                        {
+                                            "attachment_type": "default",
+                                            "callback_id": "manager_confirm_reject",
+                                            "text": userEmail,
+                                            "fallback": "ReferenceError",
+                                            "fields": [
+                                                {
+                                                    "title": "From",
+                                                    "value": startDate,
+                                                    "short": true
+                                                },
+                                                {
+                                                    "title": "Days/Time ",
+                                                    "value": workingDays + " day",
+                                                    "short": true
+                                                },
+                                                {
+                                                    "title": "to",
+                                                    "value": endDate,
+                                                    "short": true
+                                                },
+                                                {
+                                                    "title": "Type",
+                                                    "value": type,
+                                                    "short": true
+                                                }, commentFieldInManagerMessage,
+                                                {
+                                                    "title": "Your action ",
+                                                    "value": "Pending :thinking_face:",
+                                                    "short": true
+                                                }
+                                                ,
+                                                {
+                                                    "title": "Approver2 action",
+                                                    "value": approver2State,
+                                                    "short": true
+                                                },
+                                                {
+                                                    "title": "Final state",
+                                                    "value": "PendingManagerApproval :thinking_face:",
+                                                    "short": true
+                                                }
+                                            ],
+                                            "actions": [
+                                                {
+                                                    "name": "confirm",
+                                                    "text": "Accept",
+                                                    "style": "primary",
+                                                    "type": "button",
+                                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                                },
+                                                {
+                                                    "name": "reject",
+                                                    "text": "Reject",
+                                                    "style": "danger",
+                                                    "type": "button",
+                                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                                },
+                                                {
+                                                    "name": "reject_with_comment",
+                                                    "text": "Reject with comment",
+                                                    "style": "danger",
+                                                    "type": "button",
+                                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                                }, dont_detuct_button,
+                                                {
+                                                    "name": "check_state",
+                                                    "text": ":arrows_counterclockwise:",
+
+                                                    "type": "button",
+                                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                                                },
+                                            ],
+                                            "color": "#F35A00",
+                                            "thumb_url": ImageUrl,
+                                        }
+                                    ]
+                                }
+                                msg.say(messageBody)
                                 i++;
                                 setTimeout(callback, 2500);
 
@@ -321,99 +421,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                 // 5 seconds have passed
                             });
 
-                        /*  if (type != "WFH") {
-                              dont_detuct_button = {
-                                  "name": "dont_detuct",
-                                  "text": "Don’t Deduct ",
-                                  "type": "button",
-                                  "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                              }
-                          }
-      
-      
-      
-      
-                          var messageBody = {
-                              "text": "This folk has pending time off request:",
-                              "attachments": [
-                                  {
-                                      "attachment_type": "default",
-                                      "callback_id": "manager_confirm_reject",
-                                      "text": userEmail,
-                                      "fallback": "ReferenceError",
-                                      "fields": [
-                                          {
-                                              "title": "From",
-                                              "value": startDate,
-                                              "short": true
-                                          },
-                                          {
-                                              "title": "Days/Time ",
-                                              "value": workingDays + " day",
-                                              "short": true
-                                          },
-                                          {
-                                              "title": "to",
-                                              "value": endDate,
-                                              "short": true
-                                          },
-                                          {
-                                              "title": "Type",
-                                              "value": type,
-                                              "short": true
-                                          }, commentFieldInManagerMessage,
-                                          {
-                                              "title": "Your action ",
-                                              "value": "Pending :thinking_face:",
-                                              "short": true
-                                          }
-                                          ,
-                                          {
-                                              "title": "Approver2 action",
-                                              "value": approver2State,
-                                              "short": true
-                                          },
-                                          {
-                                              "title": "Final state",
-                                              "value": "PendingManagerApproval :thinking_face:",
-                                              "short": true
-                                          }
-                                      ],
-                                      "actions": [
-                                          {
-                                              "name": "confirm",
-                                              "text": "Accept",
-                                              "style": "primary",
-                                              "type": "button",
-                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                          },
-                                          {
-                                              "name": "reject",
-                                              "text": "Reject",
-                                              "style": "danger",
-                                              "type": "button",
-                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                          },
-                                          {
-                                              "name": "reject_with_comment",
-                                              "text": "Reject with comment",
-                                              "style": "danger",
-                                              "type": "button",
-                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                          }, dont_detuct_button,
-                                          {
-                                              "name": "check_state",
-                                              "text": ":arrows_counterclockwise:",
-      
-                                              "type": "button",
-                                              "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                                          },
-                                      ],
-                                      "color": "#F35A00",
-                                      "thumb_url": ImageUrl,
-                                  }
-                              ]
-                          }*/
+
                     }
                 })
             })
@@ -433,7 +441,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback1) {
                 callback1(managerApprovels[i].id, managerApprovels[i].manager)
 
             }
-          
+
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
             setTimeout(callback, 2500);
