@@ -15,7 +15,7 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         var toDateMilli = ""
         var employeeEmail = ""
         var type = 0
-        if (response.result.parameters.in_off)
+        if (response.result.parameters.in_off == "wfh")
             type = 7
 
         if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
@@ -69,14 +69,14 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
-            console.log("JSON:"+JSON.stringify(body))
+            console.log("JSON:" + JSON.stringify(body))
             var isOffFlag = 0
             var obj = JSON.parse(body);
             var stringMessage = "["
             var i = 0
             if (!obj[0])
                 if (employeeEmail != "") {
-                    console.log(employeeEmail + " is not off.")
+                    msg.say(employeeEmail + " is not off.")
 
                 } else
                     msg.say("There are no off employees.")
