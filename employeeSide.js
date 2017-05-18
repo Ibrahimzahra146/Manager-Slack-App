@@ -287,8 +287,8 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
 
     var dont_detuct_button = ""
     managerHelper.getIdFromEmail(email, employeeEmail, function (employeeId) {
-        managerHelper.getIdFromEmail(email, email, function (managerEmail) {
-            var uri = 'http://' + IP + '/api/v1/employee/emp-pending-vacations?empId=' + employeeId + '&managerId=' + managerEmail
+        managerHelper.getIdFromEmail(email, email, function (managerId) {
+            var uri = 'http://' + IP + '/api/v1/employee/emp-pending-vacations?empId=' + employeeId + '&managerId=' + managerId
             console.log("uri" + uri)
 
             request({
@@ -420,7 +420,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                     msg.say(messageBody)
                                 })
                                 i++;
-                                setTimeout(callback, 2500);
+                                setTimeout(callback, 1000);
 
                             },
                             function (err) {
@@ -450,7 +450,7 @@ function getManagerEmailForPendingVacation(managerApprovels, email, callback1) {
 
             //console.log("body[i].fromDate" + (managerApprovels[i].email))
             i++;
-            setTimeout(callback, 2500);
+            setTimeout(callback, 200);
 
         },
         function (err) {
