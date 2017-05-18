@@ -417,8 +417,9 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                             }
                                         ]
                                     }
+
+                                    msg.say(messageBody)
                                 })
-                                msg.say(messageBody)
                                 i++;
                                 setTimeout(callback, 2500);
 
