@@ -524,8 +524,8 @@ function sendRequestToApiAi(emailValue, msg) {
                     vacation_type1 = "personal"
                   }
                   //get the milliseconds for the  end of the vacation 
-                  managerToffyHelper.convertTimeFormat(time, function (x, y, convertedTime) {
-                    managerToffyHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
+                  DateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
+                    DateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                       var fromDate = date + " " + convertedTime;
                       var toDate = date1 + " " + convertedTime1
 
@@ -793,9 +793,9 @@ function managerAction(msg, value, typeOfaction) {
     managerId = arr[10]
     managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, type, function (vacationId, managerApproval) {
 
-      managerToffyHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
+      DateHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
 
-        managerToffyHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
+        DateHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
 
           if (arr[0] && (arr[0] != undefined)) {
             fromDate = fromDate + " at " + formattedTime + " " + midday
