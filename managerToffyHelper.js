@@ -3,11 +3,13 @@ const request = require('request');
 var server = require('./server')
 var generalCookies = "initial"
 var async = require('async');
+const DateHelper = require('./DatesFunctions/datesFunctions.js')
+var managerToffyHelper = require('./managerToffyHelper')
 exports.generalCookies = generalCookies
 var IP = process.env.SLACK_IP
 var userIdInHr = "initial";
 exports.userIdInHr = userIdInHr
-var managerToffyHelper = require('./managerToffyHelper')
+
 var sessionFlag = 0;
 exports.sessionFlag = sessionFlag
 var general_remember_me = "";
@@ -273,8 +275,8 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     if (type == "sick")
         typeNum = 4
     else typeNum = 0
-    managerToffyHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
-        managerToffyHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
+    DateHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
+        DateHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
             getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, typeNum, function (body) {
                 var workingDays = parseFloat(body).toFixed(1);
                 var wordFromDate = new Date(fromDate).toDateString();
@@ -661,7 +663,7 @@ module.exports.sendHelpOptions = function sendHelpOptions(msg) {
                         "value": "",
                         "short": false
                     },
-                   
+
                 ]
             }
         ]
