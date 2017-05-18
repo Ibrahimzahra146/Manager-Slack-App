@@ -315,7 +315,7 @@ module.exports.showEmployeePendingRequest = function showEmployeePendingRequest(
                                 var managerEmail = email;
                                 var startDate = ""
                                 var endDate = ""
-                                DateHelper.converDateToWords(body[i].fromDate + (3 * 60 * 60 * 1000), body[i].toDate + (3 * 60 * 60 * 1000), function (startDateWord, endDateWord) {
+                                DateHelper.converDateToWords(body[i].fromDate, body[i].toDate, function (startDateWord, endDateWord) {
 
                                     startDate = startDateWord
                                     endDate = endDateWord
