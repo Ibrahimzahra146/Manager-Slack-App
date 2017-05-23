@@ -161,15 +161,16 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         console.log("response.statusCode == 500 " + response.statusCode)
         if (response.statusCode == 500 || response.statusCode == 403) {
             callback(1000, 1000)
+        } else {
+            var cookies = JSON.stringify((response.headers["set-cookie"])[1]);
+            var arr = cookies.toString().split(";")
+            res = arr[0].replace(/['"]+/g, '');
+            var cookies1 = JSON.stringify((response.headers["set-cookie"])[0]);
+            var arr1 = cookies1.toString().split(";")
+            res1 = arr1[0].replace(/['"]+/g, '');
+            printLogs("final session is =========>" + res)
+            callback(res, res1);
         }
-        var cookies = JSON.stringify((response.headers["set-cookie"])[1]);
-        var arr = cookies.toString().split(";")
-        res = arr[0].replace(/['"]+/g, '');
-        var cookies1 = JSON.stringify((response.headers["set-cookie"])[0]);
-        var arr1 = cookies1.toString().split(";")
-        res1 = arr1[0].replace(/['"]+/g, '');
-        printLogs("final session is =========>" + res)
-        callback(res, res1);
     });
 
 
