@@ -113,35 +113,42 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
     printLogs("Getting roles")
     var flag = false;
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
-        request({
-            url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': remember_me_cookie + ";" + session_Id
+        if (remember_me_cookie == 1000) {
+            callback(1000)
+        } else {
+            request({
+                url: 'http://' + IP + '/api/v1/employee/roles', //URL to hitDs
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': remember_me_cookie + ";" + session_Id
 
-            },
-            body: email
-            //Set the body as a stringcc
-        }, function (error, response, body) {
-            var roles = (JSON.parse(body));
-            var i = 0
-            while (roles[i]) {
-                printLogs("roles[i].name" + roles[i].name)
-                if (roles[i].name == role) {
-                    flag = true;
-                    break;
+                },
+                body: email
+                //Set the body as a stringcc
+            }, function (error, response, body) {
+                if (JSON.parse(body).activated == false) {
+                    callback(1000);
                 }
-                i++;
+                var roles = (JSON.parse(body));
+                var i = 0
+                while (roles[i]) {
+                    printLogs("roles[i].name" + roles[i].name)
+                    if (roles[i].name == role) {
+                        flag = true;
+                        break;
+                    }
+                    i++;
 
-            }
-            callback(flag)
+                }
+                callback(flag)
 
-        })
+            })
+        }
     })
 }
 module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email, callback) {
-    console.log("Hi1")
+
     request({
         url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
         method: 'POST',
@@ -151,6 +158,9 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         body: email
         //Set the body as a stringcc
     }, function (error, response, body) {
+        if (response.statusCode == 500) {
+            callback(1000, 1000)
+        }
         var cookies = JSON.stringify((response.headers["set-cookie"])[1]);
         var arr = cookies.toString().split(";")
         res = arr[0].replace(/['"]+/g, '');
@@ -160,7 +170,6 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         printLogs("final session is =========>" + res)
         callback(res, res1);
     });
-    console.log("Hi12")
 
 
 }

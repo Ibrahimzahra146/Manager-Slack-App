@@ -610,6 +610,8 @@ function sendRequestToApiAi(emailValue, msg) {
       });
       apiaiRequest.on('error', (error) => console.error(error));
       apiaiRequest.end();
+    } else if (role == 1000) {
+      msg.say("Your account has been deactivated. You are not allowed to use the system.")
     }
 
 
@@ -997,7 +999,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
     //Set the body as a stringcc
   }, function (error, response, body) {
     vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
-      
+
       vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
 
 
