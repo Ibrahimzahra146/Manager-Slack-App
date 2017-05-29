@@ -895,18 +895,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
           var responseBody = JSON.parse(body);
 
 
-
-          var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-          request({
-            url: uri, //URL to hitDs
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
-
-            }
-            //Set the body as a stringcc
-          }, function (error, response, body) {
+          vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
             messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
 
               replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState)
@@ -953,17 +942,7 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var workingDays = arr[8]
   var ImageUrl = arr[9]
 
-  var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-  request({
-    url: uri, //URL to hitDs
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
-
-    }
-    //Set the body as a stringcc
-  }, function (error, response, body) {
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
 
       vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
