@@ -48,7 +48,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
-                            "short": true
+                            "short": false
                         }
 
                     ],
