@@ -5,6 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState) {
+    console.log("managerApprovalsSection" + managerApprovalsSection)
     getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         console.log("ImageUrl" + ImageUrl)
         var messageBody = {
@@ -82,8 +83,8 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
           stringfy = stringfy.replace(/,,/, ",")
           stringfy = stringfy.replace(/\"\{/g, "{")
          // stringfy = JSON.parse(stringfy);*/
-          console.log("JSON.stringify(messageBody)1" + messageBody)
-          console.log("JSON.stringify(messageBody)" + JSON.stringify(messageBody))
+        console.log("JSON.stringify(messageBody)1" + messageBody)
+        console.log("JSON.stringify(messageBody)" + JSON.stringify(messageBody))
         msg.respond(msg.body.response_url, messageBody)
     })
 }
