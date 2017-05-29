@@ -93,6 +93,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
 }
 //return original message when click on undo
 module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+    console.log("undoAction1" + undoAction)
     getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         var dont_detuct_button = ""
         if (type != "WFH") {
@@ -197,7 +198,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
         console.log("stringfy2" + stringfy)
 
         stringfy = JSON.parse(stringfy)
-        msg.respond(msg.body.response_url, messageBody)
+        msg.respond(msg.body.response_url, stringfy)
     })
 }
 
