@@ -71,6 +71,8 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                 }
             ]
         }
+        console.log("JSON.stringify(messageBody)1" + messageBody)
+        console.log("JSON.stringify(messageBody)" + JSON.stringify(messageBody))
         msg.respond(msg.body.response_url, messageBody)
     })
 }
