@@ -183,26 +183,13 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                 }
             ]
         }
-        var stringfy = JSON.stringify(messageBody)
-        stringfy = stringfy.replace(/\\/, "")
-
-        stringfy = stringfy.replace(/}\"/g, "}")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        stringfy = stringfy.replace(/\\/g, "")
-        stringfy = stringfy.replace(/\",\"\"/g, "")
-        stringfy = stringfy.replace(/,,/, ",")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        console.log("stringfy11" + stringfy)
-        stringfy = stringfy.replace(/,\",{/g, ",")
-        stringfy = stringfy.replace(/},\"/g, "},{\"")
-        console.log("stringfy2" + stringfy)
-
-        stringfy = JSON.parse(stringfy)
-        msg.respond(msg.body.response_url, stringfy)
+        prepareMessage(messageBody, function (stringfy) {
+            msg.respond(msg.body.response_url, stringfy)
+        })
     })
 }
 
-module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) {
+module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
     getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
         var dont_detuct_button = ""
@@ -243,11 +230,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                             "short": true
                         }
                         ,
-                        {
-                            "title": "Approver2 action",
-                            "value": approver2Action + " " + approverActionEmoji,
-                            "short": true
-                        },
+
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -296,7 +279,9 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                 }
             ]
         }
-        msg.respond(msg.body.response_url, messageBody)
+        prepareMessage(messageBody, function (stringfy) {
+            msg.respond(msg.body.response_url, stringfy)
+        })
     })
 }
 
@@ -486,6 +471,25 @@ function getEmoji(state, finalState, type, myAction, callback) {
 
     callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
 
+}
+//prepare message
+function prepareMessage(messageBody, callback) {
+    var stringfy = JSON.stringify(messageBody)
+    stringfy = stringfy.replace(/\\/, "")
+
+    stringfy = stringfy.replace(/}\"/g, "}")
+    stringfy = stringfy.replace(/\"\{/g, "{")
+    stringfy = stringfy.replace(/\\/g, "")
+    stringfy = stringfy.replace(/\",\"\"/g, "")
+    stringfy = stringfy.replace(/,,/, ",")
+    stringfy = stringfy.replace(/\"\{/g, "{")
+    console.log("stringfy11" + stringfy)
+    stringfy = stringfy.replace(/,\",{/g, ",")
+    stringfy = stringfy.replace(/},\"/g, "},{\"")
+    console.log("stringfy2" + stringfy)
+
+    stringfy = JSON.parse(stringfy)
+    callback(stringfy)
 }
 
 
