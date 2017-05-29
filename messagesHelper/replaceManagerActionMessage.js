@@ -217,7 +217,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                             "value": myAction + " " + myActionEmoji,
                             "short": true
                         }
-                        ,
+                        , managerApprovalsSection,
 
                         {
                             "title": "Final state",
