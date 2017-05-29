@@ -50,7 +50,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
         async.whilst(
             function () { return JSON.parse(body).managerApproval[i]; },
             function (callback) {
-                if (JSON.parse(body).managerApproval[i].managerEmail == email && state == 1) {
+                if (JSON.parse(body).managerApproval[i].managerEmail == email && state == 1&&JSON.parse(body).managerApproval[i].type=="Manager") {
 
                     approver2Email = JSON.parse(body).managerApproval[i].managerEmail
                     approver2Action = JSON.parse(body).managerApproval[i].state
