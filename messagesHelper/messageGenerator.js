@@ -24,9 +24,12 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
         var arr = managerApproval[i].managerEmail.toString().split("@")
         console.log("managerApproval[i].managerEmail != managerEmail" + managerApproval[i].managerEmail != managerEmail)
         if (managerApproval[i].managerEmail != managerEmail) {
+            getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
-            messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "\"" + ",\"short\":" + flag
-            messageBody = messageBody + ","
+
+                messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "\"" + ",\"short\":" + flag
+                messageBody = messageBody + ","
+            })
         }
 
         i++
@@ -56,11 +59,10 @@ module.exports.generateYourActionSection = function generateYourActionSection(ma
         var flag = true
         console.log("managerApproval[i].email" + managerApproval[i].managerEmail)
         if (managerApproval[i].managerEmail == managerEmail) {
-            getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
 
-                messageBody = "{" + "\"title\":" + "\"" + "Your Action " + "\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":true }"
-            })
+            messageBody = "{" + "\"title\":" + "\"" + "Your Action " + "\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":true }"
+
         }
 
         i++
