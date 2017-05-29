@@ -182,6 +182,21 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                 }
             ]
         }
+        var stringfy = JSON.stringify(messageBody)
+        stringfy = stringfy.replace(/\\/, "")
+
+        stringfy = stringfy.replace(/}\"/g, "}")
+        stringfy = stringfy.replace(/\"\{/g, "{")
+        stringfy = stringfy.replace(/\\/g, "")
+        stringfy = stringfy.replace(/\",\"\"/g, "")
+        stringfy = stringfy.replace(/,,/, ",")
+        stringfy = stringfy.replace(/\"\{/g, "{")
+        console.log("stringfy11" + stringfy)
+        stringfy = stringfy.replace(/,\",{/g, ",")
+        stringfy = stringfy.replace(/},\"/g, "},{\"")
+        console.log("stringfy2" + stringfy)
+
+        stringfy = JSON.parse(stringfy)
         msg.respond(msg.body.response_url, messageBody)
     })
 }
