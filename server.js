@@ -908,7 +908,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
             //Set the body as a stringcc
           }, function (error, response, body) {
             messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
-              console.log("generateManagerApprovelsSection" + generateManagerApprovelsSection)
+              console.log("generateManagerApprovelsSection" + managerApprovalsSection)
 
               replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection)
             })
