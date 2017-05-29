@@ -13,6 +13,7 @@ const JSONbig = require('json-bigint');
 const managerToffyHelper = require('./managerToffyHelper.js')
 const DateHelper = require('./DatesFunctions/datesFunctions.js')
 var reminderHelper = require('./Reminders/remindersHelper.js')
+const messageGenerator = require('./messagesHelper/messageGenerator.js')
 const async = require('async');
 const apiai = require('apiai');
 const APIAI_LANG = 'en';
@@ -93,7 +94,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status, ca
       "id": approvalId,
       "comments": "From Ibrahim",
       "state": status,
-      "type": "MANAGER"
+      "type": " "
 
     }
     approvalBody = JSON.stringify(approvalBody)
@@ -906,9 +907,10 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
             }
             //Set the body as a stringcc
           }, function (error, response, body) {
-            vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 0, function (approver2Email, approver2Action, vacationState) {
+            messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
+              console.log("generateManagerApprovelsSection" + generateManagerApprovelsSection)
 
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState)
+              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection)
             })
             messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
