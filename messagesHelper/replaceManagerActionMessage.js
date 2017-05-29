@@ -4,8 +4,8 @@ var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
-module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, approver2Email, approver2Action, vacationState) {
-    getEmoji(approver2Action, vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection) {
+    getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         console.log("ImageUrl" + ImageUrl)
         var messageBody = {
             "text": "Time off request:",
@@ -43,11 +43,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             "short": true
                         }
                         ,
-                        {
-                            "title": "Approver2 action",
-                            "value": approver2Action + " " + approverActionEmoji,
-                            "short": true
-                        },
+                        managerApprovalsSection,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -436,15 +432,15 @@ function getEmoji(state, finalState, type, myAction, callback) {
     var typeEmoji = ""
     var finalStateEmoji = ":thinking_face:"
     var myActionEmoji = ":thinking_face:"
-    if (state == "--"){
-    var approverActionEmoji = ""
-        
+    if (state == "--") {
+        var approverActionEmoji = ""
+
     }
-        if (state == "Rejected") {
-            approverActionEmoji = ":no_entry_sign:"
-        } else if (state == "Approved") {
-            approverActionEmoji = ":white_check_mark:"
-        }
+    if (state == "Rejected") {
+        approverActionEmoji = ":no_entry_sign:"
+    } else if (state == "Approved") {
+        approverActionEmoji = ":white_check_mark:"
+    }
     if (type == "sick") {
         typeEmoji = ":ambulance:"
     }
