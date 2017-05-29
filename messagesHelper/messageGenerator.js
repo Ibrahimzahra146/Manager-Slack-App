@@ -27,7 +27,7 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
             getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
 
-                messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state +"" + emoji + + "\"" + ",\"short\":" + flag
+                messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":" + flag
                 messageBody = messageBody + ","
             })
         }

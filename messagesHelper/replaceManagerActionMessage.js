@@ -427,7 +427,37 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
     })
 }
 //
+function getEmoji(state, finalState, type, myAction, callback) {
+    var approverActionEmoji = ":thinking_face:"
+    var typeEmoji = ""
+    var finalStateEmoji = ":thinking_face:"
+    var myActionEmoji = ":thinking_face:"
+    if (state == "--") {
+        var approverActionEmoji = ""
 
+    }
+    if (state == "Rejected") {
+        approverActionEmoji = ":no_entry_sign:"
+    } else if (state == "Approved") {
+        approverActionEmoji = ":white_check_mark:"
+    }
+    if (type == "sick") {
+        typeEmoji = ":ambulance:"
+    }
+    if (finalState == "Rejected") {
+        finalStateEmoji = ":no_entry_sign:"
+    } else if (finalState == "Approved") {
+        finalStateEmoji = ":white_check_mark:"
+    }
+    if (myAction == "Rejected") {
+        myActionEmoji = ":no_entry_sign:"
+    } else if (myAction == "Approved") {
+        myActionEmoji = ":white_check_mark:"
+    }
+
+    callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
+
+}
 //prepare message
 function prepareMessage(messageBody, callback) {
     var stringfy = JSON.stringify(messageBody)
