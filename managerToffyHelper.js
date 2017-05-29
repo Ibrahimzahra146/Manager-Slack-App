@@ -130,11 +130,11 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
                 if (JSON.parse(body).activated == false) {
                     callback(1000);
                 } else {
-                    var roles = (JSON.parse(body));
+                    var body = (JSON.parse(body));
                     var i = 0
-                    while (roles[i]) {
-                        printLogs("roles[i].name" + roles[i].name)
-                        if (roles[i].name == role) {
+                    while (body.roles[i]) {
+                        printLogs("roles[i].name" + body.roles[i].name)
+                        if (body.roles[i].name == role) {
                             flag = true;
                             break;
                         }

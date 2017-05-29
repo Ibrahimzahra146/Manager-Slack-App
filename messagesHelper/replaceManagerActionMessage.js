@@ -92,7 +92,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
     })
 }
 //return original message when click on undo
-module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Action, vacationState, myAction) {
+module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
     getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         var dont_detuct_button = ""
         if (type != "WFH") {
@@ -139,11 +139,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                             "short": true
                         }
                         ,
-                        {
-                            "title": "Approver2 action",
-                            "value": approver2Action + " " + approverActionEmoji,
-                            "short": true
-                        },
+                        managerApprovalsSection,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
