@@ -72,23 +72,11 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                 }
             ]
         }
-        var stringfy = JSON.stringify(messageBody)
-        stringfy = stringfy.replace(/\\/, "")
 
-        stringfy = stringfy.replace(/}\"/g, "}")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        stringfy = stringfy.replace(/\\/g, "")
-        stringfy = stringfy.replace(/\",\"\"/g, "")
-        stringfy = stringfy.replace(/,,/, ",")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        console.log("stringfy11" + stringfy)
-        stringfy = stringfy.replace(/,\",{/g, ",")
-        stringfy = stringfy.replace(/},\"/g, "},{\"")
-        console.log("stringfy2" + stringfy)
 
-        stringfy = JSON.parse(stringfy)
-
-        msg.respond(msg.body.response_url, stringfy)
+        prepareMessage(messageBody, function (stringfy) {
+            msg.respond(msg.body.response_url, stringfy)
+        })
     })
 }
 //return original message when click on undo
@@ -340,7 +328,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * Check state of not canceled request
  * 
  */
-module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, approver2Email, approver2Action, vacationState, myAction) {
+module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
     getEmoji(approver2Action, vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
 
@@ -390,11 +378,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                             "short": true
                         }
                         ,
-                        {
-                            "title": "Approver2 action",
-                            "value": approver2Action + " " + approverActionEmoji,
-                            "short": true
-                        },
+                        managerApprovalsSection,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -437,7 +421,9 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                 }
             ]
         }
-        msg.respond(msg.body.response_url, messageBody)
+        prepareMessage(messageBody, function (stringfy) {
+            msg.respond(msg.body.response_url, stringfy)
+        })
     })
 }
 //
