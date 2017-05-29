@@ -71,9 +71,9 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                 }
             ]
         }
-        //var stringfy = JSON.stringify(messageBody)
+        var stringfy = messageBody
         console.log("stringfy11" + stringfy)
-        var stringfy = messageBody.replace(/\\/, "")
+        stringfy = messageBody.replace(/\\/, "")
 
         stringfy = stringfy.replace(/}\"/g, "}")
         stringfy = stringfy.replace(/\"\{/g, "{")
