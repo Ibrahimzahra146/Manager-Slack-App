@@ -71,20 +71,20 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                 }
             ]
         }
-        var stringfy = messageBody
-        console.log("stringfy11" + stringfy)
-        stringfy = messageBody.replace(/\\/, "")
-
-        stringfy = stringfy.replace(/}\"/g, "}")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        stringfy = stringfy.replace(/\\/g, "")
-        stringfy = stringfy.replace(/\",\"\"/g, "")
-        stringfy = stringfy.replace(/,,/, ",")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        stringfy = JSON.parse(stringfy);
-        console.log("JSON.stringify(messageBody)1" + stringfy)
-        console.log("JSON.stringify(messageBody)" + JSON.stringify(stringfy))
-        msg.respond(msg.body.response_url, stringfy)
+        /*  var stringfy = messageBody
+          console.log("stringfy11" + stringfy)
+          stringfy = messageBody.replace(/\\/, "")
+  
+          stringfy = stringfy.replace(/}\"/g, "}")
+          stringfy = stringfy.replace(/\"\{/g, "{")
+          stringfy = stringfy.replace(/\\/g, "")
+          stringfy = stringfy.replace(/\",\"\"/g, "")
+          stringfy = stringfy.replace(/,,/, ",")
+          stringfy = stringfy.replace(/\"\{/g, "{")
+         // stringfy = JSON.parse(stringfy);
+          console.log("JSON.stringify(messageBody)1" + stringfy)
+          console.log("JSON.stringify(messageBody)" + JSON.stringify(stringfy))*/
+        msg.respond(msg.body.response_url, messageBody)
     })
 }
 //return original message when click on undo
