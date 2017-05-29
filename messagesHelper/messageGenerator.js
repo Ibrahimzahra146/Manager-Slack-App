@@ -56,13 +56,47 @@ module.exports.generateYourActionSection = function generateYourActionSection(ma
         var flag = true
         console.log("managerApproval[i].email" + managerApproval[i].managerEmail)
         if (managerApproval[i].managerEmail == managerEmail) {
+            getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
-            messageBody = "{" + "\"title\":" + "\"" + "Your Action " + "\"" + ",\"value\":" + "\"" + managerApproval[i].state + "\"" + ",\"short\":true }"
 
+                messageBody = "{" + "\"title\":" + "\"" + "Your Action " + "\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":true }"
+            })
         }
 
         i++
     }
     callback(messageBody)
+
+}
+//emoji
+function getEmoji(state, finalState, type, myAction, callback) {
+    var approverActionEmoji = ":thinking_face:"
+    var typeEmoji = ""
+    var finalStateEmoji = ":thinking_face:"
+    var myActionEmoji = ":thinking_face:"
+    if (state == "--") {
+        var approverActionEmoji = ""
+
+    }
+    if (state == "Rejected") {
+        approverActionEmoji = ":no_entry_sign:"
+    } else if (state == "Approved") {
+        approverActionEmoji = ":white_check_mark:"
+    }
+    if (type == "sick") {
+        typeEmoji = ":ambulance:"
+    }
+    if (finalState == "Rejected") {
+        finalStateEmoji = ":no_entry_sign:"
+    } else if (finalState == "Approved") {
+        finalStateEmoji = ":white_check_mark:"
+    }
+    if (myAction == "Rejected") {
+        myActionEmoji = ":no_entry_sign:"
+    } else if (myAction == "Approved") {
+        myActionEmoji = ":white_check_mark:"
+    }
+
+    callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
 
 }
