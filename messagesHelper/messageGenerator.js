@@ -30,7 +30,6 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
 
         i++
     }
-    console.log("generateManagerApprovelsSection1" + JSON.stringify(messageBody))
     messageBody = messageBody.replace(/}\"/g, "}")
     messageBody = messageBody.replace(/\"\{/g, "{")
     messageBody = messageBody.replace(/\\/g, "")
