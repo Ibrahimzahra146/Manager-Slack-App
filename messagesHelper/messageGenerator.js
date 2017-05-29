@@ -38,7 +38,7 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
     messageBody = messageBody.replace(/,,/, ",")
     messageBody = messageBody.replace(/\"\{/g, "{")
     console.log("messageBody:::" + messageBody)
-    callback(messageBody)
+    callback(JSON.parse(messageBody))
 }
 /**
  * Generate manager action section(Your action)
