@@ -910,7 +910,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
             messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
               console.log("generateManagerApprovelsSection" + managerApprovalsSection)
 
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState)
+              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, JSON.parse(managerApprovalsSection), JSON.parse(body).vacationState)
             })
             messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
