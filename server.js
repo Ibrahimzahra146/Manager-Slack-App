@@ -989,17 +989,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId
-  request({
-    url: uri, //URL to hitDs
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': managerToffyHelper.general_remember_me + ";" + managerToffyHelper.general_session_Id
-
-    }
-    //Set the body as a stringcc
-  }, function (error, response, body) {
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
 
       messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
