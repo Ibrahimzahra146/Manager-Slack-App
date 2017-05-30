@@ -15,14 +15,13 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
     managerApproval.sort(function (a, b) {
         return a.rank - b.rank;
     });
-    console.log("Sorted " + JSON.stringify(managerApproval))
+    console.log("Sorted " + size)
     while (i < size) {
         var flag = "true }"
         if ((i + 1) == size) {
             flag == "false }"
         }
         var arr = managerApproval[i].managerEmail.toString().split("@")
-        console.log("managerApproval[i].managerEmail != managerEmail" + managerApproval[i].managerEmail != managerEmail)
         if (managerApproval[i].managerEmail != managerEmail) {
             getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
