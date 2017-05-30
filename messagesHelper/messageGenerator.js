@@ -10,7 +10,7 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
 
     var i = 0
     var size = Object.keys(managerApproval).length
-    var messageBody = "\""
+    var messageBody = ""
     //Sorting Managers Approver based on rank
     managerApproval.sort(function (a, b) {
         return a.rank - b.rank;
@@ -34,13 +34,16 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
 
         i++
     }
-    messageBody = messageBody.replace(/}\"/g, "}")
-    messageBody = messageBody.replace(/\"\{/g, "{")
-    messageBody = messageBody.replace(/\\/g, "")
-    messageBody = messageBody.replace(/\",\"\"/g, "")
-    messageBody = messageBody.replace(/,,/, ",")
-    messageBody = messageBody.replace(/\"\{/g, "{")
-    console.log("messageBody:::" + messageBody)
+    if (messageBody != "") {
+        messageBody = messageBody.replace(/}\"/g, "}")
+        messageBody = messageBody.replace(/\"\{/g, "{")
+        messageBody = messageBody.replace(/\\/g, "")
+        messageBody = messageBody.replace(/\",\"\"/g, "")
+        messageBody = messageBody.replace(/,,/, ",")
+        messageBody = messageBody.replace(/\"\{/g, "{")
+        console.log("messageBody:::" + messageBody)
+    }
+
     callback(messageBody)
 }
 /**
