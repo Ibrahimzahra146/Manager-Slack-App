@@ -898,7 +898,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
           vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
             messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
 
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState)
+              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState, JSON.parse(body.comment))
 
               messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 

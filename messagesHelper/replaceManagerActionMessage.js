@@ -4,7 +4,7 @@ var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
-module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState) {
+module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
 
     getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
         console.log("ImageUrl" + ImageUrl)
@@ -49,6 +49,10 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
                             "short": false
+                        }, {
+                            "title": "Comment",
+                            "value": comment,
+                            "short": true
                         }
 
                     ],
@@ -474,11 +478,11 @@ function prepareMessage(messageBody, callback) {
     stringfy = stringfy.replace(/},\"/g, "},{\"")
     stringfy = stringfy.replace(/{\"\"\",/g, "")
 
-    
+
     console.log("stringfy2" + stringfy)
 
     stringfy = JSON.parse(stringfy)
     callback(stringfy)
-        }
+}
 
 
