@@ -132,7 +132,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
-                            "short": true
+                            "short": false
                         }
 
                     ],
@@ -222,7 +222,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
-                            "short": true
+                            "short": false
                         }
                     ],
                     "actions": [
@@ -382,7 +382,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
-                            "short": true
+                            "short": false
                         }
 
                     ], "actions": [
@@ -473,7 +473,7 @@ function prepareMessage(messageBody, callback) {
     stringfy = stringfy.replace(/,\",{/g, ",")
     stringfy = stringfy.replace(/},\"/g, "},{\"")
     stringfy = stringfy.replace(/{\"\"\",/g, "")
-    stringfy = stringfy.replace(/{\"\",/g, "")
+    stringfy = stringfy.replace(/{\"\"  ,/g, "")
 
     console.log("stringfy2" + stringfy)
 
