@@ -473,7 +473,7 @@ function prepareMessage(messageBody, callback) {
     stringfy = stringfy.replace(/,\",{/g, ",")
     stringfy = stringfy.replace(/},\"/g, "},{\"")
     stringfy = stringfy.replace(/{\"\"\",/g, "")
-    stringfy = stringfy.replace(/{\"\"  ,/g, "")
+    stringfy = stringfy.replace(/{\"\",/g, "")
 
     console.log("stringfy2" + stringfy)
 
