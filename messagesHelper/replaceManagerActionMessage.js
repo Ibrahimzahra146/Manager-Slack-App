@@ -44,7 +44,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             "short": true
                         }
                         ,
-                        managerApprovalsSection,
+                        managerApprovalsSection
                         ,
 
                         {
@@ -55,8 +55,8 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         {
                             "title": "Comment ",
                             "value": comment,
-                            "short": false
-                        },
+                            "short": true
+                        }
 
                     ],
                     "actions": [
