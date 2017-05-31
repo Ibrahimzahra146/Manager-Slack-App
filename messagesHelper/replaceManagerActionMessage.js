@@ -5,7 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
-    console.log("Commebt" + comment)
+    console.log("Commeb t" + comment)
     var commentField = ""
     if (comment != null && comment != "") {
         commentField =
