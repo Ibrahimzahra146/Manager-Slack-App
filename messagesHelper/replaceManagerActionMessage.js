@@ -17,7 +17,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
             }
     }
     getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
-        console.log("ImageUrl" + ImageUrl)
+       
         var messageBody = {
             "text": "Time off request:",
             "attachments": [
