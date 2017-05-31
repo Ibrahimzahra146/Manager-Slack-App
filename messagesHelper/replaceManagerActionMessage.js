@@ -91,268 +91,215 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
         })
     }
     //return original message when click on undo
-    module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+    module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
         //console.log("undoAction1" + undoAction)
-        getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
-            var dont_detuct_button = ""
-            if (type != "WFH") {
-                dont_detuct_button = {
-                    "name": "dont_detuct",
-                    "text": "Don’t Deduct ",
-                    "type": "button",
-                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                }
-            }
-            var messageBody = {
-                "text": "Time off request:",
-                "attachments": [
-                    {
-                        "attachment_type": "default",
-                        "callback_id": "manager_confirm_reject",
-                        "text": userEmail,
-                        "fallback": "ReferenceError",
-                        "fields": [
-                            {
-                                "title": "From",
-                                "value": fromDate,
-                                "short": true
-                            },
-                            {
-                                "title": "Days/Time ",
-                                "value": workingDays + " day",
-                                "short": true
-                            },
-                            {
-                                "title": "to",
-                                "value": toDate,
-                                "short": true
-                            },
-                            {
-                                "title": "Type",
-                                "value": type + " " + typeEmoji,
-                                "short": true
-                            }
-                            ,
-                            {
-                                "title": "Your action ",
-                                "value": myAction + " " + myActionEmoji,
-                                "short": true
-                            }
-                            ,
-                            managerApprovalsSection,
-                            {
-                                "title": "Final state",
-                                "value": vacationState + " " + finalStateEmoji,
-                                "short": false
-                            }
-
-                        ],
-                        "actions": [
-                            {
-                                "name": "confirm",
-                                "text": "Accept",
-                                "style": "primary",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
-                            {
-                                "name": "reject",
-                                "text": "Reject",
-                                "style": "danger",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
-                            {
-                                "name": "reject_with_comment",
-                                "text": "Reject with comment",
-                                "style": "danger",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            }, dont_detuct_button
-                            , {
-                                "name": "check_state",
-                                "text": ":arrows_counterclockwise:",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
-                        ],
-                        "color": "#F35A00",
-                        "thumb_url": ImageUrl,
-                    }
-                ]
-            }
-            prepareMessage(messageBody, function (stringfy) {
-                msg.respond(msg.body.response_url, stringfy)
-            })
-        })
-    }
-
-    module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
-        getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
-
-            var dont_detuct_button = ""
-
-            var messageBody = {
-                "text": "Time off request:",
-                "attachments": [
-                    {
-                        "attachment_type": "default",
-                        "callback_id": "manager_confirm_reject",
-                        "text": userEmail,
-                        "fallback": "ReferenceError",
-                        "fields": [
-                            {
-                                "title": "From",
-                                "value": fromDate,
-                                "short": true
-                            },
-                            {
-                                "title": "Days/Time ",
-                                "value": workingDays + " day",
-                                "short": true
-                            },
-                            {
-                                "title": "to",
-                                "value": toDate,
-                                "short": true
-                            },
-                            {
-                                "title": "Type",
-                                "value": type + " " + typeEmoji,
-                                "short": true
-                            }
-                            ,
-                            {
-                                "title": "Your action ",
-                                "value": myAction + " " + myActionEmoji,
-                                "short": true
-                            }
-                            , managerApprovalsSection,
-
-                            {
-                                "title": "Final state",
-                                "value": vacationState + " " + finalStateEmoji,
-                                "short": false
-                            }
-                        ],
-                        "actions": [
-                            {
-                                "name": "Send_comment",
-                                "text": "Sorry",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Sorry!."
-                            },
-                            {
-                                "name": "Send_comment",
-                                "text": "Project deadline",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Project deadline."
-                            },
-
-                            {
-                                "name": "Send_comment",
-                                "text": "Discuss it privately",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Discuss it privately."
-                            },
-                            {
-                                "name": "Send_comment",
-                                "text": "No replaceable emp",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
-                            }, {
-                                "name": "Undo",
-                                "text": "back",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            }
-
-                        ],
-                        "color": "#F35A00",
-                        "thumb_url": ImageUrl,
-                    }
-                ]
-            }
-            prepareMessage(messageBody, function (stringfy) {
-                msg.respond(msg.body.response_url, stringfy)
-            })
-        })
-    }
-
-    /**
-     * Refresh the current message
-     */
-
-    module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
-
-
-        var messageBody = {
-            "text": "Time off request:",
-            "attachments": [
+        var commentField = ""
+        if (comment != null && comment != "") {
+            commentField =
                 {
-                    "attachment_type": "default",
-                    "callback_id": "manager_confirm_reject",
-                    "text": userEmail,
-                    "fallback": "ReferenceError",
-                    "fields": [
-                        {
-                            "title": "From",
-                            "value": fromDate,
-                            "short": true
-                        },
-                        {
-                            "title": "Days/Time ",
-                            "value": workingDays + " day",
-                            "short": true
-                        },
-                        {
-                            "title": "to",
-                            "value": toDate,
-                            "short": true
-                        },
-                        {
-                            "title": "Type",
-                            "value": type,
-                            "short": true
-                        }
-                        ,
-                        {
-                            "title": "State",
-                            "value": "Cancelled by employee :no_entry_sign:",
-                            "short": true
-                        }
-                    ],
+                    "title": "Comment ",
+                    "value": comment,
+                    "short": true
 
-                    "color": "#F35A00",
-                    "thumb_url": ImageUrl,
                 }
-            ]
+            getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+                var dont_detuct_button = ""
+                if (type != "WFH") {
+                    dont_detuct_button = {
+                        "name": "dont_detuct",
+                        "text": "Don’t Deduct ",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }
+                }
+                var messageBody = {
+                    "text": "Time off request:",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "callback_id": "manager_confirm_reject",
+                            "text": userEmail,
+                            "fallback": "ReferenceError",
+                            "fields": [
+                                {
+                                    "title": "From",
+                                    "value": fromDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Days/Time ",
+                                    "value": workingDays + " day",
+                                    "short": true
+                                },
+                                {
+                                    "title": "to",
+                                    "value": toDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Type",
+                                    "value": type + " " + typeEmoji,
+                                    "short": true
+                                }
+                                ,
+                                {
+                                    "title": "Your action ",
+                                    "value": myAction + " " + myActionEmoji,
+                                    "short": true
+                                }
+                                ,
+                                managerApprovalsSection,
+                                {
+                                    "title": "Final state",
+                                    "value": vacationState + " " + finalStateEmoji,
+                                    "short": false
+                                }, commentField
+
+                            ],
+                            "actions": [
+                                {
+                                    "name": "confirm",
+                                    "text": "Accept",
+                                    "style": "primary",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                                {
+                                    "name": "reject",
+                                    "text": "Reject",
+                                    "style": "danger",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                                {
+                                    "name": "reject_with_comment",
+                                    "text": "Reject with comment",
+                                    "style": "danger",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                }, dont_detuct_button
+                                , {
+                                    "name": "check_state",
+                                    "text": ":arrows_counterclockwise:",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                            ],
+                            "color": "#F35A00",
+                            "thumb_url": ImageUrl,
+                        }
+                    ]
+                }
+                prepareMessage(messageBody, function (stringfy) {
+                    msg.respond(msg.body.response_url, stringfy)
+                })
+            })
         }
-        msg.respond(msg.body.response_url, messageBody)
-    }
-    /**
-     * Check state of not canceled request
-     * 
-     */
-    module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
-        getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
+        module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+            getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
-            var dont_detuct_button = ""
-            if (type != "WFH") {
-                dont_detuct_button = {
-                    "name": "dont_detuct",
-                    "text": "Don’t Deduct ",
-                    "type": "button",
-                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                var dont_detuct_button = ""
+
+                var messageBody = {
+                    "text": "Time off request:",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "callback_id": "manager_confirm_reject",
+                            "text": userEmail,
+                            "fallback": "ReferenceError",
+                            "fields": [
+                                {
+                                    "title": "From",
+                                    "value": fromDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Days/Time ",
+                                    "value": workingDays + " day",
+                                    "short": true
+                                },
+                                {
+                                    "title": "to",
+                                    "value": toDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Type",
+                                    "value": type + " " + typeEmoji,
+                                    "short": true
+                                }
+                                ,
+                                {
+                                    "title": "Your action ",
+                                    "value": myAction + " " + myActionEmoji,
+                                    "short": true
+                                }
+                                , managerApprovalsSection,
+
+                                {
+                                    "title": "Final state",
+                                    "value": vacationState + " " + finalStateEmoji,
+                                    "short": false
+                                }
+                            ],
+                            "actions": [
+                                {
+                                    "name": "Send_comment",
+                                    "text": "Sorry",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Sorry!."
+                                },
+                                {
+                                    "name": "Send_comment",
+                                    "text": "Project deadline",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Project deadline."
+                                },
+
+                                {
+                                    "name": "Send_comment",
+                                    "text": "Discuss it privately",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";Discuss it privately."
+                                },
+                                {
+                                    "name": "Send_comment",
+                                    "text": "No replaceable emp",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";No replaceable emp."
+                                }, {
+                                    "name": "Undo",
+                                    "text": "back",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                }
+
+                            ],
+                            "color": "#F35A00",
+                            "thumb_url": ImageUrl,
+                        }
+                    ]
                 }
-            }
-            console.log("replaceMessageOnCheckState")
+                prepareMessage(messageBody, function (stringfy) {
+                    msg.respond(msg.body.response_url, stringfy)
+                })
+            })
+        }
+
+        /**
+         * Refresh the current message
+         */
+
+        module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+
+
             var messageBody = {
                 "text": "Time off request:",
                 "attachments": [
@@ -379,52 +326,15 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             },
                             {
                                 "title": "Type",
-                                "value": type + " " + typeEmoji,
+                                "value": type,
                                 "short": true
                             }
                             ,
                             {
-                                "title": "Your action ",
-                                "value": myAction + " " + myActionEmoji,
+                                "title": "State",
+                                "value": "Cancelled by employee :no_entry_sign:",
                                 "short": true
                             }
-                            ,
-                            managerApprovalsSection,
-                            {
-                                "title": "Final state",
-                                "value": vacationState + " " + finalStateEmoji,
-                                "short": false
-                            }
-
-                        ], "actions": [
-                            {
-                                "name": "confirm",
-                                "text": "Accept",
-                                "style": "primary",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
-                            {
-                                "name": "reject",
-                                "text": "Reject",
-                                "style": "danger",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
-                            {
-                                "name": "reject_with_comment",
-                                "text": "Reject with comment",
-                                "style": "danger",
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            }, dont_detuct_button
-                            , {
-                                "name": "check_state",
-                                "text": ":arrows_counterclockwise:",
-
-                                "type": "button",
-                                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                            },
                         ],
 
                         "color": "#F35A00",
@@ -432,64 +342,163 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                     }
                 ]
             }
-            prepareMessage(messageBody, function (stringfy) {
-                msg.respond(msg.body.response_url, stringfy)
+            msg.respond(msg.body.response_url, messageBody)
+        }
+        /**
+         * Check state of not canceled request
+         * 
+         */
+        module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+            getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+
+
+                var dont_detuct_button = ""
+                if (type != "WFH") {
+                    dont_detuct_button = {
+                        "name": "dont_detuct",
+                        "text": "Don’t Deduct ",
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }
+                }
+                console.log("replaceMessageOnCheckState")
+                var messageBody = {
+                    "text": "Time off request:",
+                    "attachments": [
+                        {
+                            "attachment_type": "default",
+                            "callback_id": "manager_confirm_reject",
+                            "text": userEmail,
+                            "fallback": "ReferenceError",
+                            "fields": [
+                                {
+                                    "title": "From",
+                                    "value": fromDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Days/Time ",
+                                    "value": workingDays + " day",
+                                    "short": true
+                                },
+                                {
+                                    "title": "to",
+                                    "value": toDate,
+                                    "short": true
+                                },
+                                {
+                                    "title": "Type",
+                                    "value": type + " " + typeEmoji,
+                                    "short": true
+                                }
+                                ,
+                                {
+                                    "title": "Your action ",
+                                    "value": myAction + " " + myActionEmoji,
+                                    "short": true
+                                }
+                                ,
+                                managerApprovalsSection,
+                                {
+                                    "title": "Final state",
+                                    "value": vacationState + " " + finalStateEmoji,
+                                    "short": false
+                                }
+
+                            ], "actions": [
+                                {
+                                    "name": "confirm",
+                                    "text": "Accept",
+                                    "style": "primary",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                                {
+                                    "name": "reject",
+                                    "text": "Reject",
+                                    "style": "danger",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                                {
+                                    "name": "reject_with_comment",
+                                    "text": "Reject with comment",
+                                    "style": "danger",
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                }, dont_detuct_button
+                                , {
+                                    "name": "check_state",
+                                    "text": ":arrows_counterclockwise:",
+
+                                    "type": "button",
+                                    "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                                },
+                            ],
+
+                            "color": "#F35A00",
+                            "thumb_url": ImageUrl,
+                        }
+                    ]
+                }
+                prepareMessage(messageBody, function (stringfy) {
+                    msg.respond(msg.body.response_url, stringfy)
+                })
             })
-        })
-    }
-    //
-    function getEmoji(state, finalState, type, myAction, callback) {
-        var approverActionEmoji = ":thinking_face:"
-        var typeEmoji = ""
-        var finalStateEmoji = ":thinking_face:"
-        var myActionEmoji = ":thinking_face:"
-        if (state == "--") {
-            var approverActionEmoji = ""
+        }
+        //
+        function getEmoji(state, finalState, type, myAction, callback) {
+            var approverActionEmoji = ":thinking_face:"
+            var typeEmoji = ""
+            var finalStateEmoji = ":thinking_face:"
+            var myActionEmoji = ":thinking_face:"
+            if (state == "--") {
+                var approverActionEmoji = ""
+
+            }
+            if (state == "Rejected") {
+                approverActionEmoji = ":no_entry_sign:"
+            } else if (state == "Approved") {
+                approverActionEmoji = ":white_check_mark:"
+            }
+            if (type == "sick") {
+                typeEmoji = ":ambulance:"
+            }
+            if (finalState == "Rejected") {
+                finalStateEmoji = ":no_entry_sign:"
+            } else if (finalState == "Approved") {
+                finalStateEmoji = ":white_check_mark:"
+            }
+            if (myAction == "Rejected") {
+                myActionEmoji = ":no_entry_sign:"
+            } else if (myAction == "Approved") {
+                myActionEmoji = ":white_check_mark:"
+            }
+
+            callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
 
         }
-        if (state == "Rejected") {
-            approverActionEmoji = ":no_entry_sign:"
-        } else if (state == "Approved") {
-            approverActionEmoji = ":white_check_mark:"
+        //prepare message
+        function prepareMessage(messageBody, callback) {
+            var stringfy = JSON.stringify(messageBody)
+            stringfy = stringfy.replace(/\\/, "")
+
+            stringfy = stringfy.replace(/}\"/g, "}")
+            stringfy = stringfy.replace(/\"\{/g, "{")
+            stringfy = stringfy.replace(/\\/g, "")
+            stringfy = stringfy.replace(/\",\"\"/g, "")
+            stringfy = stringfy.replace(/,,/, ",")
+            stringfy = stringfy.replace(/\"\{/g, "{")
+            console.log("stringfy11" + stringfy)
+            stringfy = stringfy.replace(/,\",{/g, ",")
+            stringfy = stringfy.replace(/},\"/g, "},{\"")
+            stringfy = stringfy.replace(/{\"\"\",/g, "")
+            stringfy = stringfy.replace(/{\"\",/g, "")
+
+            console.log("stringfy2" + stringfy)
+
+            stringfy = JSON.parse(stringfy)
+            callback(stringfy)
         }
-        if (type == "sick") {
-            typeEmoji = ":ambulance:"
-        }
-        if (finalState == "Rejected") {
-            finalStateEmoji = ":no_entry_sign:"
-        } else if (finalState == "Approved") {
-            finalStateEmoji = ":white_check_mark:"
-        }
-        if (myAction == "Rejected") {
-            myActionEmoji = ":no_entry_sign:"
-        } else if (myAction == "Approved") {
-            myActionEmoji = ":white_check_mark:"
-        }
-
-        callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
-
-    }
-    //prepare message
-    function prepareMessage(messageBody, callback) {
-        var stringfy = JSON.stringify(messageBody)
-        stringfy = stringfy.replace(/\\/, "")
-
-        stringfy = stringfy.replace(/}\"/g, "}")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        stringfy = stringfy.replace(/\\/g, "")
-        stringfy = stringfy.replace(/\",\"\"/g, "")
-        stringfy = stringfy.replace(/,,/, ",")
-        stringfy = stringfy.replace(/\"\{/g, "{")
-        console.log("stringfy11" + stringfy)
-        stringfy = stringfy.replace(/,\",{/g, ",")
-        stringfy = stringfy.replace(/},\"/g, "},{\"")
-        stringfy = stringfy.replace(/{\"\"\",/g, "")
-        stringfy = stringfy.replace(/{\"\",/g, "")
-
-        console.log("stringfy2" + stringfy)
-
-        stringfy = JSON.parse(stringfy)
-        callback(stringfy)
-    }
 
 
