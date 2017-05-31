@@ -12,12 +12,12 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
             {
                 "title": "Comment ",
                 "value": comment,
-                "short": true
+                "short": false
 
             }
     }
     getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
-       
+
         var messageBody = {
             "text": "Time off request:",
             "attachments": [
@@ -55,13 +55,13 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                         }
                         ,
                         managerApprovalsSection
-                        ,
+                        , commentField,
 
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
                             "short": false
-                        }, commentField
+                        }
 
                     ],
                     "actions": [
@@ -100,7 +100,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
             {
                 "title": "Comment ",
                 "value": comment,
-                "short": true
+                "short": false
 
             }
     }
@@ -151,11 +151,12 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         }
                         ,
                         managerApprovalsSection,
+                         commentField,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
                             "short": false
-                        }, commentField
+                        }
 
                     ],
                     "actions": [
