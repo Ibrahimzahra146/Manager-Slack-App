@@ -362,7 +362,17 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * Check state of not canceled request
  * 
  */
-module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+    var commentField = ""
+    if (comment != null && comment != "") {
+        commentField =
+            {
+                "title": "Comment ",
+                "value": comment,
+                "short": false
+
+            }
+    }
     getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
 
@@ -413,6 +423,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         }
                         ,
                         managerApprovalsSection,
+                        commentField,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
