@@ -151,7 +151,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         }
                         ,
                         managerApprovalsSection,
-                         commentField,
+                        commentField,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -200,7 +200,17 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
     })
 }
 
-module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction) {
+module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+    var commentField = ""
+    if (comment != null && comment != "") {
+        commentField =
+            {
+                "title": "Comment ",
+                "value": comment,
+                "short": false
+
+            }
+    }
     getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
         var dont_detuct_button = ""
@@ -241,6 +251,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                             "short": true
                         }
                         , managerApprovalsSection,
+                        commentField,
 
                         {
                             "title": "Final state",
