@@ -512,6 +512,8 @@ function getEmoji(state, finalState, type, myAction, callback) {
         approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
         approverActionEmoji = ":white_check_mark:"
+    } else if (state == "ApprovedWithoutDeduction") {
+        approverActionEmoji = "::eight_spoked_asterisk::"
     }
     if (type == "sick") {
         typeEmoji = ":ambulance:"
@@ -520,7 +522,11 @@ function getEmoji(state, finalState, type, myAction, callback) {
         finalStateEmoji = ":no_entry_sign:"
     } else if (finalState == "Approved") {
         finalStateEmoji = ":white_check_mark:"
+    } else if (finalState == "ApprovedWithoutDeduction") {
+        finalStateEmoji = "::eight_spoked_asterisk::"
     }
+    ApprovedWithoutDeduction
+
     if (myAction == "Rejected") {
         myActionEmoji = ":no_entry_sign:"
     } else if (myAction == "Approved") {
