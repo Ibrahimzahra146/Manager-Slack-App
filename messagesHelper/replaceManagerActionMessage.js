@@ -121,7 +121,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                 "text": "Accept with report",
 
                 "type": "button",
-                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
             }
         var messageBody = {
             "text": "Time off request:",
@@ -394,6 +394,15 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                 "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
             }
         }
+        var actions_based_on_type = dont_detuct_button
+        if (type == "sick")
+            actions_based_on_type = {
+                "name": "accept_with_report",
+                "text": "Accept with report",
+
+                "type": "button",
+                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+            }
         console.log("replaceMessageOnCheckState")
         var messageBody = {
             "text": "Time off request:",
@@ -455,12 +464,12 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         },
                         {
-                            "name": "accept_with_report",
-                            "text": "Accept with report",
+                            "name": "reject_with_comment",
+                            "text": "Reject with comment",
                             "style": "danger",
                             "type": "button",
-                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        }, dont_detuct_button
+                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+                        }, actions_based_on_type
                         , {
                             "name": "check_state",
                             "text": ":arrows_counterclockwise:",
