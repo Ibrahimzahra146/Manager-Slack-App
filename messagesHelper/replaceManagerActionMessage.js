@@ -175,8 +175,8 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         },
                         {
-                            "name": "reject_with_comment",
-                            "text": "Reject with comment",
+                            "name": "accept_with_report",
+                            "text": "Accept with report",
                             "style": "danger",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
@@ -446,8 +446,8 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         },
                         {
-                            "name": "reject_with_comment",
-                            "text": "Reject with comment",
+                            "name": "accept_with_report",
+                            "text": "Accept with report",
                             "style": "danger",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
