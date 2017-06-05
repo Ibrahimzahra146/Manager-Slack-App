@@ -527,12 +527,15 @@ function getEmoji(state, finalState, type, myAction, callback) {
     } else if (finalState == "ApprovedWithoutDeduction") {
         finalStateEmoji = "::eight_spoked_asterisk::"
     }
-    
+
 
     if (myAction == "Rejected") {
         myActionEmoji = ":no_entry_sign:"
     } else if (myAction == "Approved") {
         myActionEmoji = ":white_check_mark:"
+    }
+    else if (myAction == "ApprovedWithoutDeduction") {
+        myActionEmoji = ":eight_spoked_asterisk:"
     }
 
     callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
