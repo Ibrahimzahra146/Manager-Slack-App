@@ -105,6 +105,13 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
             }
     }
     getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+        var reject_with_comment_button = {
+            "name": "reject_with_comment",
+            "text": "Reject with comment",
+            "style": "danger",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+        }
         var dont_detuct_button = ""
         if (type != "WFH") {
             dont_detuct_button = {
@@ -115,7 +122,8 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
             }
         }
         var actions_based_on_type = dont_detuct_button
-        if (type == "sick")
+        if (type == "sick") {
+            reject_with_comment_button = ""
             actions_based_on_type = {
                 "name": "accept_with_report",
                 "text": "Accept with report",
@@ -123,6 +131,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                 "type": "button",
                 "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
             }
+        }
         var messageBody = {
             "text": "Time off request:",
             "attachments": [
@@ -175,22 +184,16 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                             "style": "primary",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        },
+                        }, actions_based_on_type,
                         {
                             "name": "reject",
                             "text": "Reject",
                             "style": "danger",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        },
+                        }, reject_with_comment_button,
+
                         {
-                            "name": "reject_with_comment",
-                            "text": "Reject with comment",
-                            "style": "danger",
-                            "type": "button",
-                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                        }, actions_based_on_type
-                        , {
                             "name": "check_state",
                             "text": ":arrows_counterclockwise:",
 
@@ -384,9 +387,17 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
     }
     getEmoji("", vacationState, type, myAction, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
-
+        var reject_with_comment_button = {
+            "name": "reject_with_comment",
+            "text": "Reject with comment",
+            "style": "danger",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
+        }
         var dont_detuct_button = ""
         if (type != "WFH") {
+            reject_with_comment_button = ""
+
             dont_detuct_button = {
                 "name": "dont_detuct",
                 "text": "Don’t Deduct ",
@@ -455,22 +466,17 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                             "style": "primary",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        },
+                        }, actions_based_on_type,
                         {
                             "name": "reject",
                             "text": "Reject",
                             "style": "danger",
                             "type": "button",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        },
+                        }, reject_with_comment_button,
+
+
                         {
-                            "name": "reject_with_comment",
-                            "text": "Reject with comment",
-                            "style": "danger",
-                            "type": "button",
-                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
-                        }, actions_based_on_type
-                        , {
                             "name": "check_state",
                             "text": ":arrows_counterclockwise:",
 
