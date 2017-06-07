@@ -35,6 +35,7 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
                     messageBody = messageBody + ","
                 })
             }
+            
 
             i++
         }
