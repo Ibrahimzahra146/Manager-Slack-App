@@ -878,39 +878,52 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
     typeText = " paternity" + " time off"
   } else if (type == "WFH")
     typeText = " work from home"
-
-  sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-    if (isDeleted == false) {
-      if (fromManager != 1) {
-        request({
-          url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-          },
-          body: userEmail
-          //Set the body as a stringcc
-        }, function (error, response, body) {
-          var responseBody = JSON.parse(body);
-
-
-          vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
-            messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
-              console.log("generate ManagerApprovelsSection " + JSON.stringify(body))
-
-              replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState, JSON.parse(body).comments)
-
-              messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-
-            });
-          })
-        })
-      }
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
+    if (JSON.parse(body).vacationState == "Rejected") {
+      replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
-    else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+    else {
 
 
+      sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+        if (isDeleted == false) {
+          if (fromManager != 1) {
+            request({
+              url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
+              },
+              body: userEmail
+              //Set the body as a stringcc
+            }, function (error, response, body) {
+              var responseBody = JSON.parse(body);
+
+
+
+
+
+              messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
+                console.log("generate ManagerApprovelsSection " + JSON.stringify(body))
+
+                replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState, JSON.parse(body).comments)
+
+                messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+
+              });
+
+
+
+            })
+
+          }
+        }
+        else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+
+
+      })
+    }
   })
 }
 
