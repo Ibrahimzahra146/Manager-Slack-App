@@ -903,7 +903,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
 
 
 
-
+              console.log("JSON.parse(vacationBody)" + JSON.stringify(vacationBody))
               messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
                 console.log("generate ManagerApprovelsSection " + JSON.stringify(vacationBody))
 
