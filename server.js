@@ -878,7 +878,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
     typeText = " paternity" + " time off"
   } else if (type == "WFH")
     typeText = " work from home"
-  vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
+  vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody) {
     if (JSON.parse(body).vacationState == "Rejected") {
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
@@ -904,10 +904,10 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
 
 
 
-              messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, function (managerApprovalsSection) {
+              messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
                 console.log("generate ManagerApprovelsSection " + JSON.stringify(body))
 
-                replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(body).vacationState, JSON.parse(body).comments)
+                replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
 
                 messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
