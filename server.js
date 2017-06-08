@@ -905,7 +905,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
 
 
               messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
-                console.log("generate ManagerApprovelsSection " + JSON.stringify(body))
+                console.log("generate ManagerApprovelsSection " + JSON.stringify(vacationBody))
 
                 replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
 
