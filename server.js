@@ -897,13 +897,16 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                 env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
                   var responseBody = JSON.parse(body);
                   var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-                  if (type == "sick" && approvalType == "Approved" && sickReportFlag)
+                  if (type == "sick" && approvalType == "Approved" && sickReportFlag == 1)
                     feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                  else {
+                    messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+
+                  }
 
                   env.bot.startConversation(slack_message, function (err, convo) {
 
                     if (!err) {
-                      var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
                       var stringfy = JSON.stringify(upload_sick_report_message);
                       var obj1 = JSON.parse(stringfy);
                       env.bot.reply(slack_message, obj1);
