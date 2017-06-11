@@ -879,7 +879,9 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   } else if (type == "WFH")
     typeText = " work from home"
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody) {
+    //check if the vaction rejected in order to prevent manager to take an action
     if (JSON.parse(vacationBody).vacationState == "Rejected") {
+      console.log("Rejected")
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
     else {
