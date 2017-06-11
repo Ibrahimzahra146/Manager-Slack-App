@@ -40,7 +40,7 @@ module.exports.upload_sick_report_message = function cancelationButton(email, va
                         "name": "upload_sick_report",
                         "text": "Upload sick report ",
                         "type": "button",
-                        "value": email + ";" + vacationId + ";" + fromDate + ";" + toDate + 
+                        "value": email + ";" + vacationId + ";" + fromDate + ";" + toDate 
 
                     }
                 ]
