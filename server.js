@@ -877,52 +877,53 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
     else {
 
 
+      messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
 
 
-      if (approvalType == "Rejected") {
-        replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment)
-      } else {
+        if (approvalType == "Rejected") {
+          replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
+        } else {
 
 
-        sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-          if (isDeleted == false) {
-            if (fromManager != 1) {
+          sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+            if (isDeleted == false) {
+              if (fromManager != 1) {
 
 
-              env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
-                var responseBody = JSON.parse(body);
-                var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-                if (type == "sick" && approvalType == "accept_with_report")
-                  feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+                  var responseBody = JSON.parse(body);
+                  var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+                  if (type == "sick" && approvalType == "accept_with_report")
+                    feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
 
-                env.bot.startConversation(slack_message, function (err, convo) {
+                  env.bot.startConversation(slack_message, function (err, convo) {
 
-                  if (!err) {
-                    var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
-                    var stringfy = JSON.stringify(upload_sick_report_message);
-                    var obj1 = JSON.parse(stringfy);
-                    env.bot.reply(slack_message, obj1);
+                    if (!err) {
+                      var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                      var stringfy = JSON.stringify(upload_sick_report_message);
+                      var obj1 = JSON.parse(stringfy);
+                      env.bot.reply(slack_message, obj1);
 
-                  }
-                });
-                messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
+                    }
+                  });
                   replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
                   /* if (comment != "accept_with_report")
                      messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
    */
-                });
 
 
 
-              })
 
+                })
+
+              }
             }
-          }
-          else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+            else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
 
-        })
-      }
+          })
+        }
+      })
     }
   })
 }
