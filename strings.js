@@ -26,12 +26,13 @@ module.exports.slack_message = function (userChannelId, slackUserId, teamId) {
  * 
  * 
  */
-module.exports.upload_sick_report_message = function cancelationButton(email, vacationId, fromDate, toDate, type) {
+module.exports.upload_sick_report_message = function upload_sick_report_message(email, vacationId, fromDate, toDate, messageFB) {
+    messageFB = env.stringFile.manager_message_on_accept_with_report(email, fromDate, toDate)
     var message = {
         "text": "",
         "attachments": [
             {
-                "text": env.stringFile.manager_message_on_accept_with_report(email, fromDate, toDate),
+                "text": messageFB,
                 "callback_id": 'cancel_request',
                 "color": "#3AA3E3",
                 "attachment_type": "default",
@@ -40,7 +41,7 @@ module.exports.upload_sick_report_message = function cancelationButton(email, va
                         "name": "upload_sick_report",
                         "text": "Upload sick report ",
                         "type": "button",
-                        "value": email + ";" + vacationId + ";" + fromDate + ";" + toDate 
+                        "value": email + ";" + vacationId + ";" + fromDate + ";" + toDate + ";" + messageFB
 
                     }
                 ]
