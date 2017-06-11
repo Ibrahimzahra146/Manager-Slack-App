@@ -6,7 +6,7 @@ const env = require('./public/configrations.js')
  * 
  */
 module.exports.manager_message_on_accept_with_report = function manager_message_on_accept_with_report(email, fromDate, toDate) {
-    var message = "Your manager " + email + " asked you to submitt a sick report for your sick time from ( " + fromDate + "-" + toDate + " )";
+    var message = "The approver " + email + " asked you to submit a sick report for your sick time from ( " + fromDate + "-" + toDate + " )";
     return message;
 }
 
