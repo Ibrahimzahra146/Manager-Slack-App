@@ -1018,7 +1018,7 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
 
 slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
 
-  managerApproval1(msg, value, "accept_with_report", 0, "", 0, 1)
+  managerApproval1(msg, value, "Approved", 0, "", 0, 1)
 
 
 })
