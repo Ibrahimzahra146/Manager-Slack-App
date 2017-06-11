@@ -904,8 +904,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
                 console.log("generate ManagerApprovelsSection " + JSON.stringify(vacationBody))
 
                 replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
-
-                messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+                if (comment != "accept_with_report")
+                  messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
               });
 
@@ -1027,7 +1027,7 @@ slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
     });
 
   })
-  managerApproval1(msg, value, "Approved", 0, "")
+  managerApproval1(msg, value, "Approved", 0, "accept_with_report")
 
 
 })
