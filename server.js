@@ -918,7 +918,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                         messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
                       }
-                      if (approvalType == "Rejected") {
+                      if (approvalType == "Rejected"&&rejectConfFlag==1) {
                         replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
                       } else
