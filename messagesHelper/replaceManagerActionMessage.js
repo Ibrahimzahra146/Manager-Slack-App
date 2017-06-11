@@ -554,7 +554,7 @@ module.exports.replaceAlreadyRejectedVacation = function replaceAlreadyRejectedV
  * 
  * 
  */
-module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
     console.log("Comment" + comment)
     var commentField = ""
     if (comment != null && comment != "") {
