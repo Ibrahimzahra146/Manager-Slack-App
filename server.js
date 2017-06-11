@@ -1,4 +1,6 @@
 'use strict'
+const env = require('./public/configrations.js')
+
 var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY
 var requestIp = require('request-ip')
 const express = require('express')
@@ -85,10 +87,10 @@ exports.hr_bot = hr_bot
 function sendVacationPutRequest(vacationId, approvalId, managerEmail, status, callback) {
   var isDeleted = false;
 
-  managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
-    managerToffyHelper.general_remember_me = remember_me_cookie;
-    managerToffyHelper.general_session_Id = session_id
-    var uri = 'http://' + IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
+  env.managerToffyHelper.getNewSessionwithCookie(managerEmail, function (remember_me_cookie, session_id) {
+    env.managerToffyHelper.general_remember_me = remember_me_cookie;
+    env.managerToffyHelper.general_session_Id = session_id
+    var uri = 'http://' + env.IP + '/api/v1/vacation/' + vacationId + '/managerApproval/' + approvalId
     console.log("uri: :" + uri)
     var approvalBody = {
       "id": approvalId,
@@ -197,14 +199,14 @@ function storeManagerSlackInformation(email, msg) {
 }
 //send the text to api ai 
 function sendRequestToApiAi(emailValue, msg) {
-  managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
+  env.managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     if (role == true) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
 
-      let apiaiRequest = apiAiService.textRequest(text,
+      let apiaiRequest = env.apiAiService.textRequest(text,
         {
-          sessionId: sessionId
+          sessionId: env.sessionId
         });
 
       apiaiRequest.on('response', (response) => {
@@ -235,11 +237,7 @@ function sendRequestToApiAi(emailValue, msg) {
           whoIsOff.whoIsOff(msg, response, emailValue)
         }
         else if (responseText == "showEmployeeInfo") {
-          console.log("eresponse:::" + JSON.stringify(response))
-          console.log("employeeEmail:  ::" + response.result.parameters.email)
-          console.log("response.result.parameters.any" + response.result.parameters.any)
-          console.log("generalEmail" + generalEmail)
-          console.log("generalEmailForEmpInfo" + generalEmailForEmpInfo)
+
           var employeeEmail = "";
           if (response.result.parameters.any || generalEmailForEmpInfo != "" || generalEmail != "") {
             console.log("Case1")
@@ -683,8 +681,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
     console.log("message from bot")
     var stringfy = JSON.stringify(msg);
-    console.log("the message is ");
-    console.log(stringfy);
+
 
   } else {
 
@@ -861,9 +858,6 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-  var approver2Email = arr[10]
-  var approver2Action = arr[11]
-  var vacationState = arr[12]
 
 
 
@@ -944,7 +938,8 @@ slapp.action('leave_with_vacation_confirm_reject', 'reject', (msg, value) => {
   msg.say("Ok, operation aborted.")
   fromDate = "";
   toDate = "";
-})//Undo action
+})
+//Undo action
 slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var arr = value.toString().split(";")
   var userEmail = arr[0];
@@ -964,11 +959,6 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
       vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, function (myEmail, myAction, vacationState) {
         replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
       })
-
-
-
-
-
     })
   })
 })
@@ -1000,6 +990,58 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
 
   managerApproval1(msg, value, "Rejected", 0, comment)
 })
+
+
+
+/**********************
+ * Accept with report listener ,
+ * send upload sick report to employee
+ * 
+ * 
+ */
+
+slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
+  var arr = value.toString().split(";")
+  var userEmail = arr[0];
+  var vacationId = arr[1];
+  var approvalId = arr[2]
+  var managerEmail = arr[3]
+  var fromWho = arr[4];
+  var fromDate = arr[5];
+  var toDate = arr[6];
+  var type = arr[7]
+  var workingDays = arr[8]
+  var ImageUrl = arr[9]
+  env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+    var responseBody = JSON.parse(body);
+    var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+    env.bot.startConversation(slack_message, function (err, convo) {
+
+      if (!err) {
+        var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+        var stringfy = JSON.stringify(upload_sick_report_message);
+        var obj1 = JSON.parse(stringfy);
+        env.bot.reply(slack_message, obj1);
+
+      }
+    });
+
+  })
+  managerApproval1(msg, value, "Approved", 0, "")
+
+
+})
+/************
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
   console.log("Sufferring")
   console.log(JSON.stringify(message))
