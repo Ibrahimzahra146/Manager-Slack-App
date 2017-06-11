@@ -695,13 +695,13 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
 
 
 slapp.action('manager_confirm_reject', 'confirm', (msg, value) => {
-  managerApproval1(msg, value, "Approved", 0, "")
+  managerApproval1(msg, value, "Approved", 0, "", 0, 0)
 })
 
 
 
 slapp.action('manager_confirm_reject', 'reject', (msg, value) => {
-  managerApproval1(msg, value, "Rejected", 0, "")
+  managerApproval1(msg, value, "Rejected", 0, "", 0, 0)
 })
 
 
@@ -845,7 +845,8 @@ function managerAction(msg, value, typeOfaction) {
   toDate = "";
 
 }
-function managerApproval1(msg, value, approvalType, fromManager, comment) {
+function managerApproval1(msg, value, approvalType, fromManager, comment, rejectConfFlag, sickReportFlag) {
+  var pastflag = 0
   var upload_sick_report_message = "";
   var feedback_message_to_emp = ""
   var arr = value.toString().split(";")
@@ -870,6 +871,9 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   } else if (type == "WFH")
     typeText = " work from home"
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody) {
+    var currentMilliseconds = new Date().getTime();
+    if (currentMilliseconds > JSON.parse(vacationBody).fromDate)
+      pastflag = 1
     //check if the vaction rejected in order to prevent manager to take an action
     if (JSON.parse(vacationBody).vacationState == "Rejected") {
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
@@ -880,8 +884,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
       messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
 
 
-        if (approvalType == "Rejected") {
-          replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
+        if (approvalType == "Rejected" && pastflag == 1 && rejectConfFlag == 0) {
+          replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, "Pending", vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
         } else {
 
 
@@ -893,7 +897,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
                 env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
                   var responseBody = JSON.parse(body);
                   var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-                  if (type == "sick" && approvalType == "accept_with_report")
+                  if (type == "sick" && approvalType == "Approved" && sickReportFlag)
                     feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
 
                   env.bot.startConversation(slack_message, function (err, convo) {
@@ -1006,33 +1010,15 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
  */
 
 slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
-  var arr = value.toString().split(";")
-  var userEmail = arr[0];
-  var vacationId = arr[1];
-  var approvalId = arr[2]
-  var managerEmail = arr[3]
-  var fromWho = arr[4];
-  var fromDate = arr[5];
-  var toDate = arr[6];
-  var type = arr[7]
-  var workingDays = arr[8]
-  var ImageUrl = arr[9]
-  env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
-    var responseBody = JSON.parse(body);
-    var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-    env.bot.startConversation(slack_message, function (err, convo) {
 
-      if (!err) {
-        var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
-        var stringfy = JSON.stringify(upload_sick_report_message);
-        var obj1 = JSON.parse(stringfy);
-        env.bot.reply(slack_message, obj1);
+  managerApproval1(msg, value, "accept_with_report", 0, "", 0, 1)
 
-      }
-    });
 
-  })
-  managerApproval1(msg, value, "accept_with_report", 0, "")
+})
+
+slapp.action('manager_confirm_reject', 'Rejected_Conf', (msg, value) => {
+
+  managerApproval1(msg, value, "Rejected", 0, "", 1, 0)
 
 
 })

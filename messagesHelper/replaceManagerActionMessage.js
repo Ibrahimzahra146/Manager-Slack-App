@@ -614,7 +614,7 @@ module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmatio
                         },
                         {
                             "title": "[Note]",
-                            "value": "The rejection of this sick time off request will convert it automatically to deducted personal time off.\n Please note that this action cannot be UNDONE!"
+                            "value": "The rejection of this sick time off request will convert it automatically to deducted personal time off. Please note that this action cannot be UNDONE!"
                             ,
                             "short": false
                         }
@@ -623,7 +623,7 @@ module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmatio
                     ],
                     "actions": [
                         {
-                            "name": "Reject",
+                            "name": "Rejected_Conf",
                             "text": "Yes",
 
                             "type": "button",
@@ -633,7 +633,7 @@ module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmatio
                             "name": "Undo",
                             "text": "No",
                             "type": "button",
-
+                            "style": "danger",
                             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
                         },
                     ],
