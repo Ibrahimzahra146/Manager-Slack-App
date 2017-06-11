@@ -846,7 +846,8 @@ function managerAction(msg, value, typeOfaction) {
 
 }
 function managerApproval1(msg, value, approvalType, fromManager, comment) {
-
+  var upload_sick_report_message = "";
+  var feedback_message_to_emp = ""
   var arr = value.toString().split(";")
   var userEmail = arr[0];
   var vacationId = arr[1];
@@ -858,10 +859,6 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-
-
-
-
   console.log("ImageUrl" + ImageUrl)
   var typeText = " time off"
   if (type == "sick") {
@@ -875,50 +872,57 @@ function managerApproval1(msg, value, approvalType, fromManager, comment) {
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody) {
     //check if the vaction rejected in order to prevent manager to take an action
     if (JSON.parse(vacationBody).vacationState == "Rejected") {
-      console.log("Rejected")
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
     else {
 
 
-      sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-        if (isDeleted == false) {
-          if (fromManager != 1) {
-            request({
-              url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Cookie': 'JSESSIONID=24D8D542209A0B2FF91AB2A333C8FA70'
-              },
-              body: userEmail
-              //Set the body as a stringcc
-            }, function (error, response, body) {
-              var responseBody = JSON.parse(body);
+
+
+      if (approvalType == "Rejected") {
+        replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment)
+      } else {
+
+
+        sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+          if (isDeleted == false) {
+            if (fromManager != 1) {
+
+
+              env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+                var responseBody = JSON.parse(body);
+                var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+                if (type == "sick" && approvalType == "accept_with_report")
+                  feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+
+                env.bot.startConversation(slack_message, function (err, convo) {
+
+                  if (!err) {
+                    var upload_sick_report_message = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                    var stringfy = JSON.stringify(upload_sick_report_message);
+                    var obj1 = JSON.parse(stringfy);
+                    env.bot.reply(slack_message, obj1);
+
+                  }
+                });
+                messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
+                  replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
+                  /* if (comment != "accept_with_report")
+                     messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+   */
+                });
 
 
 
+              })
 
-              console.log("JSON.parse(vacationBody)" + JSON.stringify(vacationBody))
-              messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
-                console.log("generate ManagerApprovelsSection " + JSON.stringify(vacationBody))
-
-                replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
-                if (comment != "accept_with_report")
-                  messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-
-              });
-
-
-
-            })
-
+            }
           }
-        }
-        else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+          else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
 
-      })
+        })
+      }
     }
   })
 }
@@ -1027,7 +1031,7 @@ slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
     });
 
   })
-  managerApproval1(msg, value, "Approved", 0, "accept_with_report")
+  managerApproval1(msg, value, "accept_with_report", 0, "")
 
 
 })
