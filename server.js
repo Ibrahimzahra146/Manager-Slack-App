@@ -900,14 +900,14 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                   if (type == "sick" && approvalType == "Approved" && sickReportFlag == 1)
                     feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
                   else {
-                    messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+                    feedback_message_to_emp = messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
                   }
 
                   env.bot.startConversation(slack_message, function (err, convo) {
 
                     if (!err) {
-                      var stringfy = JSON.stringify(upload_sick_report_message);
+                      var stringfy = JSON.stringify(feedback_message_to_emp);
                       var obj1 = JSON.parse(stringfy);
                       env.bot.reply(slack_message, obj1);
 
