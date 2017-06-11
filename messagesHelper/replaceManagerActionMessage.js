@@ -611,7 +611,14 @@ module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmatio
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
                             "short": false
+                        },
+                        {
+                            "title": "[Note]",
+                            "value": "The rejection of this sick time off request will convert it automatically to deducted personal time off.\n Please note that this action cannot be UNDONE!"
+                            ,
+                            "short": false
                         }
+
 
                     ],
                     "actions": [
