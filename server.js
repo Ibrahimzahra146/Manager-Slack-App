@@ -881,7 +881,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
     else {
 
 
-      messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
+      messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, JSON.parse(vacationBody).needsSickReport, function (managerApprovalsSection) {
 
 
         if (approvalType == "Rejected" && pastflag == 1 && rejectConfFlag == 0 && type == "sick") {
