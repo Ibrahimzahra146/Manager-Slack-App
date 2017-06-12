@@ -875,7 +875,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
     if (currentMilliseconds > JSON.parse(vacationBody).fromDate)
       pastflag = 1
     //check if the vaction rejected in order to prevent manager to take an action
-    if (JSON.parse(vacationBody).vacationState == "Rejected" && type == "sick" && pastflag == 1) {
+    if (JSON.parse(vacationBody).sickCovertedToPersonal == true) {
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
     else {
@@ -900,7 +900,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                     env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
                       var responseBody = JSON.parse(body);
                       var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-                      if (type == "sick" && approvalType == "Approved" && sickReportFlag == 1) {
+                      if (approvalType == "ApprovedWithReport") {
                         feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
 
 
@@ -915,7 +915,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                         });
 
                       } else {
-                        if ((JSON.parse(vacationBody1).vacationState == "Approved" && sickReportFlag != 1)||(JSON.parse(vacationBody1).vacationState == "Rejected"))
+                        if ((JSON.parse(vacationBody1).vacationState == "Approved") || (JSON.parse(vacationBody1).vacationState == "Rejected"))
                           messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
 
                       }
@@ -1029,7 +1029,7 @@ slapp.action('manager_confirm_reject', 'Send_comment', (msg, value) => {
 
 slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
 
-  managerApproval1(msg, value, "Approved", 0, "", 0, 1)
+  managerApproval1(msg, value, "ApprovedWithReport", 0, "", 0, 1)
 
 
 })
