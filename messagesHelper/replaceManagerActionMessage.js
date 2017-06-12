@@ -667,6 +667,8 @@ function getEmoji(state, finalState, type, myAction, callback) {
         approverActionEmoji = ":white_check_mark:"
     } else if (state == "ApprovedWithoutDeduction") {
         approverActionEmoji = "::eight_spoked_asterisk::"
+    } else if (state == "ApprovedWithReport") {
+        approverActionEmoji = " :memo:"
     }
 
     if (type == "sick") {
@@ -691,7 +693,7 @@ function getEmoji(state, finalState, type, myAction, callback) {
     }
     else if (myAction == "ApprovedWithoutDeduction") {
         myActionEmoji = ":eight_spoked_asterisk:"
-    } else if (myAction == "ApprovedWithReport ") {
+    } else if (myAction == "ApprovedWithReport") {
         myActionEmoji = " :memo:"
     }
 
