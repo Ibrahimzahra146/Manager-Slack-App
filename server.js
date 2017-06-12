@@ -141,7 +141,7 @@ function storeManagerSlackInformation(email, msg) {
 
 
       console.log("The employee not found  ")
-      requestify.post('http://' + IP + '/api/v1/toffy', {
+      requestify.post('http://' + env.IP + '/api/v1/toffy', {
         "email": email,
         "hrChannelId": "",
         "managerChannelId": msg.body.event.channel,
@@ -166,7 +166,7 @@ function storeManagerSlackInformation(email, msg) {
         var userChId = JSON.parse(body).userChannelId;
         var hrChId = JSON.parse(body).hrChannelId;
         request({
-          url: "http://" + IP + "/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
+          url: "http://" + env.IP + "/api/v1/toffy/" + JSON.parse(body).id, //URL to hitDs
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ function storeManagerSlackInformation(email, msg) {
 
         });
         console.log("=====>arrive3")
-        requestify.post('http://' + IP + '/api/v1/toffy', {
+        requestify.post('http://' + env.IP + '/api/v1/toffy', {
           "email": email,
           "hrChannelId": hrChId,
           "managerChannelId": msg.body.event.channel,
