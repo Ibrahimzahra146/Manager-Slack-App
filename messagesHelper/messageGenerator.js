@@ -6,7 +6,7 @@ var IP = process.env.SLACK_IP
 /**
  * Genereta the approvers section when send the time off to them ,so any approvel can check the other approvels action
  */
-module.exports.generateManagerApprovelsSection = function generateManagerApprovelsSection(managerApproval, managerEmail, callback) {
+module.exports.generateManagerApprovelsSection = function generateManagerApprovelsSection(managerApproval, managerEmail, existReportFlag, callback) {
     if (!managerApproval[1]) {
         callback("")
     } else {
@@ -26,31 +26,36 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
                 flag == "false }"
             }
             var arr = managerApproval[i].managerEmail.toString().split("@")
-            if (managerApproval[i].managerEmail != managerEmail || (managerApproval[i].managerEmail == managerEmail && managerApproval[i].type == "HR")) {
+
+            if (managerApproval[i].managerEmail != managerEmail || ((managerApproval[i].managerEmail == managerEmail && managerApproval[i].type == "HR"))) {
                 console.log("Arrivvve")
-                getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
+                if (managerApproval[i].type == "HR" && existReportFlag == false) {
+
+                } else
+                    getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
 
-                    messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":" + flag
-                    messageBody = messageBody + ","
-                })
+                        messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":" + flag
+                        messageBody = messageBody + ","
+                    })
             }
-            
-
-            i++
-        }
-        if (messageBody != "") {
-            messageBody = messageBody.replace(/}\"/g, "}")
-            messageBody = messageBody.replace(/\"\{/g, "{")
-            messageBody = messageBody.replace(/\\/g, "")
-            messageBody = messageBody.replace(/\",\"\"/g, "")
-            messageBody = messageBody.replace(/,,/, ",")
-            messageBody = messageBody.replace(/\"\{/g, "{")
-            console.log("messageBody:::" + messageBody)
         }
 
-        callback(messageBody)
+
+        i++
     }
+    if (messageBody != "") {
+        messageBody = messageBody.replace(/}\"/g, "}")
+        messageBody = messageBody.replace(/\"\{/g, "{")
+        messageBody = messageBody.replace(/\\/g, "")
+        messageBody = messageBody.replace(/\",\"\"/g, "")
+        messageBody = messageBody.replace(/,,/, ",")
+        messageBody = messageBody.replace(/\"\{/g, "{")
+        console.log("messageBody:::" + messageBody)
+    }
+
+    callback(messageBody)
+}
 }
 /**
  * Generate manager action section(Your action)
