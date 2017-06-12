@@ -98,7 +98,7 @@ function getEmoji(state, finalState, type, myAction, callback) {
         approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
         approverActionEmoji = ":white_check_mark:"
-    } else if (state == "ApprovedWithReport ") {
+    } else if (state == "ApprovedWithReport") {
         approverActionEmoji = " :memo:"
     }
 
