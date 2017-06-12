@@ -893,7 +893,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
             if (isDeleted == false) {
               if (fromManager != 1) {
                 vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
-                  if (JSON.parse(vacationBody1).vacationState == "Approved")
+                  //if (JSON.parse(vacationBody1).vacationState == "Approved")
 
                     messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody1).managerApproval, managerEmail, function (managerApprovalsSection1) {
 
