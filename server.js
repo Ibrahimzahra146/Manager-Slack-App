@@ -875,78 +875,79 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
     if (currentMilliseconds > JSON.parse(vacationBody).fromDate)
       pastflag = 1
     //check if the vaction rejected in order to prevent manager to take an action
-    if (JSON.parse(vacationBody).vacationState == "Rejected" && type == "sick" && pastflag==1) {
-    replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-  }
+    if (JSON.parse(vacationBody).vacationState == "Rejected" && type == "sick" && pastflag == 1) {
+      replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+    }
     else {
 
 
-    messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
+      messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody).managerApproval, managerEmail, function (managerApprovalsSection) {
 
 
-      if (approvalType == "Rejected" && pastflag == 1 && rejectConfFlag == 0) {
-        replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, "Pending", vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
-      } else {
+        if (approvalType == "Rejected" && pastflag == 1 && rejectConfFlag == 0 && type == "sick") {
+          replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, "Pending", vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
+        } else {
 
 
-        sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
-          if (isDeleted == false) {
-            if (fromManager != 1) {
-              vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
+          sendVacationPutRequest(vacationId, approvalId, managerEmail, approvalType, function (isDeleted) {
+            if (isDeleted == false) {
+              if (fromManager != 1) {
+                vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
 
-                messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody1).managerApproval, managerEmail, function (managerApprovalsSection1) {
-
-
-                  env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
-                    var responseBody = JSON.parse(body);
-                    var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
-                    if (type == "sick" && approvalType == "Approved" && sickReportFlag == 1) {
-                      feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                  messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody1).managerApproval, managerEmail, function (managerApprovalsSection1) {
 
 
-                      env.bot.startConversation(slack_message, function (err, convo) {
-
-                        if (!err) {
-                          var stringfy = JSON.stringify(feedback_message_to_emp);
-                          var obj1 = JSON.parse(stringfy);
-                          env.bot.reply(slack_message, obj1);
-
-                        }
-                      });
-
-                    } else {
-                      messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-
-                    }
-                    if (approvalType == "Rejected" && rejectConfFlag == 1) {
-                      replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
-
-                    } else
+                    env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+                      var responseBody = JSON.parse(body);
+                      var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+                      if (type == "sick" && approvalType == "Approved" && sickReportFlag == 1) {
+                        feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
 
 
-                      replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection1, JSON.parse(vacationBody1).vacationState, JSON.parse(vacationBody1).comments)
-                    /* if (comment != "accept_with_report")
-                       messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
-     */
+                        env.bot.startConversation(slack_message, function (err, convo) {
+
+                          if (!err) {
+                            var stringfy = JSON.stringify(feedback_message_to_emp);
+                            var obj1 = JSON.parse(stringfy);
+                            env.bot.reply(slack_message, obj1);
+
+                          }
+                        });
+
+                      } else {
+                        if ((JSON.parse(vacationBody1).vacationState == "Approved" && sickReportFlag != 1)||(JSON.parse(vacationBody1).vacationState == "Rejected"))
+                          messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+
+                      }
+                      if (approvalType == "Rejected" && rejectConfFlag == 1) {
+                        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+
+                      } else
+
+
+                        replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection1, JSON.parse(vacationBody1).vacationState, JSON.parse(vacationBody1).comments)
+                      /* if (comment != "accept_with_report")
+                         messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
+       */
 
 
 
 
+                    })
                   })
                 })
-              })
 
+              }
             }
-          }
-          else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+            else replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
 
 
-        })
-      }
-    })
-  }
-})
+          })
+        }
+      })
+    }
+  })
 }
 
 
