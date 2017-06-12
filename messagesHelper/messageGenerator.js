@@ -98,19 +98,32 @@ function getEmoji(state, finalState, type, myAction, callback) {
         approverActionEmoji = ":no_entry_sign:"
     } else if (state == "Approved") {
         approverActionEmoji = ":white_check_mark:"
+    } else if (state == "ApprovedWithReport ") {
+        approverActionEmoji = " :memo:"
     }
+
+    /*** */
     if (type == "sick") {
         typeEmoji = ":ambulance:"
     }
+
+
+    /** */
     if (finalState == "Rejected") {
         finalStateEmoji = ":no_entry_sign:"
     } else if (finalState == "Approved") {
         finalStateEmoji = ":white_check_mark:"
+    } else if (finalState == "ApprovedButNeedsReport") {
+        finalStateEmoji = ":memo:"
     }
+    /** */
+
     if (myAction == "Rejected") {
         myActionEmoji = ":no_entry_sign:"
     } else if (myAction == "Approved") {
         myActionEmoji = ":white_check_mark:"
+    } else if (myAction == "ApprovedWithReport ") {
+        myActionEmoji = " :memo:"
     }
 
     callback(approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji)
