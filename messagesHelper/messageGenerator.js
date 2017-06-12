@@ -31,31 +31,31 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
                 console.log("Arrivvve")
                 if (managerApproval[i].type == "HR" && existReportFlag == false) {
 
-                } else
+                } else {
                     getEmoji(managerApproval[i].state, "", "", "", function (emoji) {
 
 
                         messageBody = messageBody + "{" + "\"title\":" + "\"" + "Approver ( " + arr[0] + " )\"" + ",\"value\":" + "\"" + managerApproval[i].state + "" + emoji + "\"" + ",\"short\":" + flag
                         messageBody = messageBody + ","
                     })
+                }
             }
+
+
+            i++
+        }
+        if (messageBody != "") {
+            messageBody = messageBody.replace(/}\"/g, "}")
+            messageBody = messageBody.replace(/\"\{/g, "{")
+            messageBody = messageBody.replace(/\\/g, "")
+            messageBody = messageBody.replace(/\",\"\"/g, "")
+            messageBody = messageBody.replace(/,,/, ",")
+            messageBody = messageBody.replace(/\"\{/g, "{")
+            console.log("messageBody:::" + messageBody)
         }
 
-
-        i++
+        callback(messageBody)
     }
-    if (messageBody != "") {
-        messageBody = messageBody.replace(/}\"/g, "}")
-        messageBody = messageBody.replace(/\"\{/g, "{")
-        messageBody = messageBody.replace(/\\/g, "")
-        messageBody = messageBody.replace(/\",\"\"/g, "")
-        messageBody = messageBody.replace(/,,/, ",")
-        messageBody = messageBody.replace(/\"\{/g, "{")
-        console.log("messageBody:::" + messageBody)
-    }
-
-    callback(messageBody)
-}
 }
 /**
  * Generate manager action section(Your action)
