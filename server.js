@@ -1062,7 +1062,7 @@ slapp.action('manager_confirm_reject', 'Rejected_Conf', (msg, value) => {
  * 
  * 
  * 
- */
+ 
 controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
   console.log("Sufferring")
   console.log(JSON.stringify(message))
@@ -1079,7 +1079,7 @@ controller.on('direct_message', function (bot, message) {
   console.log(JSON.stringify(message))
 
 })
-
+*/
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request ");
