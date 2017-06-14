@@ -1,4 +1,5 @@
-const 
+const env=require('./public/configrations.js')
+
 var requestify = require('requestify');
 const request = require('request');
 var server = require('./server')
