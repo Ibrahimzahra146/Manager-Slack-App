@@ -729,7 +729,6 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       if (JSON.parse(body).sickCovertedToPersonal == true) {
-        console.log("JSON.parse(vacationBody).sickCovertedToPersonal" + JSON.parse(vacationBody).sickCovertedToPersonal)
         replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
       } else {
 
