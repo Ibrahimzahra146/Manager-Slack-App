@@ -875,7 +875,9 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
     if (currentMilliseconds > JSON.parse(vacationBody).fromDate)
       pastflag = 1
     //check if the vaction rejected in order to prevent manager to take an action
+    console.log("JSON.parse(vacationBody).sickCovertedToPersonal" + JSON.parse(vacationBody).sickCovertedToPersonal)
     if (JSON.parse(vacationBody).sickCovertedToPersonal == true) {
+      console.log("JSON.parse(vacationBody).sickCovertedToPersonal" + JSON.parse(vacationBody).sickCovertedToPersonal)
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
     else {
