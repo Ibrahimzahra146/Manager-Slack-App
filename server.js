@@ -176,6 +176,7 @@ function storeManagerSlackInformation(email, msg) {
           body: email
           //Set the body as a stringcc
         }, function (error, response, body) {
+          console.log("Deleted" + response.statusCode)
           console.log("DELETEd");
 
         });
