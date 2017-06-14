@@ -134,7 +134,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
                     var i = 0
                     while (body.roles[i]) {
                         printLogs("roles[i].name" + body.roles[i].name)
-                        if (body.roles[i].name == role) {
+                        if (body.roles[i].name == role||body.roles[i].name == "APPROVER") {
                             flag = true;
                             break;
                         }
