@@ -679,7 +679,7 @@ listen for user messages
 */
 var app = slapp.attachToExpress(express())
 slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
-  if (msg.body.event.user == "B5TJH6AS1") {
+  if (msg.body.event.user == "U5SUVPG2D") {
 
     console.log("message from bot")
     var stringfy = JSON.stringify(msg);

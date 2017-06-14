@@ -1,4 +1,4 @@
-const env=require('./public/configrations.js')
+const env = require('./public/configrations.js')
 
 var requestify = require('requestify');
 const request = require('request');
@@ -148,6 +148,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
     })
 }
 module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email, callback) {
+    console.log("getNewSessionwithCookie" + email)
 
     request({
         url: 'http://' + IP + '/api/v1/employee/login', //URL to hitDs
@@ -158,7 +159,7 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         body: email
         //Set the body as a stringcc
     }, function (error, response, body) {
-        console.log("response.statusCode == 500 " + response.statusCode)
+        console.log("response.statusCode =" + response.statusCode)
         if (response.statusCode == 500 || response.statusCode == 451) {
             callback(1000, 1000)
         } else {
