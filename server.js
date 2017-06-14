@@ -902,7 +902,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                       var responseBody = JSON.parse(body);
                       var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
                       if (approvalType == "ApprovedWithReport") {
-                        feedback_message_to_emp = env.stringFile.upload_sick_report_message(userEmail, vacationId, fromDate, toDate, type)
+                        feedback_message_to_emp = env.stringFile.upload_sick_report_message(managerEmail, vacationId, fromDate, toDate, type)
 
 
                         env.bot.startConversation(slack_message, function (err, convo) {

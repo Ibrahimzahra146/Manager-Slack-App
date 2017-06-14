@@ -28,7 +28,6 @@ module.exports.generateManagerApprovelsSection = function generateManagerApprove
             var arr = managerApproval[i].managerEmail.toString().split("@")
 
             if (managerApproval[i].managerEmail != managerEmail || ((managerApproval[i].managerEmail == managerEmail && managerApproval[i].type == "HR"))) {
-                console.log("Arrivvve")
                 if (managerApproval[i].type == "HR" && existReportFlag == false) {
 
                 } else {
