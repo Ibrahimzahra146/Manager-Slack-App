@@ -1,3 +1,4 @@
+const 
 var requestify = require('requestify');
 const request = require('request');
 var server = require('./server')
@@ -19,10 +20,7 @@ exports.general_session_Id = general_session_Id
 var hrRole = 0
 var currentBot = server.manager_bot;
 module.exports.showEmployees = function showEmployees(msg, email) {
-    printLogs("arrive at show employees")
     var uri = 'http://' + IP + '/api/v1/employee/profile'
-    printLogs("Url :    " + uri)
-    printLogs("generalCookies " + managerToffyHelper.generalCookies)
 
 
     getIdByEmail(email, function (Id) {
@@ -134,7 +132,7 @@ module.exports.getRoleByEmail = function getRoleByEmail(email, role, callback) {
                     var i = 0
                     while (body.roles[i]) {
                         printLogs("roles[i].name" + body.roles[i].name)
-                        if (body.roles[i].name == role||body.roles[i].name == "APPROVER") {
+                        if (body.roles[i].name == role || body.roles[i].name == "APPROVER") {
                             flag = true;
                             break;
                         }
@@ -430,192 +428,16 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
 
 
 }
-module.exports.sendVacationToManager = function sendVacationToManager(startDate, endDate, email, type, vacationId, managerApproval, toWho, workingDays) {
-    console.log("arrive at send vacation to maangers" + email)
-    var message12 = ""
-    var approvarType = ""
-    var approvalId = ""
-    var managerEmail = ""
-    if (type == "sickLeave") {
-        type = "sick"
-    }
-
-    var i = 0
-    var j = 0
-
-    console.log("Mnaagers approvals  ::::" + JSON.stringify(managerApproval))
-    async.whilst(
-        function () { return managerApproval[i]; },
-        function (callback) {
-
-            /* if (managerApproval[2]) {
-                 console.log("here 11")
-                 console.log("managerApproval[2].type" + managerApproval[2].type)
-                 if (managerApproval[2].type == "Manager") {
-                     console.log("here 12")
-                     i = 2
-                 }
-         
-             } if (managerApproval[1]) {
-                 console.log("managerApproval[1].type" + managerApproval[1].type)
-         
-                 console.log("here 13")
-         
-                 if (managerApproval[1].type == "Manager") {
-                     console.log("here 14")
-         
-                     i = 1
-                 }
-             }
-         */
-
-            var x = managerToffyHelper.getEmailById('employee/email/' + managerApproval[i].manager, email, function (emailFromId) {
-                console.log("email !=  emailFromId)" + email + "!=" + emailFromId)
-                emailFromId = emailFromId.replace(/\"/, "")
-                emailFromId = emailFromId.replace(/\"/, "")
-
-                console.log("email !=  emailFromId)" + email + "!=" + emailFromId)
-
-                if (email != emailFromId) {
-                    console.log("Arrive  after get emailFromId:: " + i)
-
-                    console.log("mananger email::: " + managerEmail);
-                    console.log("approvarType" + approvarType);
-                    approvalId = managerApproval[i].id
-                    approvarType = managerApproval[i].type
-                    managerEmail = emailFromId.replace(/\"/, "")
-                    managerEmail = managerEmail.replace(/\"/, "")
-                    console.log("Second i" + i)
-
-                    request({
-                        url: 'http://' + IP + '/api/v1/toffy/get-record', //URL to hitDs
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-
-                        },
-                        body: emailFromId
-                        //Set the body as a stringcc
-                    }, function (error, response, body) {
-
-                        var jsonResponse = JSON.parse(body);
-                        console.log("approvarType:::" + approvarType)
-                        if (approvarType == "Manager") {
-                            printLogs("Manager Role ")
-                            message12 = {
-                                'type': 'message',
-                                'channel': jsonResponse.managerChannelId,
-                                user: jsonResponse.slackUserId,
-                                text: 'what is my name',
-                                ts: '1482920918.000057',
-                                team: jsonResponse.teamId,
-                                event: 'direct_message'
-
-                            }
-
-                        } else {
-                            printLogs("HR Role")
-                            hrRole = 1
-                            message12 = {
-                                'type': 'message',
-
-                                'channel': jsonResponse.hrChannelId,
-                                user: jsonResponse.slackUserId,
-                                text: 'what is my name',
-                                ts: '1482920918.000057',
-                                team: jsonResponse.teamId,
-                                event: 'direct_message'
-                            }
-
-                        }
-                        var messageBody = {
-                            "text": "This folk has pending time off request:",
-                            "attachments": [
-                                {
-                                    "attachment_type": "default",
-                                    "callback_id": "manager_confirm_reject",
-                                    "text": email,
-                                    "fallback": "ReferenceError",
-                                    "fields": [
-                                        {
-                                            "title": "From",
-                                            "value": startDate,
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "Days/Time ",
-                                            "value": workingDays + " day",
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "to",
-                                            "value": endDate,
-                                            "short": true
-                                        },
-                                        {
-                                            "title": "Type",
-                                            "value": type,
-                                            "short": true
-                                        }
-                                    ],
-                                    "actions": [
-                                        {
-                                            "name": "confirm",
-                                            "text": "Accept",
-                                            "style": "primary",
-                                            "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
-                                        },
-                                        {
-                                            "name": "reject",
-                                            "text": "Reject",
-                                            "style": "danger",
-                                            "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
-                                        }, {
-                                            "name": "dont_detuct",
-                                            "text": "Don’t Deduct ",
-                                            "type": "button",
-                                            "value": email + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";manager" + ";" + startDate + ";" + endDate
-                                        }
-                                    ],
-                                    "color": "#F35A00"
-                                }
-                            ]
-                        }
-                        if (approvarType == "Manager") {
-                            currentBot = server.manager_bot;
-
-                        } else {
-
-                            console.log("Arrive")
-                        }
-                        currentBot.startConversation(message12, function (err, convo) {
-
-
-                            if (!err) {
-
-                                var stringfy = JSON.stringify(messageBody);
-                                var obj1 = JSON.parse(stringfy);
-                                currentBot.reply(message12, obj1);
-
-                            }
-                        });
-                        flagForWhileCallbacks = 1
-
-                    });
-                }
-                i++;
-            })
-
-            setTimeout(callback, 5000);
-
-        },
-        function (err) {
-            // 5 seconds have passed
-        }
-
-    );
+/**
+ * @Rules conflicts
+ *  Send feedback to employee When manager submit a vacation for him 
+ * 
+ */
+module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(startDate, endDate, email, type, vacationId, managerApproval, toWho, workingDays) {
+    env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+        var responseBody = JSON.parse(body);
+        var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+    })
 }
 
 /** */

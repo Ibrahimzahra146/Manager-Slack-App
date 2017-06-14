@@ -69,18 +69,19 @@ var bot = controller.spawn({
 }).startRTM();
 exports.bot = bot
 //*********
-var manager_bot = controller2.spawn({
+/*var manager_bot = controller2.spawn({
   token: process.env.MANAGER_BOT_ACCESS_KEY
 
 }).startRTM();
 exports.manager_bot = manager_bot
-/***************** */
+/***************** 
 
 var hr_bot = controller.spawn({
   token: process.env.HR_BOT_ACCESS_KEY
 
 }).startRTM();
 exports.hr_bot = hr_bot
+*/
 //******************
 
 
@@ -821,7 +822,7 @@ function managerAction(msg, value, typeOfaction) {
           } else {
             console.log("fromDate:::-->" + fromDate)
             console.log("toDate:::-->" + toDate)
-            managerToffyHelper.sendVacationToManager(fromDate, toDate, managerEmail, type, vacationId, managerApproval, "Manager", workingDays)
+            managerToffyHelper.sendFeedBackToEmpOnManagerBehalfFeedback(fromDate, toDate, managerEmail, type, vacationId, managerApproval, "Manager", workingDays)
 
             if (type == "sick") {
               console.log("Managers approvals sick vacation is ::" + JSON.stringify(managerApproval))
@@ -885,9 +886,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
     if (currentMilliseconds > JSON.parse(vacationBody).fromDate)
       pastflag = 1
     //check if the vaction rejected in order to prevent manager to take an action
-    console.log("JSON.parse(vacationBody).sickCovertedToPersonal" + JSON.parse(vacationBody).sickCovertedToPersonal)
     if (JSON.parse(vacationBody).sickCovertedToPersonal == true) {
-      console.log("JSON.parse(vacationBody).sickCovertedToPersonal" + JSON.parse(vacationBody).sickCovertedToPersonal)
       replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     }
     else {
