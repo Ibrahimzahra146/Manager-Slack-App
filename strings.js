@@ -52,7 +52,7 @@ module.exports.upload_sick_report_message = function upload_sick_report_message(
 }
 module.exports.employee_message_manager_vacation_behalf = function employee_message_manager_vacation_behalf(managerEmail, vacationId, fromDate, toDate, type) {
     var message = {
-        "text": "Your approver " + managerEmail + "has submited a vacation for you from " + fromDate + "-" + toDate + ".",
+        "text": "Your approver " + managerEmail + " has submited a vacation for you from " + fromDate + "-" + toDate + ".",
         "attachments": [
             {
                 "text": ""
