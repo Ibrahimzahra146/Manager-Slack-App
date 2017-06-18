@@ -803,7 +803,7 @@ function managerAction(msg, value, typeOfaction) {
     toDate = arr[8]
     employeeEmail = arr[9]
     managerId = arr[10]
-    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, type, function (vacationId, managerApproval) {
+    managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, managerEmail, type, function (vacationId, managerApproval) {
 
       DateHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {
 

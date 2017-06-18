@@ -378,14 +378,14 @@ function getWorkingDays(startDate, endDate, email, employeeEmail, typeNum, callb
 }
 
 
-module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, to, employee_id, email, type, callback) {
+module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, to, employee_id, email, managerEmail, type, callback) {
     printLogs("Sending vacation post request")
     printLogs("Email:" + email)
     printLogs("arrive at va")
     printLogs("from" + from);
     printLogs("to======>" + to);
     printLogs("type======>" + type);
-    managerToffyHelper.getIdFromEmail(email, email, function (Id) {
+    managerToffyHelper.getIdFromEmail(managerEmail, email, function (Id) {
         var vacationType = "0"
         if (type == "sick") {
             vacationType = "4"
