@@ -435,8 +435,8 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
  *  Send feedback to employee When manager submit a vacation for him 
  * 
  */
-module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(startDate, endDate, email, type, vacationId, managerApproval, toWho, workingDays) {
-    env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
+module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail,fromDate, toDate, managerEmail, type, vacationId, managerApproval,workingDays){
+    env.mRequests.getSlackRecord(employeeEmail, function (error, response, body) {
         var responseBody = JSON.parse(body);
         var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
         feedback_message_to_emp = env.stringFile.employee_message_manager_vacation_behalf(managerEmail, vacationId, fromDate, toDate, type)
