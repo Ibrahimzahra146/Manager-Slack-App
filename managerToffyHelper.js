@@ -386,7 +386,6 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
     printLogs("to======>" + to);
     printLogs("type======>" + type);
     managerToffyHelper.getIdFromEmail(email, email, function (Id) {
-        console.log("::::" + "::" + email + "::" + Id)
         var vacationType = "0"
         if (type == "sick") {
             vacationType = "4"
@@ -415,13 +414,10 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
             //Set the body as a stringcc
         }, function (error, response, body) {
             printLogs("the vacation have been posted " + response.statusCode)
-            printLogs(error)
-            printLogs(response.message)
+
             var vacationId = (JSON.parse(body)).id;
             var managerApproval = (JSON.parse(body)).managerApproval
-            printLogs("Vacaction ID---->" + (JSON.parse(body)).id)
-            printLogs("managerApproval --->" + managerApproval)
-            printLogs("managerApproval --->" + JSON.stringify(managerApproval))
+
             callback(vacationId, managerApproval);
 
         })
@@ -435,7 +431,7 @@ module.exports.sendVacationPostRequest = function sendVacationPostRequest(from, 
  *  Send feedback to employee When manager submit a vacation for him 
  * 
  */
-module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail,fromDate, toDate, managerEmail, type, vacationId, managerApproval,workingDays){
+module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail, fromDate, toDate, managerEmail, type, vacationId, managerApproval, workingDays) {
     env.mRequests.getSlackRecord(employeeEmail, function (error, response, body) {
         var responseBody = JSON.parse(body);
         var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
