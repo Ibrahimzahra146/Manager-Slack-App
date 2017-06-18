@@ -439,6 +439,19 @@ module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackT
     env.mRequests.getSlackRecord(userEmail, function (error, response, body) {
         var responseBody = JSON.parse(body);
         var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+        feedback_message_to_emp = env.stringFile.employee_message_manager_vacation_behalf(managerEmail, vacationId, fromDate, toDate, type)
+
+
+        env.bot.startConversation(slack_message, function (err, convo) {
+
+            if (!err) {
+                var stringfy = JSON.stringify(feedback_message_to_emp);
+                var obj1 = JSON.parse(stringfy);
+                env.bot.reply(slack_message, obj1);
+
+            }
+        });
+
     })
 }
 

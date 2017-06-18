@@ -827,7 +827,7 @@ function managerAction(msg, value, typeOfaction) {
 
             if (type == "sick") {
               console.log("Managers approvals sick vacation is ::" + JSON.stringify(managerApproval))
-              msg.respond(msg.body.response_url, "Your  request has been submitted . ")
+              msg.respond(msg.body.response_url, "Your request has been submitted . ")
 
             }
             else
