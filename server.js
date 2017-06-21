@@ -205,8 +205,9 @@ function sendRequestToApiAi(emailValue, msg) {
     if (role == true) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
-      text = text.replace(/@exalt.ps/g, " ");
-      console.log("Text" + text)
+      env.TextService.prepareTextForApiAi(text, function (text) {
+        console.log("prepareTextForApiAi" + text)
+      })
 
       let apiaiRequest = env.apiAiService.textRequest(text,
         {
