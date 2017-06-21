@@ -225,6 +225,10 @@ function sendRequestToApiAi(emailValue, msg) {
           if (response.result.parameters.any) {
 
             console.log("response.result.parameters.any" + response.result.parameters.any)
+            employeeEmail = response.result.parameters.any
+            employeeEmail = employeeEmail.toString().split('|')
+            employeeEmail = employeeEmail[1];
+            employeeEmail = employeeEmail.replace(/>/g, "");
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
             if ((employeeEmail).indexOf('mailto') > -1) {
