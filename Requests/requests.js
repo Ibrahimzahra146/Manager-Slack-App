@@ -216,7 +216,7 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
         json: true
     }, function (error, response, body) {
         console.log("getUserSlackInfoBySlackId" + response.statusCode)
-        console.log("getUserSlackInfoBySlackId" + body)
+        console.log("getUserSlackInfoBySlackId" + body.user.profile.email)
         console.log("getUserSlackInfoBySlackId" + JSON.stringify(body))
         callback(error, response, body)
 
