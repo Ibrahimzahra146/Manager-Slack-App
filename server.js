@@ -205,8 +205,8 @@ function sendRequestToApiAi(emailValue, msg) {
     if (role == true) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
-      text = text.replace(/@exalt.ps/g, "");
-
+      text = text.replace(/@exalt.ps/g, " ");
+      console.log("Text" + text)
 
       let apiaiRequest = env.apiAiService.textRequest(text,
         {
@@ -226,7 +226,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
             console.log("response.result.parameters.any" + response.result.parameters.any)
             employeeEmail = response.result.parameters.any
-            employeeEmail = employeeEmail.toString().split('|')
+            employeeEmail = employeeEmail.toString().split(':')
             employeeEmail = employeeEmail[1];
             employeeEmail = employeeEmail.replace(/>/g, "");
             employeeEmail = response.result.parameters.any + "@exalt.ps"
