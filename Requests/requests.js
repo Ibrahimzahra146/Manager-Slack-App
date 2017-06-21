@@ -206,7 +206,7 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
     console.log("getUserSlackInfoBySlackId" + id)
     var arr = ""
     if ((id).indexOf('<') > -1) {
-        arr = id.toString().split('<')
+        arr = id.toString().split('@')
         id = arr[1]
     }
     var url = "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id
