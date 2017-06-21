@@ -121,7 +121,7 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
             }
             else {
                 var messageBody = {
-                    "text": "Your stats and anuual time off details",
+                    "text": employeeEmail + " stats and anuual time off details",
                     "attachments": [
                         {
                             "attachment_type": "default",
