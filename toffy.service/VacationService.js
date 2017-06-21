@@ -318,7 +318,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         dateMilliSeconds = dateMilliSeconds - (3 * 60 * 60 * 1000)
                         console.log()
                         if (validPreviousDate == 1) {
-                            console.log("sendVacationWithLeaveConfirmation" + employeeEmail)
+                            console.log("sendVacationWithLeaveConfirmation  " + employeeEmail)
                             env.VacationConfirmationService.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, vacation_type1, timeOffCase)
                             vacation_type1 = ""
                         } else msg.say("Please try again with this foramt mm dd yyyy. I am a bit confused whether you want a vacation in the current year or in next one.")
