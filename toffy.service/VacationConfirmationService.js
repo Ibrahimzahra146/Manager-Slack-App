@@ -1,7 +1,7 @@
 const env = require('.././public/configrations.js')
 
 
-module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, type, timeOffcase) {
+module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, employeeEmail, type, timeOffcase) {
     var holidaysNotice = ""
     var typeNum = ""
     if (type == "sick") {
@@ -22,83 +22,83 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
 
     env.dateHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
         env.dateHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
-            getWorkingDays(fromMilliseconds, toMilliseconds, email, typeNum, function (workingPeriod, isValid, reason, containsHolidays, overlappedVacations, body) {
+            getWorkingDays(fromMilliseconds, toMilliseconds, email, employeeEmail, typeNum, function (workingPeriod, isValid, reason, containsHolidays, overlappedVacations, body) {
                 if (workingPeriod != 1000) {
 
                     var workingDays = parseFloat(workingPeriod).toFixed(2);
                     if (workingDays != 0.0 || containsHolidays == true) {
                         console.log("overlappedVacations" + overlappedVacations == null)
 
-                            var fromDateServer = new Date(body.timeSlotFrom.date)
-                            fromDateServer.setHours(body.timeSlotFrom.hour)
-                            fromDateServer.setMinutes(body.timeSlotFrom.minute)
-                            //
-                            var toDateWordServer = new Date(body.toTimeSlot.date)
-                            toDateWordServer.setHours(body.toTimeSlot.hour)
-                            toDateWordServer.setMinutes(body.toTimeSlot.minute)
-                            console.log("toDateWordServer" + toDateWordServer)
-                            console.log("toMilliseconds" + toMilliseconds)
-                            env.dateHelper.converDateToWords(fromDateServer, toDateWordServer, 0, function (wordFromDate, wordTodate) {
+                        var fromDateServer = new Date(body.timeSlotFrom.date)
+                        fromDateServer.setHours(body.timeSlotFrom.hour)
+                        fromDateServer.setMinutes(body.timeSlotFrom.minute)
+                        //
+                        var toDateWordServer = new Date(body.toTimeSlot.date)
+                        toDateWordServer.setHours(body.toTimeSlot.hour)
+                        toDateWordServer.setMinutes(body.toTimeSlot.minute)
+                        console.log("toDateWordServer" + toDateWordServer)
+                        console.log("toMilliseconds" + toMilliseconds)
+                        env.dateHelper.converDateToWords(fromDateServer, toDateWordServer, 0, function (wordFromDate, wordTodate) {
 
 
-                                getmessage(formattedFromTime, middayFrom, wordFromDate, formattedTime, midday, wordTodate, email, type, timeOffcase, workingDays, overlappedVacations, function (messagetext) {
-                                    var addCommentButton = ""
-                                    if (containsHolidays == true) {
-                                        holidaysNotice = env.stringFile.holiday_notice
-                                        console.log("holidaysNotice" + holidaysNotice)
+                            getmessage(formattedFromTime, middayFrom, wordFromDate, formattedTime, midday, wordTodate, email, employeeEmail, type, timeOffcase, workingDays, overlappedVacations, function (messagetext) {
+                                var addCommentButton = ""
+                                if (containsHolidays == true) {
+                                    holidaysNotice = env.stringFile.holiday_notice
+                                    console.log("holidaysNotice" + holidaysNotice)
 
+                                }
+                                if (type == "sick") {
+                                    // msg.say("Sorry to hear that :(")
+                                    // holidaysNotice = ""
+                                }
+                                if (type == "WFH") {
+                                    workingDays = 0
+                                    holidaysNotice = ""
+                                }
+                                if (type == "sick" || type == "personal") {
+                                    addCommentButton = {
+                                        "name": 'yesWithComment',
+                                        "text": "Add comment",
+                                        "type": "button",
+                                        "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
                                     }
-                                    if (type == "sick") {
-                                        // msg.say("Sorry to hear that :(")
-                                        // holidaysNotice = ""
-                                    }
-                                    if (type == "WFH") {
-                                        workingDays = 0
-                                        holidaysNotice = ""
-                                    }
-                                    if (type == "sick" || type == "personal") {
-                                        addCommentButton = {
-                                            "name": 'yesWithComment',
-                                            "text": "Add comment",
-                                            "type": "button",
-                                            "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                }
+                                messagetext = messagetext + "" + holidaysNotice
+
+                                var text12 = {
+                                    "text": "",
+                                    "attachments": [
+                                        {
+                                            "text": messagetext,
+                                            "callback_id": 'leave_with_vacation_confirm_reject',
+                                            "color": "#3AA3E3",
+                                            "attachment_type": "default",
+                                            "actions": [
+                                                {
+                                                    "name": 'confirm',
+                                                    "text": "Yes",
+                                                    "style": "primary",
+                                                    "type": "button",
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                                },
+                                                {
+                                                    "name": 'reject',
+                                                    "text": "No",
+                                                    "style": "danger",
+                                                    "type": "button",
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                                }, addCommentButton
+
+                                            ],
                                         }
-                                    }
-                                    messagetext = messagetext + "" + holidaysNotice
-
-                                    var text12 = {
-                                        "text": "",
-                                        "attachments": [
-                                            {
-                                                "text": messagetext,
-                                                "callback_id": 'leave_with_vacation_confirm_reject',
-                                                "color": "#3AA3E3",
-                                                "attachment_type": "default",
-                                                "actions": [
-                                                    {
-                                                        "name": 'confirm',
-                                                        "text": "Yes",
-                                                        "style": "primary",
-                                                        "type": "button",
-                                                        "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
-                                                    },
-                                                    {
-                                                        "name": 'reject',
-                                                        "text": "No",
-                                                        "style": "danger",
-                                                        "type": "button",
-                                                        "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
-                                                    }, addCommentButton
-
-                                                ],
-                                            }
-                                        ]
-                                    }
-                                    msg.say(text12)
-                                })
-                                //else vacationOverllaping.determinOverllapingCase(msg, email, overlappedVacations, messagetext, holidaysNotice, fromTime, toTime, email, fromMilliseconds, toMilliseconds, type, workingDays, )
-
+                                    ]
+                                }
+                                msg.say(text12)
                             })
+                            //else vacationOverllaping.determinOverllapingCase(msg, email, overlappedVacations, messagetext, holidaysNotice, fromTime, toTime, email, fromMilliseconds, toMilliseconds, type, workingDays, )
+
+                        })
 
                     }
                     else msg.say("It's already a time off.")
@@ -114,11 +114,11 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
 
 
 
-function getWorkingDays(startDate, endDate, email, typeNum, callback) {
+function getWorkingDays(startDate, endDate, email, employeeEmail, typeNum, callback) {
 
 
     try {
-        env.managerToffyHelper.getIdFromEmail(email,email, function (Id) {
+        env.managerToffyHelper.getIdFromEmail(email, employeeEmail, function (Id) {
             var vacationBody = {
                 "employee_id": Id,
                 "from": startDate,
@@ -166,10 +166,10 @@ function getWorkingDays(startDate, endDate, email, typeNum, callback) {
 
 
 }
-function getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, type, timeOffcase, workingDays, overlappedVacations, callback) {
-    var typeText = "Okay, you asked for a time off"
+function getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, overlappedVacations, callback) {
+    var typeText = "Okay, you asked for a time off for " + employeeEmail
     if (type == "sick") {
-        typeText = " you asked for a sick" + " time off :persevere:,"
+        typeText = " you asked for a sick" + " time off for " + employeeEmail + " :persevere:,"
     } else if (type == "Maternity") {
         typeText = env.stringFile.maternity_message
     } else if (type == "Paternity") {
