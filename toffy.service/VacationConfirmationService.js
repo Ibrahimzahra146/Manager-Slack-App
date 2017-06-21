@@ -28,7 +28,6 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                     var workingDays = parseFloat(workingPeriod).toFixed(2);
                     if (workingDays != 0.0 || containsHolidays == true) {
                         console.log("overlappedVacations" + overlappedVacations == null)
-                        if (isValid == true || (isValid == false && type == "sick") || (isValid == false && type == "Wedding") || (isValid == false && type == "Paternity")) {
 
                             var fromDateServer = new Date(body.timeSlotFrom.date)
                             fromDateServer.setHours(body.timeSlotFrom.hour)
@@ -100,7 +99,6 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                 //else vacationOverllaping.determinOverllapingCase(msg, email, overlappedVacations, messagetext, holidaysNotice, fromTime, toTime, email, fromMilliseconds, toMilliseconds, type, workingDays, )
 
                             })
-                        } else msg.say("Sorry! According to the time off submition rules. Your time off reuquest has been rejected automatically.\n" + reason + ". Please contact your manager.")
 
                     }
                     else msg.say("It's already a time off.")
