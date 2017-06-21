@@ -6,6 +6,8 @@ const env = require('.././public/configrations.js')
 
 var vacation_type1 = ""
 module.exports.vacationWithLeave = function vacationWithLeave(msg, response, emailValue) {
+    console.log("response"+response)
+    console.log("JSON response"+JSON.stringify(response))
 
     var other_vacation_types = ""
     var messageText = ""
