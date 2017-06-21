@@ -206,7 +206,7 @@ function sendRequestToApiAi(emailValue, msg) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
       env.TextService.prepareTextForApiAi(text, function (preparedText) {
-        console.log("prepareTextForApiAi" + text)
+        console.log("prepareTextForApiAi" + preparedText)
 
 
         let apiaiRequest = env.apiAiService.textRequest(preparedText,
