@@ -591,13 +591,7 @@ function managerAction(msg, value, typeOfaction) {
 
         DateHelper.convertTimeFormat(arr[1], function (formattedTime1, midday1) {
 
-          if (arr[0] && (arr[0] != undefined)) {
-            fromDate = fromDate + " at " + formattedTime + " " + midday
-          } else fromDate = fromDate + " at 08:00 am ";
 
-          if (arr[1] && (arr[1] != undefined)) {
-            toDate = toDate + " at " + formattedTime1 + " " + midday1
-          } else toDate = toDate + " at 05:00 pm ";
 
 
           if (!managerApproval[0]) {
