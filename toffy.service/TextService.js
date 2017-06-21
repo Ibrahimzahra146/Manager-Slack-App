@@ -4,7 +4,7 @@ module.exports.prepareTextForApiAi = function prepareTextForApiAi(text, callback
     var first_part = arr[0]
     console.log("first_part" + first_part)
     arr = text.toString().split('>')
-    var lasr_part = arr[1]
+    var last_part = arr[1]
     console.log("last_part" + last_part)
     var mailPart = arr[0]
     console.log("mailPart" + mailPart)
