@@ -36,6 +36,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     console.log("There is email")
 
                     employeeEmail = response.result.parameters.email
+                    console.log("There is email" + employeeEmail)
                     // generalEmail = employeeEmail;
                 }
 
