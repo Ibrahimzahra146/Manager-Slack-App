@@ -568,7 +568,7 @@ function managerAction(msg, value, typeOfaction) {
   var toTime = ""
   var wordFromDate = ""
   var messageText = ""
-  var wordToDate=""
+  var wordToDate = ""
 
   var employeeEmail = ""
   var managerId = ""
@@ -613,7 +613,7 @@ function managerAction(msg, value, typeOfaction) {
 
             }
             else
-              msg.respond(msg.body.response_url, "Your time off request for " + employeeEmail + " from ( " + fromDate + "- " + toDate + " ) has been submitted.")
+              msg.respond(msg.body.response_url, "Your time off request for " + employeeEmail + " from ( " + wordFromDate + "- " + wordToDate + " ) has been submitted.")
 
           }
         });
