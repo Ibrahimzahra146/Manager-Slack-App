@@ -205,13 +205,13 @@ function sendRequestToApiAi(emailValue, msg) {
     if (role == true) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
+      text = text.replace(/@exalt.ps/g, "");
 
 
       let apiaiRequest = env.apiAiService.textRequest(text,
         {
           sessionId: env.sessionId
         });
-      text = text.replace(/@exalt.ps/g, "");
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
 
