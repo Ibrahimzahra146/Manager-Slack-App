@@ -206,11 +206,12 @@ function sendRequestToApiAi(emailValue, msg) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
 
+
       let apiaiRequest = env.apiAiService.textRequest(text,
         {
           sessionId: env.sessionId
         });
-
+      text = text.replace(/@exalt.ps/g, "");
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
 
@@ -227,10 +228,10 @@ function sendRequestToApiAi(emailValue, msg) {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
             if ((employeeEmail).indexOf('mailto') > -1) {
-             
+
               employeeEmail = employeeEmail.toString().split(':')
               employeeEmail = employeeEmail[1];
-             // employeeEmail = employeeEmail.replace(/>/g, "");
+              // employeeEmail = employeeEmail.replace(/>/g, "");
               console.log("Email after split mail to " + employeeEmail)
               generalEmailForEmpInfo = employeeEmail
 
