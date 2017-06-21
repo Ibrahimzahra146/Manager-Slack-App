@@ -205,204 +205,205 @@ function sendRequestToApiAi(emailValue, msg) {
     if (role == true) {
       storeManagerSlackInformation(emailValue, msg);
       var text = msg.body.event.text;
-      env.TextService.prepareTextForApiAi(text, function (text) {
+      env.TextService.prepareTextForApiAi(text, function (preparedText) {
         console.log("prepareTextForApiAi" + text)
-      })
 
-      let apiaiRequest = env.apiAiService.textRequest(text,
-        {
-          sessionId: env.sessionId
-        });
-      apiaiRequest.on('response', (response) => {
-        let responseText = response.result.fulfillment.speech;
 
-        if (responseText == "whoIsOff") {
-          console.log("arrive")
-          whoIsOff.whoIsOff(msg, response, emailValue)
-        }
-        else if (responseText == "showEmployeeInfo") {
+        let apiaiRequest = env.apiAiService.textRequest(preparedText,
+          {
+            sessionId: env.sessionId
+          });
+        apiaiRequest.on('response', (response) => {
+          let responseText = response.result.fulfillment.speech;
 
-          var employeeEmail = "";
-          if (response.result.parameters.any) {
+          if (responseText == "whoIsOff") {
+            console.log("arrive")
+            whoIsOff.whoIsOff(msg, response, emailValue)
+          }
+          else if (responseText == "showEmployeeInfo") {
 
-            console.log("response.result.parameters.any" + response.result.parameters.any)
-            employeeEmail = response.result.parameters.any
-            employeeEmail = employeeEmail.toString().split(':')
-            employeeEmail = employeeEmail[1];
-            employeeEmail = employeeEmail.replace(/>/g, "");
-            employeeEmail = response.result.parameters.any + "@exalt.ps"
-            employeeEmail = employeeEmail.replace(/ /g, ".");
-            if ((employeeEmail).indexOf('mailto') > -1) {
+            var employeeEmail = "";
+            if (response.result.parameters.any) {
 
+              console.log("response.result.parameters.any" + response.result.parameters.any)
+              employeeEmail = response.result.parameters.any
               employeeEmail = employeeEmail.toString().split(':')
               employeeEmail = employeeEmail[1];
-              // employeeEmail = employeeEmail.replace(/>/g, "");
-              console.log("Email after split mail to " + employeeEmail)
-              generalEmailForEmpInfo = employeeEmail
-
-            }
-            generalEmailForEmpInfo = employeeEmail
-            if (generalEmail != "") {
-              generalEmailForEmpInfo = generalEmail
-            }
-
-            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
-              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
-              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
-              employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-            else {
-              msg.say("Please specify on of the following :profile,stats or history ")
-            }
-
-
-
-
-          }
-          else if (response.result.parameters.email) {
-            console.log("response.result.parameters.email" + response.result.parameters.email)
-            console.log("Case2")
-
-            if ((response.result.parameters.email).indexOf('mailto') > -1) {
-              employeeEmail = response.result.parameters.email
-              employeeEmail = employeeEmail.toString().split('|')
-              employeeEmail = employeeEmail[1];
               employeeEmail = employeeEmail.replace(/>/g, "");
-              console.log("Email after split mail to " + employeeEmail)
+              employeeEmail = response.result.parameters.any + "@exalt.ps"
+              employeeEmail = employeeEmail.replace(/ /g, ".");
+              if ((employeeEmail).indexOf('mailto') > -1) {
+
+                employeeEmail = employeeEmail.toString().split(':')
+                employeeEmail = employeeEmail[1];
+                // employeeEmail = employeeEmail.replace(/>/g, "");
+                console.log("Email after split mail to " + employeeEmail)
+                generalEmailForEmpInfo = employeeEmail
+
+              }
               generalEmailForEmpInfo = employeeEmail
+              if (generalEmail != "") {
+                generalEmailForEmpInfo = generalEmail
+              }
+
+              if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+                employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+                employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+                employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
+                employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              else {
+                msg.say("Please specify on of the following :profile,stats or history ")
+              }
+
+
+
 
             }
-            else {
-              employeeEmail = response.result.parameters.email
-              generalEmailForEmpInfo = employeeEmail
+            else if (response.result.parameters.email) {
+              console.log("response.result.parameters.email" + response.result.parameters.email)
+              console.log("Case2")
+
+              if ((response.result.parameters.email).indexOf('mailto') > -1) {
+                employeeEmail = response.result.parameters.email
+                employeeEmail = employeeEmail.toString().split('|')
+                employeeEmail = employeeEmail[1];
+                employeeEmail = employeeEmail.replace(/>/g, "");
+                console.log("Email after split mail to " + employeeEmail)
+                generalEmailForEmpInfo = employeeEmail
+
+              }
+              else {
+                employeeEmail = response.result.parameters.email
+                generalEmailForEmpInfo = employeeEmail
 
 
+              }
+              if (generalEmail != "") {
+                generalEmailForEmpInfo = generalEmail
+              }
+
+
+
+
+              if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+
+                employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+
+              }
+              else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+                employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+
+              }
+              else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+                employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
+                employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
+                generalEmailForEmpInfo = ""
+                generalEmpInfo = ""
+                generalEmail = ""
+
+              }
+              // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+              else {
+                msg.say("Please specify on of the following :profile, stats, history or pending ")
+              }
+
+            } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
+              msg.say("Please specify employee email")
+              generalEmpInfo = response.result.parameters.employee_info_types
+              console.log("Arriveee" + generalEmpInfo)
             }
-            if (generalEmail != "") {
-              generalEmailForEmpInfo = generalEmail
-            }
-
-
-
-
-            if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-
-              employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-
-            }
-            else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
-              employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-
-            }
-            else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
-              employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
-              employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
-              generalEmailForEmpInfo = ""
-              generalEmpInfo = ""
-              generalEmail = ""
-
-            }
-            // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-            else {
-              msg.say("Please specify on of the following :profile, stats, history or pending ")
-            }
-
-          } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
-            msg.say("Please specify employee email")
-            generalEmpInfo = response.result.parameters.employee_info_types
-            console.log("Arriveee" + generalEmpInfo)
           }
-        }
 
 
 
 
-        else if (responseText == "vacationWithLeave") {
-          env.VacationService.vacationWithLeave(msg, response, emailValue)
+          else if (responseText == "vacationWithLeave") {
+            env.VacationService.vacationWithLeave(msg, response, emailValue)
 
-        }
-        else if ((responseText) == "Help") {
+          }
+          else if ((responseText) == "Help") {
 
-          managerToffyHelper.sendHelpOptions(msg);
-        }
-        else if (responseText == "Reminders") {
-          getTodayDate(function (today) {
-            var date = today
-            var time = ""
-            var reminderFor = ""
-            var isReminder = ""
-            if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date && response.result.parameters.any) {
-              date = response.result.parameters.date
-              time = response.result.parameters.time
-              reminderFor = response.result.parameters.any
-
-
-            } else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date) {
-              date = response.result.parameters.date
-              time = response.result.parameters.time
-
-            }
-            else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.any) {
-              time = response.result.parameters.time
-              reminderFor = response.result.parameters.any
-
-            }
-            else if (response.result.parameters.reminder && response.result.parameters.time) {
-              time = response.result.parameters.time
-
-            }
-            reminderHelper.setReminder(msg, emailValue, time, reminderFor, msg.meta.app_token)
-          })
+            managerToffyHelper.sendHelpOptions(msg);
+          }
+          else if (responseText == "Reminders") {
+            getTodayDate(function (today) {
+              var date = today
+              var time = ""
+              var reminderFor = ""
+              var isReminder = ""
+              if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date && response.result.parameters.any) {
+                date = response.result.parameters.date
+                time = response.result.parameters.time
+                reminderFor = response.result.parameters.any
 
 
-        }
-        else {
-          msg.say(responseText);
-          generalEmail = ""
+              } else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.date) {
+                date = response.result.parameters.date
+                time = response.result.parameters.time
 
-        }
+              }
+              else if (response.result.parameters.reminder && response.result.parameters.time && response.result.parameters.any) {
+                time = response.result.parameters.time
+                reminderFor = response.result.parameters.any
 
-      });
-      apiaiRequest.on('error', (error) => console.error(error));
-      apiaiRequest.end();
+              }
+              else if (response.result.parameters.reminder && response.result.parameters.time) {
+                time = response.result.parameters.time
+
+              }
+              reminderHelper.setReminder(msg, emailValue, time, reminderFor, msg.meta.app_token)
+            })
+
+
+          }
+          else {
+            msg.say(responseText);
+            generalEmail = ""
+
+          }
+
+        });
+        apiaiRequest.on('error', (error) => console.error(error));
+        apiaiRequest.end();
+      })
     } else if (role == 1000) {
       msg.say("Your account has been deactivated. You are not allowed to use the system.")
     }
