@@ -105,7 +105,7 @@ function printLogs(msg) {
 Show Employee stats like annual vacation and etc.. from Hr side
 *****/
 module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEmail, msg) {
-    printLogs("showEmployeeStats")
+    printLogs("showEmployeeStats" + employeeEmail)
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         request({
             url: "http://" + IP + "/api/v1/employee/" + Id + "/balance",

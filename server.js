@@ -223,7 +223,7 @@ function sendRequestToApiAi(emailValue, msg) {
           var employeeEmail = "";
           if (response.result.parameters.any) {
 
-
+            console.log("response.result.parameters.any" + response.result.parameters.any)
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
 
@@ -269,7 +269,8 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
           }
-          else if (response.result.parameters.email){
+          else if (response.result.parameters.email) {
+            console.log("response.result.parameters.email" + response.result.parameters.email)
             console.log("Case2")
 
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
@@ -295,6 +296,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
             if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+              
               employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
