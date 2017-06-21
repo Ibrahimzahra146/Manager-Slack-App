@@ -564,6 +564,11 @@ function managerAction(msg, value, typeOfaction) {
   var toDateInMilliseconds = ""
   var workingDays = ""
   var employeeEmail = ""
+  var fromTime = ""
+  var toTime = ""
+  var wordFromDate = ""
+  var messageText = ""
+  var wordToDate=""
 
   var employeeEmail = ""
   var managerId = ""
