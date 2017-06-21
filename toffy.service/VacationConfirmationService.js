@@ -2,6 +2,8 @@ const env = require('.././public/configrations.js')
 
 
 module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, employeeEmail, type, timeOffcase) {
+    console.log("sendVacationWithLeaveConfirmation: " + employeeEmail)
+
     var holidaysNotice = ""
     var typeNum = ""
     if (type == "sick") {
