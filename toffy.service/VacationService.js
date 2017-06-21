@@ -38,7 +38,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
 
             } else if (response.result.parameters.any) {
-                console.log("response.result.parameters.any" + response.result.parameters.any)
+                console.log("response.result.parameters.any " + response.result.parameters.any)
                 /* if ((response.result.parameters.any).indexOf('.') < 0) {
  
                    msg.say("Sorry ,I cant understand you ")
