@@ -21,6 +21,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
             msg.say("please specify the user email with request")
         } else {
             if (response.result.parameters.email) {
+                console.log("There is Id")
                 //<mailto:ibrahim.zahra@exalt.ps|ibrahim.zahra@exalt.ps>
                 if ((response.result.parameters.email).indexOf('mailto') > -1) {
                     employeeEmail = response.result.parameters.email
@@ -32,6 +33,8 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     // isInfo = 1
                 }
                 else {
+                    console.log("There is email")
+
                     employeeEmail = response.result.parameters.email
                     // generalEmail = employeeEmail;
                 }
