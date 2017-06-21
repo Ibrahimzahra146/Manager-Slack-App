@@ -224,6 +224,9 @@ function sendRequestToApiAi(emailValue, msg) {
 
             var employeeEmail = "";
             if (response.result.parameters.any) {
+              env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any,function(){
+
+              })
 
               console.log("response.result.parameters.any" + response.result.parameters.any)
            

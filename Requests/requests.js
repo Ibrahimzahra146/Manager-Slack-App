@@ -160,18 +160,18 @@ module.exports.getTimeOffRules = function getTimeOffRules(email, callback) {
  */
 module.exports.getEmployeeProfile = function getEmployeeProfile(email, Id, callback) {
 
-        env.request({
-            url: "http://" + env.IP + "/api/v1/employee/" + Id,
-            json: true,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': env.managerToffyHelper.general_remember_me + ";" + env.managerToffyHelper.general_session_id
-            },
-        }, function (error, response, body) {
-            callback(error, response, body)
-        })
-    
+    env.request({
+        url: "http://" + env.IP + "/api/v1/employee/" + Id,
+        json: true,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': env.managerToffyHelper.general_remember_me + ";" + env.managerToffyHelper.general_session_id
+        },
+    }, function (error, response, body) {
+        callback(error, response, body)
+    })
+
 }
 /**
  * 
@@ -196,5 +196,23 @@ module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, ca
             callback(body)
 
         })
+    });
+}
+/**
+ * 
+ * Get user info from slack based on his ID
+ */
+module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id, callback) {
+    console.log("getUserSlackInfoBySlackId" + id)
+
+    env.request({
+        url: "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id,
+        json: true
+    }, function (error, response, body) {
+        console.log("getUserSlackInfoBySlackId" + response.statusCode)
+        console.log("getUserSlackInfoBySlackId" + body)
+        console.log("getUserSlackInfoBySlackId" + JSON.stringify(body))
+        callback(error, response, body)
+
     });
 }
