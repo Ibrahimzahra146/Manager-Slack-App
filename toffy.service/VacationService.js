@@ -6,8 +6,8 @@ const env = require('.././public/configrations.js')
 
 var vacation_type1 = ""
 module.exports.vacationWithLeave = function vacationWithLeave(msg, response, emailValue) {
-    console.log("response"+response)
-    console.log("JSON response"+JSON.stringify(response))
+    console.log("response" + response)
+    console.log("JSON response" + JSON.stringify(response))
 
     var other_vacation_types = ""
     var messageText = ""
@@ -44,24 +44,23 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
 
             } else if (response.result.parameters.any) {
-                console.log("response.result.parameters.any " + response.result.parameters.any)
-                /* if ((response.result.parameters.any).indexOf('.') < 0) {
- 
-                   msg.say("Sorry ,I cant understand you ")
-                 } else {*/
+                env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response1, body) {
+                    //Mention user
+                    if (error != 1000) {
+                        employeeEmail = body.user.profile.email
+                    }else {
 
-
-                employeeEmail = response.result.parameters.any
-                employeeEmail = response.result.parameters.any + "@exalt.ps"
-                employeeEmail = employeeEmail.replace(/ /g, ".");
-                console.log("employeeEmail" + employeeEmail)
-                // generalEmail = employeeEmail
-                // isInfo = 1
-
-
+                    employeeEmail = response.result.parameters.any
+                    employeeEmail = response.result.parameters.any + "@exalt.ps"
+                    employeeEmail = employeeEmail.replace(/ /g, ".");
+                    console.log("employeeEmail" + employeeEmail)
+                    }
+                   
+                })
 
 
             }
+
             console.log("employeeEmail" + employeeEmail)
 
             if (response.result.parameters.sick_synonyms) {

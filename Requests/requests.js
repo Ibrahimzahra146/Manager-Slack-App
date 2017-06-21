@@ -203,13 +203,12 @@ module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, ca
  * Get user info from slack based on his ID
  */
 module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id, callback) {
-    console.log("getUserSlackInfoBySlackId" + id)
     var arr = ""
+    // <@uudkmflkpe> format of the id so we handle it and remove the charaters 
     if ((id).indexOf('<') > -1) {
         arr = id.toString().split('@')
         id = arr[1]
     }
-    console.log("getUserSlackInfoBySlackId" + id)
     if ((id).indexOf('>') > -1) {
         arr = id.toString().split('>')
         id = arr[0]
@@ -218,15 +217,13 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
         arr = id.toString().split('@')
         id = arr[1]
     }
-    console.log("getUserSlackInfoBySlackId" + id)
     var url = "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id
     console.log("URL" + url)
     env.request({
         url: url,
         json: true
     }, function (error, response, body) {
-        console.log("getUserSlackInfoBySlackId" + response.statusCode)
-        console.log("getUserSlackInfoBySlackId" + body.user.profile.email)
+  
         console.log("getUserSlackInfoBySlackId" + JSON.stringify(body))
         if (body.error == "user_not_found") {
             callback(1000, 1000, 1000)
