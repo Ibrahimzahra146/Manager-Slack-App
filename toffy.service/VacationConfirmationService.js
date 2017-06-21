@@ -67,7 +67,23 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                             "callback_id": 'leave_with_vacation_confirm_reject',
                                             "color": "#3AA3E3",
                                             "attachment_type": "default",
-                                         
+                                            "actions": [
+                                                {
+                                                    "name": 'confirm',
+                                                    "text": "Yes",
+                                                    "style": "primary",
+                                                    "type": "button",
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                                },
+                                                {
+                                                    "name": 'reject',
+                                                    "text": "No",
+                                                    "style": "danger",
+                                                    "type": "button",
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                                }, addCommentButton
+
+                                            ],
                                         }
                                     ]
                                 }
