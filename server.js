@@ -269,7 +269,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
           }
-          else if (response.result.parameters.email{
+          else if (response.result.parameters.email){
             console.log("Case2")
 
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
