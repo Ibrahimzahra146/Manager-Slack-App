@@ -221,7 +221,7 @@ function sendRequestToApiAi(emailValue, msg) {
         else if (responseText == "showEmployeeInfo") {
 
           var employeeEmail = "";
-          if (response.result.parameters.any || generalEmailForEmpInfo != "" || generalEmail != "") {
+          if (response.result.parameters.any) {
 
 
             employeeEmail = response.result.parameters.any + "@exalt.ps"
@@ -269,7 +269,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
           }
-          else if (response.result.parameters.email || generalEmailForEmpInfo != "" || generalEmail != "") {
+          else if (response.result.parameters.email{
             console.log("Case2")
 
             if ((response.result.parameters.email).indexOf('mailto') > -1) {
