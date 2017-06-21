@@ -120,7 +120,7 @@ function getWorkingDays(startDate, endDate, email, typeNum, callback) {
 
 
     try {
-        env.toffyHelper.getIdFromEmail(email, function (Id) {
+        env.managerToffyHelper.getIdFromEmail(email,email, function (Id) {
             var vacationBody = {
                 "employee_id": Id,
                 "from": startDate,
@@ -135,7 +135,7 @@ function getWorkingDays(startDate, endDate, email, typeNum, callback) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie': env.toffyHelper.general_remember_me + ";" + env.toffyHelper.general_session_id
+                    'Cookie': env.managerToffyHelper.general_remember_me + ";" + env.managerToffyHelper.general_session_id
                 },
                 body: vacationBody
                 //Set the body as a stringcc
