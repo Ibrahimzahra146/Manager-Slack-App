@@ -213,7 +213,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
       apiaiRequest.on('response', (response) => {
         let responseText = response.result.fulfillment.speech;
-       
+
         if (responseText == "whoIsOff") {
           console.log("arrive")
           whoIsOff.whoIsOff(msg, response, emailValue)
@@ -340,7 +340,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
         else if (responseText == "vacationWithLeave") {
-                 env.VacationService.vacationWithLeave(msg, response, emailValue)
+          env.VacationService.vacationWithLeave(msg, response, emailValue)
 
         }
         else if ((responseText) == "Help") {
@@ -563,22 +563,23 @@ function managerAction(msg, value, typeOfaction) {
   var fromDateInMilliseconds = ""
   var toDateInMilliseconds = ""
   var workingDays = ""
+  var employeeEmail = ""
 
   var employeeEmail = ""
   var managerId = ""
   getTodayDate(function (todayDate) {
-    var fromDate = ""
-    var toDate = ""
-    arr = value.toString().split(",");
-    type = arr[5]
+    arr = value.toString().split(";");
+    fromTime = arr[0]
+    toTime = arr[1]
     managerEmail = arr[2];
     fromDateInMilliseconds = arr[3];
     toDateInMilliseconds = arr[4]
+    type = arr[5]
     workingDays = arr[6]
-    fromDate = arr[7]
-    toDate = arr[8]
-    employeeEmail = arr[9]
-    managerId = arr[10]
+    wordFromDate = arr[7]
+    wordToDate = arr[8]
+    messageText = arr[9]
+    employeeEmail = arr[10]
     managerToffyHelper.sendVacationPostRequest(/*from  */fromDateInMilliseconds, toDateInMilliseconds, managerToffyHelper.userIdInHr, employeeEmail, managerEmail, type, function (vacationId, managerApproval) {
 
       DateHelper.convertTimeFormat(arr[0], function (formattedTime, midday) {

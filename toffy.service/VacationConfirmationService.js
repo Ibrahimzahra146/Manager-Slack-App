@@ -56,7 +56,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                     workingDays = 0
                                     holidaysNotice = ""
                                 }
-                             
+
                                 messagetext = messagetext + "" + holidaysNotice
 
                                 var text12 = {
@@ -73,15 +73,15 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                                     "text": "Yes",
                                                     "style": "primary",
                                                     "type": "button",
-                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext + ";" + employeeEmail
                                                 },
                                                 {
                                                     "name": 'reject',
                                                     "text": "No",
                                                     "style": "danger",
                                                     "type": "button",
-                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext
-                                                }, addCommentButton
+                                                    "value": fromTime + ";" + toTime + ";" + email + ";" + fromDateServer.getTime() + ";" + toDateWordServer.getTime() + ";" + type + ";" + workingDays + ";" + wordFromDate + ";" + wordTodate + ";" + messagetext + ";" + employeeEmail
+                                                }
 
                                             ],
                                         }
