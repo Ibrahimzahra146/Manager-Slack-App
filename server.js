@@ -225,62 +225,66 @@ function sendRequestToApiAi(emailValue, msg) {
             var employeeEmail = "";
             if (response.result.parameters.any) {
               env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response, body) {
+                //Mention user
+                if (error != 1000) {
+                  employeeEmail = body.user.profile.email
+                } else {
+                  employeeEmail = response.result.parameters.any + "@exalt.ps"
+                  employeeEmail = employeeEmail.replace(/ /g, ".");
+                  if ((employeeEmail).indexOf('mailto') > -1) {
+
+                    employeeEmail = employeeEmail.toString().split(':')
+                    employeeEmail = employeeEmail[1];
+                    // employeeEmail = employeeEmail.replace(/>/g, "");
+                    console.log("Email after split mail to " + employeeEmail)
+                  }
+
+                  console.log("response.result.parameters.any" + response.result.parameters.any)
+
+
+                  generalEmailForEmpInfo = employeeEmail
+
+                }
+                generalEmailForEmpInfo = employeeEmail
+                if (generalEmail != "") {
+                  generalEmailForEmpInfo = generalEmail
+                }
+
+                if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
+                  employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
+                  generalEmailForEmpInfo = ""
+                  generalEmpInfo = ""
+                  generalEmail = ""
+
+                }
+                else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
+                  employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
+                  generalEmailForEmpInfo = ""
+                  generalEmpInfo = ""
+                  generalEmail = ""
+
+                }
+                else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
+                  employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
+                  generalEmailForEmpInfo = ""
+                  generalEmpInfo = ""
+                  generalEmail = ""
+
+                }
+                else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
+                  employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
+                  generalEmailForEmpInfo = ""
+                  generalEmpInfo = ""
+                  generalEmail = ""
+
+                }
+                // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
+                else {
+                  msg.say("Please specify on of the following :profile,stats or history ")
+                }
+
 
               })
-
-              console.log("response.result.parameters.any" + response.result.parameters.any)
-
-              employeeEmail = response.result.parameters.any + "@exalt.ps"
-              employeeEmail = employeeEmail.replace(/ /g, ".");
-              if ((employeeEmail).indexOf('mailto') > -1) {
-
-                employeeEmail = employeeEmail.toString().split(':')
-                employeeEmail = employeeEmail[1];
-                // employeeEmail = employeeEmail.replace(/>/g, "");
-                console.log("Email after split mail to " + employeeEmail)
-                generalEmailForEmpInfo = employeeEmail
-
-              }
-              generalEmailForEmpInfo = employeeEmail
-              if (generalEmail != "") {
-                generalEmailForEmpInfo = generalEmail
-              }
-
-              if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-                employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-                generalEmail = ""
-
-              }
-              else if (response.result.parameters.employee_info_types == "profile" || generalEmpInfo != "") {
-                employee.showEmployeeProfile(emailValue, generalEmailForEmpInfo, msg)
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-                generalEmail = ""
-
-              }
-              else if (response.result.parameters.employee_info_types == "history" || generalEmpInfo != "") {
-                employee.showEmployeeHistory(emailValue, generalEmailForEmpInfo, msg)
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-                generalEmail = ""
-
-              }
-              else if (response.result.parameters.employee_info_types == "pending" || generalEmpInfo != "") {
-                employee.showEmployeePendingRequest(emailValue, generalEmailForEmpInfo, msg)
-                generalEmailForEmpInfo = ""
-                generalEmpInfo = ""
-                generalEmail = ""
-
-              }
-              // else employee.showEmployeeProfile(emailValue, employeeEmail, msg)
-              else {
-                msg.say("Please specify on of the following :profile,stats or history ")
-              }
-
-
-
 
             }
             else if (response.result.parameters.email) {
@@ -351,7 +355,7 @@ function sendRequestToApiAi(emailValue, msg) {
               console.log("Arriveee" + generalEmpInfo)
             }
           }
-          
+
 
 
 
