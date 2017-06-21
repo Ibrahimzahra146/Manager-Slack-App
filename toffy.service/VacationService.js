@@ -59,6 +59,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
 
             }
+            console.log("employeeEmail" + employeeEmail)
 
             if (response.result.parameters.sick_synonyms) {
                 vacation_type1 = "sick"
