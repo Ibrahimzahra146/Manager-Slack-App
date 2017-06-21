@@ -224,7 +224,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
             var employeeEmail = "";
             if (response.result.parameters.any) {
-              env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response, body) {
+              env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response1, body) {
                 //Mention user
                 if (error != 1000) {
                   employeeEmail = body.user.profile.email
@@ -238,17 +238,9 @@ function sendRequestToApiAi(emailValue, msg) {
                     // employeeEmail = employeeEmail.replace(/>/g, "");
                     console.log("Email after split mail to " + employeeEmail)
                   }
-
-                  console.log("response.result.parameters.any" + response.result.parameters.any)
-
-
-                  generalEmailForEmpInfo = employeeEmail
-
                 }
                 generalEmailForEmpInfo = employeeEmail
-                if (generalEmail != "") {
-                  generalEmailForEmpInfo = generalEmail
-                }
+           
 
                 if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
                   employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
