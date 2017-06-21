@@ -27,7 +27,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     employeeEmail = employeeEmail.toString().split('|')
                     employeeEmail = employeeEmail[1];
                     employeeEmail = employeeEmail.replace(/>/g, "");
-                    console.log("Email after split mail to ")
+                    console.log("Email after split mail to " + employeeEmail)
                     // generalEmail = employeeEmail
                     // isInfo = 1
                 }
@@ -38,6 +38,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
 
             } else if (response.result.parameters.any) {
+                console.log("response.result.parameters.any" + response.result.parameters.any)
                 /* if ((response.result.parameters.any).indexOf('.') < 0) {
  
                    msg.say("Sorry ,I cant understand you ")
@@ -47,6 +48,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 employeeEmail = response.result.parameters.any
                 employeeEmail = response.result.parameters.any + "@exalt.ps"
                 employeeEmail = employeeEmail.replace(/ /g, ".");
+                console.log("employeeEmail" + employeeEmail)
                 // generalEmail = employeeEmail
                 // isInfo = 1
 
