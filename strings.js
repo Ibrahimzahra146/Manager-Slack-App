@@ -1,5 +1,7 @@
 const env = require('./public/configrations.js')
-
+//Holiday nodtice 
+var holiday_notice = "\n ( Note: Any official holiday will not be deducted from your time off request.)"
+exports.holiday_notice = holiday_notice
 
 /**
  * 

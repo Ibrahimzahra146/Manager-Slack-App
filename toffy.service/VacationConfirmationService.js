@@ -38,8 +38,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                         var toDateWordServer = new Date(body.toTimeSlot.date)
                         toDateWordServer.setHours(body.toTimeSlot.hour)
                         toDateWordServer.setMinutes(body.toTimeSlot.minute)
-                        console.log("toDateWordServer" + toDateWordServer)
-                        console.log("toMilliseconds" + toMilliseconds)
+                      
                         env.dateHelper.converDateToWords(fromDateServer, toDateWordServer, 0, function (wordFromDate, wordTodate) {
 
 
@@ -47,7 +46,6 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                                 var addCommentButton = ""
                                 if (containsHolidays == true) {
                                     holidaysNotice = env.stringFile.holiday_notice
-                                    console.log("holidaysNotice" + holidaysNotice)
 
                                 }
                                 if (type == "sick") {
