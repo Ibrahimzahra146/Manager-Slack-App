@@ -204,9 +204,15 @@ module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, ca
  */
 module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id, callback) {
     console.log("getUserSlackInfoBySlackId" + id)
-
+    var arr = ""
+    if ((id).indexOf('<') > -1) {
+        arr = id.toString().split('<')
+        id = arr[1]
+    }
+    var url = "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id
+    console.log("URL" + url)
     env.request({
-        url: "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id,
+        url: url,
         json: true
     }, function (error, response, body) {
         console.log("getUserSlackInfoBySlackId" + response.statusCode)
