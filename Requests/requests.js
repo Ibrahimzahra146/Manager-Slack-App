@@ -209,6 +209,10 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
         arr = id.toString().split('@')
         id = arr[1]
     }
+    if ((id).indexOf('>') > -1) {
+        arr = id.toString().split('>')
+        id = arr[0]
+    }
     var url = "https://slack.com/api/users.info?token=" + env.SLACK_ACCESS_TOKEN + "&user=" + id
     console.log("URL" + url)
     env.request({
@@ -218,9 +222,9 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
         console.log("getUserSlackInfoBySlackId" + response.statusCode)
         console.log("getUserSlackInfoBySlackId" + body.user.profile.email)
         console.log("getUserSlackInfoBySlackId" + JSON.stringify(body))
-        if (body.error == "user_not_found"){
-            callback(1000,1000,1000)
-        }else 
+        if (body.error == "user_not_found") {
+            callback(1000, 1000, 1000)
+        } else
             callback(error, response, body)
 
     });
