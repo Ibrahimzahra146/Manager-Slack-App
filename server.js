@@ -226,7 +226,15 @@ function sendRequestToApiAi(emailValue, msg) {
             console.log("response.result.parameters.any" + response.result.parameters.any)
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
+            if ((employeeEmail).indexOf('mailto') > -1) {
+             
+              employeeEmail = employeeEmail.toString().split(':')
+              employeeEmail = employeeEmail[1];
+             // employeeEmail = employeeEmail.replace(/>/g, "");
+              console.log("Email after split mail to " + employeeEmail)
+              generalEmailForEmpInfo = employeeEmail
 
+            }
             generalEmailForEmpInfo = employeeEmail
             if (generalEmail != "") {
               generalEmailForEmpInfo = generalEmail
@@ -296,7 +304,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 
             if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
-              
+
               employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
               generalEmailForEmpInfo = ""
               generalEmpInfo = ""
