@@ -5,7 +5,7 @@ module.exports.prepareTextForApiAi = function prepareTextForApiAi(text, callback
     console.log("first_part" + first_part)
     arr = text.toString().split('>')
     var lasr_part = arr[1]
-    console.log("lasr_part" + lasr_part)
+    console.log("last_part" + last_part)
     var mailPart = arr[0]
     console.log("mailPart" + mailPart)
 
@@ -14,6 +14,7 @@ module.exports.prepareTextForApiAi = function prepareTextForApiAi(text, callback
     mailPart = mailPart.replace(/@exalt.ps/g, "");
     mailPart = mailPart.replace(/>/g, "");
     console.log("mailPart" + mailPart)
+    text = first_part + "" + mailPart + "" + last_part
 
     callback(text)
 }
