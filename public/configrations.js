@@ -31,7 +31,7 @@ const async = require('async');
 exports.async = async
 
 const apiai = require('apiai');
-exports.apiai=apiai
+exports.apiai = apiai
 
 const mRequests = require('.././Requests/requests.js')
 exports.mRequests = mRequests
@@ -41,6 +41,9 @@ exports.managerToffyHelper = managerToffyHelper
 
 var employee = require('.././employeeSide.js');
 exports.employee = employee
+
+const dateHelper = require('.././DateEngine/DateHelper.js')
+exports.dateHelper = dateHelper;
 
 var server = require('.././server.js')
 exports.server = server
@@ -55,6 +58,10 @@ exports.Constants = Constants
 var messageGenerator = require('.././messagesHelper/messageGenerator.js');
 exports.messageGenerator = messageGenerator
 
+const VacationConfirmationService = require('.././toffy.service/VacationConfirmationService.js')
+exports.VacationConfirmationService = VacationConfirmationService
+const VacationService = require('.././toffy.service/VacationService.js')
+exports.VacationService = VacationService
 var apiAiService = apiai(APIAI_ACCESS_TOKEN);
 exports.apiAiService = apiAiService
 
