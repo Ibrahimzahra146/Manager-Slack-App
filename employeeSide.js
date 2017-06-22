@@ -212,7 +212,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                     while ((body)[i]) {
                         var parsedBody = body[i]
                         var stringMessage = "["
-                        var fromDate = new Date(parsedBody.fromDate);
+                        //var fromDate = new Date(parsedBody.fromDate);
                         env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
                             var fromDate = fromDateWord
                             var toDate = toDateWord
