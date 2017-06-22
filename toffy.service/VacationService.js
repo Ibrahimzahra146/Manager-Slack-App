@@ -74,7 +74,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
                 console.log("employeeEmail" + employeeEmail)
                 if (employeeEmail == emailValue) {
-                    mag.say("Sorry you can't apply a against rules vacation for you.Please contact your managers")
+                    msg.say("Sorry you can't apply a against rules vacation for you.Please contact your managers")
                 }
 
                 else if (response.result.parameters.sick_synonyms) {
