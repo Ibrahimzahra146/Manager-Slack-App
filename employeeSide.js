@@ -1,3 +1,4 @@
+const env = require('./public/configrations.js')
 const request = require('request');
 var managerHelper = require('./managerToffyHelper.js')
 var server = require('./server.js')
@@ -212,48 +213,49 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                         var parsedBody = body[i]
                         var stringMessage = "["
                         var fromDate = new Date(parsedBody.fromDate);
-                        fromDate = fromDate.toString().split("GMT")
-                        fromDate = fromDate[0]
-                        var toDate = new Date(parsedBody.toDate)
-                        toDate = toDate.toString().split("GMT")
-                        toDate = toDate[0]
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
-                        stringMessage = stringMessage + ","
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
-                        stringMessage = stringMessage + ","
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + parsedBody.vacationState + "\"" + ",\"short\":true}"
-                        var typeOfVacation = ""
-                        if (parsedBody.type == 0)
-                            typeOfVacation = "Time off"
-                        else if (parsedBody.type == 4)
-                            typeOfVacation = "Sick time off"
-                        printLogs("stringMessage::" + stringMessage);
-                        stringMessage = stringMessage + "]"
-                        var messageBody = {
-                            "text": "*" + typeOfVacation + "*",
-                            "attachments": [
-                                {
-                                    "attachment_type": "default",
-                                    "text": " ",
-                                    "fallback": "ReferenceError",
-                                    "fields": stringMessage,
-                                    "color": "#F35A00"
-                                }
-                            ]
-                        }
-                        printLogs("messageBody" + messageBody)
-                        var stringfy = JSON.stringify(messageBody);
+                        env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
+                            var fromDate = fromDateWord
+                            var toDate = toDateWord
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
+                            stringMessage = stringMessage + ","
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
+                            stringMessage = stringMessage + ","
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + parsedBody.vacationState + "\"" + ",\"short\":true}"
+                            var typeOfVacation = ""
+                            if (parsedBody.type == 0)
+                                typeOfVacation = "Time off"
+                            else if (parsedBody.type == 4)
+                                typeOfVacation = "Sick time off"
+                            else if (parsedBody.type == 7)
+                                typeOfVacation = "Work from home "
+                            printLogs("stringMessage::" + stringMessage);
+                            stringMessage = stringMessage + "]"
+                            var messageBody = {
+                                "text": "*" + typeOfVacation + "*",
+                                "attachments": [
+                                    {
+                                        "attachment_type": "default",
+                                        "text": " ",
+                                        "fallback": "ReferenceError",
+                                        "fields": stringMessage,
+                                        "color": "#F35A00"
+                                    }
+                                ]
+                            }
+                            printLogs("messageBody" + messageBody)
+                            var stringfy = JSON.stringify(messageBody);
 
-                        printLogs("stringfy" + stringfy)
-                        stringfy = stringfy.replace(/\\/g, "")
-                        stringfy = stringfy.replace(/]\"/, "]")
-                        stringfy = stringfy.replace(/\"\[/, "[")
-                        stringfy = JSON.parse(stringfy)
+                            printLogs("stringfy" + stringfy)
+                            stringfy = stringfy.replace(/\\/g, "")
+                            stringfy = stringfy.replace(/]\"/, "]")
+                            stringfy = stringfy.replace(/\"\[/, "[")
+                            stringfy = JSON.parse(stringfy)
 
-                        msg.say(stringfy)
-                        i++;
-
+                            msg.say(stringfy)
+                            i++;
+                        })
                     }
+
 
                 }
             }
