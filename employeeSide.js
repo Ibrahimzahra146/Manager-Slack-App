@@ -209,18 +209,18 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 }
                 else {
                     //build message Json result to send it to slack
-                    while (!(JSON.parse(body)[i])) {
-                        //var parsedBody = body[i]
+                    while ((body)[i]) {
+                        parsedBody = body[i]
                         var stringMessage = "["
                         //var fromDate = new Date(parsedBody.fromDate);
-                        env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
+                        env.dateHelper.converDateToWords(parsedBody.fromDate, parsedBody.toDate, 0, function (fromDateWord, toDateWord) {
                             var fromDate = fromDateWord
                             var toDate = toDateWord
                             stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
                             stringMessage = stringMessage + ","
                             stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
                             stringMessage = stringMessage + ","
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + (JSON.parse(body)[i]).vacationState + "\"" + ",\"short\":true}"
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + parsedBody.vacationState + "\"" + ",\"short\":true}"
                             var typeOfVacation = ""
                             if (parsedBody.type == 0)
                                 typeOfVacation = "Time off"
