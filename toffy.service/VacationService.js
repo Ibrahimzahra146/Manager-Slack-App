@@ -73,11 +73,9 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 }
 
                 console.log("employeeEmail" + employeeEmail)
-                if (employeeEmail == emailValue) {
-                    msg.say("Sorry you can't apply a against rules vacation for you.Please contact your managers")
-                }
 
-                else if (response.result.parameters.sick_synonyms) {
+
+                if (response.result.parameters.sick_synonyms) {
                     vacation_type1 = "sick"
                 }
                 /*  else if (response.result.parameters.other_vacation_types) {
@@ -333,12 +331,14 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             }
                             var dateMilliSeconds = toDate.getTime();
                             dateMilliSeconds = dateMilliSeconds - (3 * 60 * 60 * 1000)
-                            console.log()
-                            if (validPreviousDate == 1) {
-                                console.log("sendVacationWithLeaveConfirmation  " + employeeEmail)
+                            if (employeeEmail == emailValue) {
+                                msg.say("Sorry you can't apply a against rules vacation for you.Please contact your managers")
+                            } else {
                                 env.VacationConfirmationService.sendVacationWithLeaveConfirmation(msg, convertedTime, date, convertedTime1, date1, timeMilliseconds, dateMilliSeconds, emailValue, employeeEmail, vacation_type1, timeOffCase)
-                                vacation_type1 = ""
-                            } else msg.say("Please try again with this foramt mm dd yyyy. I am a bit confused whether you want a vacation in the current year or in next one.")
+
+                            }
+                            vacation_type1 = ""
+                            // else msg.say("Please try again with this foramt mm dd yyyy. I am a bit confused whether you want a vacation in the current year or in next one.")
                         })
 
                     })
