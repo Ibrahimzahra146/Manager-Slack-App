@@ -240,7 +240,7 @@ function sendRequestToApiAi(emailValue, msg) {
                   }
                 }
                 generalEmailForEmpInfo = employeeEmail
-           
+
 
                 if (response.result.parameters.employee_info_types == "stats" || generalEmpInfo != "") {
                   employee.showEmployeeStats(emailValue, generalEmailForEmpInfo, msg);
@@ -361,7 +361,7 @@ function sendRequestToApiAi(emailValue, msg) {
             managerToffyHelper.sendHelpOptions(msg);
           }
           else if (responseText == "Reminders") {
-            getTodayDate(function (today) {
+            env.dateHelper.getTodayDate(function (today) {
               var date = today
               var time = ""
               var reminderFor = ""
@@ -414,23 +414,7 @@ function sendRequestToApiAi(emailValue, msg) {
 
 }
 /** */
-function getTodayDate(callback) {
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1; //January is 0!
-  var yyyy = today.getFullYear();
 
-  if (dd < 10) {
-    dd = '0' + dd
-  }
-
-  if (mm < 10) {
-    mm = '0' + mm
-  }
-
-  today = yyyy + '/' + mm + '/' + dd;
-  callback(today)
-}
 
 
 /*--------------___________________________________________________----------------------
@@ -586,7 +570,7 @@ function managerAction(msg, value, typeOfaction) {
 
   var employeeEmail = ""
   var managerId = ""
-  getTodayDate(function (todayDate) {
+  env.dateHelper.getTodayDate(function (todayDate) {
     arr = value.toString().split(";");
     fromTime = arr[0]
     toTime = arr[1]

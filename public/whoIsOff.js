@@ -18,20 +18,20 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         if (response.result.parameters.in_off == "wfh")
             type = 7
 
-        if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
+        if (response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
             console.log("Case1")
             date = response.result.parameters.date
             date1 = response.result.parameters.date1
-        } else if (response.result.parameters.question && response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date) {
+        } else if (response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date) {
             console.log("Case2")
             date = response.result.parameters.date
-             date1 = response.result.parameters.date
-        } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.any) {
+            date1 = response.result.parameters.date
+        } else if (response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.any) {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
             console.log("Case3")
             date = response.result.parameters.date
-        } else if (response.result.parameters.question && response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.any) {
+        } else if (response.result.parameters.question == "is" && response.result.parameters.in_off && response.result.parameters.any) {
             employeeEmail = response.result.parameters.any + "@exalt.ps"
             employeeEmail = employeeEmail.replace(/ /g, ".");
 
