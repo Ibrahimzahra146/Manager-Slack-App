@@ -17,6 +17,8 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         var type = 0
         if (response.result.parameters.in_off == "wfh")
             type = 7
+        if (response.result.parameters.in_off == "sick")
+            type = 4
 
         if (response.result.parameters.question != "is" && response.result.parameters.in_off && response.result.parameters.date && response.result.parameters.date1) {
             console.log("Case1")
