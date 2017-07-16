@@ -67,7 +67,7 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
 
                     callback1(approver2Email, approver2Action, vacationState, approvalId)
                 }
-                else if (JSON.parse(body).managerApproval[i].managerEmail != email && state == 0) {
+                else if (parsedBody.managerApproval[i].managerEmail != email && state == 0) {
 
                     approver2Email = parsedBody.managerApproval[i].managerEmail
                     approver2Action = parsedBody.managerApproval[i].state
