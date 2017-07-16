@@ -20,12 +20,12 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                         var comment = JSON.parse(body)[i].comments;
                         //var approvalId = arr[2]
                         var managerEmail = email
-                        // var fromWho = arr[4];
+                        // var fromWho = ;
                         var fromDate = JSON.parse(body)[i].fromDate;
                         var toDate = JSON.parse(body)[i].toDate;
-                        /* var type = arr[7]
-                         var workingDays = arr[8]
-                         var ImageUrl = arr[9]*/
+                        var type = JSON.parse(body)[i].type
+                        var workingDays = JSON.parse(body)[i].period
+                        var ImageUrl = JSON.parse(body)[i].employee.profilePicture
                         console.log("fromDate" + fromDate)
                         console.log("toDate" + toDate)
 
@@ -36,10 +36,11 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                             console.log("toDateWord1" + toDateWord)
 
                             env.messageGenerator.generateManagerApprovelsSection(JSON.parse(body)[i].managerApproval, managerEmail, JSON.parse(body)[i].needsSickReport, function (managerApprovalsSection) {
-                                env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, JSON.parse(body)[i], 1,1, function (myEmail, myAction, vacationState, approvalId) {
+                                env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, JSON.parse(body)[i], 1, 1, function (myEmail, myAction, vacationState, approvalId) {
                                     console.log("approvalId" + approvalId)
-                                    //var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState, );
-
+                                    var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState, );
+                                    i++
+                                    msg.say(messageBody)
                                 })
                             })
                             //  var message = env.stringFile.pendingVacationMessage(email, JSON.parse(body)[i].id, JSON.parse(body)[i].managerApproval, JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, JSON.parse(body)[i].type, fromDateWord, toDateWord)
