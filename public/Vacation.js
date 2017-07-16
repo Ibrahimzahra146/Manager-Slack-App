@@ -36,7 +36,7 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
         })
     });
 }
-module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email, body, state, callback1) {
+module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email, body, state, pendingManagerApprovalFlag, callback1) {
 
     var approver2Email = "--"
     var approver2Action = "--"
@@ -44,29 +44,34 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
 
     var vacationState = "--"
     var approvalId = ""
+    var parsedBody = ""
+    if (pendingManagerApprovalFlag == 1) {
+        parsedBody = body
+
+    } else parsedBody = JSON.parse(body)
     //no second Approver 
-    if (state == 0 && !(JSON.parse(body).managerApproval[1])) {
-        callback1("--", "--", JSON.parse(body).vacationState)
+    if (state == 0 && !(parsedBody.managerApproval[1])) {
+        callback1("--", "--", parsedBody.vacationState)
     } else {
         var i = 0;
         async.whilst(
-            function () { return JSON.parse(body).managerApproval[i]; },
+            function () { return parsedBody.managerApproval[i]; },
             function (callback) {
-                if (JSON.parse(body).managerApproval[i].managerEmail == email && state == 1 && JSON.parse(body).managerApproval[i].type == "Manager") {
+                if (parsedBody.managerApproval[i].managerEmail == email && state == 1 && parsedBody.managerApproval[i].type == "Manager") {
 
-                    approver2Email = JSON.parse(body).managerApproval[i].managerEmail
-                    approver2Action = JSON.parse(body).managerApproval[i].state
-                    vacationState = JSON.parse(body).vacationState
-                    approvalId = JSON.parse(body).managerApproval[i].id
+                    approver2Email = parsedBody.managerApproval[i].managerEmail
+                    approver2Action = parsedBody.managerApproval[i].state
+                    vacationState = parsedBody.vacationState
+                    approvalId = parsedBody.managerApproval[i].id
                     console.log("getSecondApproverStateAndFinalState" + approvalId)
 
                     callback1(approver2Email, approver2Action, vacationState, approvalId)
                 }
                 else if (JSON.parse(body).managerApproval[i].managerEmail != email && state == 0) {
 
-                    approver2Email = JSON.parse(body).managerApproval[i].managerEmail
-                    approver2Action = JSON.parse(body).managerApproval[i].state
-                    vacationState = JSON.parse(body).vacationState
+                    approver2Email = parsedBody.managerApproval[i].managerEmail
+                    approver2Action = parsedBody.managerApproval[i].state
+                    vacationState = parsedBody.vacationState
                     callback1(approver2Email, approver2Action, vacationState)
                 }
                 i++
