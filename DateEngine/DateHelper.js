@@ -155,6 +155,7 @@ module.exports.converDateToWords = function converDateToWords(fromDate, toDate, 
         minutes = "00"
 
     env.dateHelper.convertTimeFormat(hours + ":" + minutes, function (formattedTime, midday, TimeforMilliseconds) {
+        console.log("formattedTime" + formattedTime)
         var wordToDate = new Date(toDate).toDateString()
         var arr = wordToDate.toString().split(" ")
         wordToDate = arr[0] + ", " + arr[1] + " " + arr[2]
