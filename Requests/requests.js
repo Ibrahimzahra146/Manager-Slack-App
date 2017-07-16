@@ -199,6 +199,24 @@ module.exports.getIdFromEmail = function getIdFromEmail(email, employeeEmail, ca
     });
 }
 /**
+ * get all pending vacation for managergetManagerpendingVacation
+ */
+module.exports.getManagerPendingVacation = function getManagerPendingVacation(email, Id, callback) {
+    env.request({
+        url: 'http://' + env.IP + '/api/v1/employee/' + Id + '/pending-vacations',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': env.toffyHelper.general_remember_me + ";" + env.toffyHelper.general_session_id
+        },
+    }, function (error, response, body) {
+        console.log("getPendingVacation" + JSON.stringify(body))
+        callback(error, response, body)
+    })
+
+
+}
+/**
  * 
  * Get user info from slack based on his ID
  */
@@ -223,7 +241,7 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
         url: url,
         json: true
     }, function (error, response, body) {
-  
+
         console.log("getUserSlackInfoBySlackId" + JSON.stringify(body))
         if (body.error == "user_not_found") {
             callback(1000, 1000, 1000)

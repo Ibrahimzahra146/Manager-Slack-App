@@ -95,7 +95,7 @@ function sendVacationPutRequest(vacationId, approvalId, managerEmail, status, ca
     console.log("uri: :" + uri)
     var approvalBody = {
       "id": approvalId,
-      "comments": "From Ibrahim",
+      "comments": "",
       "state": status,
       "type": " "
 
@@ -345,9 +345,11 @@ function sendRequestToApiAi(emailValue, msg) {
             } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
               //Show pending request for manager  
               if (response.result.parameters.employee_info_types == "pending") {
+                env.PendingService.showManagerPendingRequest(msg, emailValue)
                 msg.say("I will show your pending request")
 
               } else {
+
                 msg.say("Please specify employee email")
                 generalEmpInfo = response.result.parameters.employee_info_types
                 console.log("Arriveee" + generalEmpInfo)

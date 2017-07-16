@@ -60,10 +60,20 @@ exports.messageGenerator = messageGenerator
 
 const VacationConfirmationService = require('.././toffy.service/VacationConfirmationService.js')
 exports.VacationConfirmationService = VacationConfirmationService
+
 const VacationService = require('.././toffy.service/VacationService.js')
 exports.VacationService = VacationService
+
 const TextService = require('.././toffy.service/TextService.js')
 exports.TextService = TextService
+
+const PendingService = require('.././toffy.service/PendingRequestService.js')
+exports.PendingService = PendingService
+
+const VacationHelper = require('./Vacation.js')
+exports.VacationHelper = VacationHelper
+
+
 var apiAiService = apiai(APIAI_ACCESS_TOKEN);
 exports.apiAiService = apiAiService
 
