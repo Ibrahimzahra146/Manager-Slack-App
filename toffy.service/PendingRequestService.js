@@ -26,6 +26,8 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                         /* var type = arr[7]
                          var workingDays = arr[8]
                          var ImageUrl = arr[9]*/
+                        console.log("fromDate" + fromDate)
+                        console.log("toDate" + toDate)
 
 
                         env.dateHelper.converDateToWords(JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, 0, function (fromDateWord, toDateWord) {
