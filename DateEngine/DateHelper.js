@@ -141,6 +141,8 @@ module.exports.getDayNameOfDate = function getDayNameOfDate(date, callback) {
 }
 //convert Date to word 
 module.exports.converDateToWords = function converDateToWords(fromDate, toDate, flag, callback) {
+    console.log("fromDate" + fromDate)
+    console.log("toDate" + toDate)
 
     var wordFromDate = new Date(fromDate).toDateString()
     var arr = wordFromDate.toString().split(" ")

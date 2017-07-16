@@ -30,7 +30,7 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                         console.log("toDate" + toDate)
 
 
-                        env.dateHelper.converDateToWords(JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, 0, function (fromDateWord, toDateWord) {
+                        env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
 
                             env.messageGenerator.generateManagerApprovelsSection(JSON.parse(body[i]).managerApproval, managerEmail, JSON.parse(body[i]).needsSickReport, function (managerApprovalsSection) {
                                 env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, body[i], 1, function (myEmail, myAction, vacationState, approvalId) {
