@@ -1,6 +1,6 @@
 const env = require('.././public/configrations.js')
 
-module.exports.showManagerPendingRequest = function showManagerPendingRequest(msg, email) {
+module.exports.showManagerPendingRequest = function showManagerPendingRequest(msg,email) {
     var i = 0
     env.mRequests.getUserIdByEmail(email, function (error, response, Id) {
 

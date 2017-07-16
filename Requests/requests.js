@@ -78,7 +78,7 @@ module.exports.deleteVacation = function deleteVacation(email, vacationId, callb
 /**
  * get user Id By email
  */
-module.exports.getUserIdByEmail = function getUserIdByEmail(callback) {
+module.exports.getUserIdByEmail = function getUserIdByEmail(email, callback) {
     env.managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, sessionId) {
         env.managerToffyHelper.general_remember_me = remember_me_cookie
         env.managerToffyHelper.general_session_id = sessionId
