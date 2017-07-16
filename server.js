@@ -556,9 +556,10 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
             replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, managerApprovalsSection, vacationState, JSON.parse(body).comments)
 
           })
-        }
+        })
+      }
     }
-    })
+  })
 })
 function managerAction(msg, value, typeOfaction) {
   var arr = ""
@@ -857,16 +858,16 @@ controller2.hears(['(.*)'], 'direct_message,direct_mention,mention', function (b
   console.log(JSON.stringify(message))
 })
 controller.on('message_received', function (bot, message) {
-
+ 
   console.log("Sufferring11")
   console.log(JSON.stringify(message))
-
+ 
 })
 controller.on('direct_message', function (bot, message) {
-
+ 
   console.log("Sufferring11222")
   console.log(JSON.stringify(message))
-
+ 
 })
 */
 app.get('/', function (req, res) {
