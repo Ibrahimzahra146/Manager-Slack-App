@@ -221,6 +221,7 @@ function sendRequestToApiAi(emailValue, msg) {
             whoIsOff.whoIsOff(msg, response, emailValue)
           }
           else if (responseText == "showEmployeeInfo") {
+            console.log("Info type:" + response.result.parameters.employee_info_types)
 
             var employeeEmail = "";
             if (response.result.parameters.any && response.result.parameters.any != "") {
