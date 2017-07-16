@@ -211,6 +211,9 @@ module.exports.getManagerPendingVacation = function getManagerPendingVacation(em
         },
     }, function (error, response, body) {
         console.log("getPendingVacation" + JSON.stringify(body))
+        console.log("getPendingVacation" + (body))
+
+
         callback(error, response, body)
     })
 
