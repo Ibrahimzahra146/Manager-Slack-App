@@ -223,7 +223,7 @@ function sendRequestToApiAi(emailValue, msg) {
           else if (responseText == "showEmployeeInfo") {
 
             var employeeEmail = "";
-            if (response.result.parameters.any) {
+            if (response.result.parameters.any && response.result.parameters.any != "") {
               env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response1, body) {
                 //Mention user
                 if (error != 1000) {
@@ -279,7 +279,7 @@ function sendRequestToApiAi(emailValue, msg) {
               })
 
             }
-            else if (response.result.parameters.email) {
+            else if (response.result.parameters.email && response.result.parameters.email != "") {
               console.log("response.result.parameters.email" + response.result.parameters.email)
               console.log("Case2")
 
@@ -342,9 +342,16 @@ function sendRequestToApiAi(emailValue, msg) {
               }
 
             } else if (!(response.result.parameters.any || response.result.parameters.email) && response.result.parameters.employee_info_types) {
-              msg.say("Please specify employee email")
-              generalEmpInfo = response.result.parameters.employee_info_types
-              console.log("Arriveee" + generalEmpInfo)
+              //Show pending request for manager  
+              if (response.result.parameters.employee_info_types == "pending") {
+                msg.say("I will show your pending request")
+
+              } else {
+                msg.say("Please specify employee email")
+                generalEmpInfo = response.result.parameters.employee_info_types
+                console.log("Arriveee" + generalEmpInfo)
+              }
+
             }
           }
 
@@ -549,10 +556,9 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
             replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, managerApprovalsSection, vacationState, JSON.parse(body).comments)
 
           })
-        })
-      }
+        }
     }
-  })
+    })
 })
 function managerAction(msg, value, typeOfaction) {
   var arr = ""

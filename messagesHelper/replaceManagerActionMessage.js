@@ -4,7 +4,10 @@ var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
-module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
+module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays,
+    managerApprovalsSection, vacationState, comment, sickReport) {
+    var sickReportField = ""
+
     console.log("Comment" + comment)
     var commentField = ""
     if (comment != null && comment != "") {
@@ -53,6 +56,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
                             "value": approvalType + " " + myActionEmoji,
                             "short": true
                         }
+
                         ,
                         managerApprovalsSection
                         , commentField,
