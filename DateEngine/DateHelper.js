@@ -173,9 +173,13 @@ module.exports.converDateToWords = function converDateToWords(fromDate, toDate, 
                 wordFromDate = wordFromDate + " at " + formattedTime + " " + midday;
 
                 //toDateho
+                console.log("wordFromDate" + wordFromDate)
+
+
 
 
                 wordToDate = wordToDate + " at " + formattedTime1 + " " + midday1;
+                console.log("wordToDate" + wordToDate)
                 callback(wordFromDate, wordToDate)
             })
         }
