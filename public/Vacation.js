@@ -72,7 +72,10 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
                     approver2Email = parsedBody.managerApproval[i].managerEmail
                     approver2Action = parsedBody.managerApproval[i].state
                     vacationState = parsedBody.vacationState
-                    callback1(approver2Email, approver2Action, vacationState)
+                    approvalId = parsedBody.managerApproval[i].id
+                    console.log("getSecondApproverStateAndFinalState" + approvalId)
+
+                    callback1(approver2Email, approver2Action, vacationState, approvalId)
                 }
                 i++
                 setTimeout(callback, 500);
