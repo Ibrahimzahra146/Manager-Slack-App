@@ -207,7 +207,7 @@ module.exports.getManagerPendingVacation = function getManagerPendingVacation(em
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Cookie': env.toffyHelper.general_remember_me + ";" + env.toffyHelper.general_session_id
+            'Cookie': env.managerToffyHelper.general_remember_me + ";" + env.managerToffyHelper.general_session_id
         },
     }, function (error, response, body) {
         console.log("getPendingVacation" + JSON.stringify(body))
