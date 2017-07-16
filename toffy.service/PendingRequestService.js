@@ -1,6 +1,6 @@
 const env = require('.././public/configrations.js')
 
-module.exports.showManagerPendingRequest = function showManagerPendingRequest(msg,email) {
+module.exports.showManagerPendingRequest = function showManagerPendingRequest(msg, email) {
     var i = 0
     env.mRequests.getUserIdByEmail(email, function (error, response, Id) {
 
@@ -15,32 +15,34 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                         console.log(JSON.stringify(body))
                         console.log("body[i].id" + (JSON.parse(body))[i].id)
                         console.log("body[i].email" + (JSON.parse(body))[i].employee.email)
-                        /*var userEmail = JSON.parse(body)[i].employee.email;
+                        var userEmail = JSON.parse(body)[i].employee.email;
                         var vacationId = JSON.parse(body)[i].id;
-                        var approvalId = arr[2]
-                        var managerEmail = arr[3]
-                        var fromWho = arr[4];
-                        var fromDate = arr[5];
-                        var toDate = arr[6];
-                        var type = arr[7]
-                        var workingDays = arr[8]
-                        var ImageUrl = arr[9]
+                        var comment = JSON.parse(body)[i].comments;
+                        /* var approvalId = arr[2]
+                         var managerEmail = arr[3]
+                         var fromWho = arr[4];
+                         var fromDate = arr[5];
+                         var toDate = arr[6];
+                         var type = arr[7]
+                         var workingDays = arr[8]
+                         var ImageUrl = arr[9]*/
 
-                      
+
                         env.dateHelper.converDateToWords(JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, 0, function (fromDateWord, toDateWord) {
 
                             env.messageGenerator.generateManagerApprovelsSection(JSON.parse(body[i]).managerApproval, managerEmail, JSON.parse(body[i]).needsSickReport, function (managerApprovalsSection) {
-                                env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, body[i], 1, function (myEmail, myAction, vacationState) {
-                                    var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, startDate, workingDays, endDate, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState, );
+                                env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, body[i], 1, function (myEmail, myAction, vacationState, approvalId) {
+                                    console.log("approvalId" + approvalId)
+                                    //var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState, );
 
                                 })
                             })
-                            var message = env.stringFile.pendingVacationMessage(email, JSON.parse(body)[i].id, JSON.parse(body)[i].managerApproval, JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, JSON.parse(body)[i].type, fromDateWord, toDateWord)
-                            i++
-                            msg.say(message)
-                         
+                            //  var message = env.stringFile.pendingVacationMessage(email, JSON.parse(body)[i].id, JSON.parse(body)[i].managerApproval, JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, JSON.parse(body)[i].type, fromDateWord, toDateWord)
+                            //  i++
+                            // msg.say(message)
+
                         })
-                         */
+
                     }
 
                 }
