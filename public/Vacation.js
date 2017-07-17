@@ -37,7 +37,7 @@ module.exports.getVacationState = function getVacationState(email, vacationId, c
     });
 }
 module.exports.getSecondApproverStateAndFinalState = function getSecondApproverStateAndFinalState(email, body, state, pendingManagerApprovalFlag, callback1) {
-    console.log("getSecondApproverStateAndFinalState" + approvalId)
+    console.log("getSecondApproverStateAndFinalState1")
 
     var approver2Email = "--"
     var approver2Action = "--"
@@ -52,8 +52,12 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
     } else parsedBody = JSON.parse(body)
     //no second Approver 
     if (state == 0 && !(parsedBody.managerApproval[1])) {
+        console.log("getSecondApproverStateAndFinalState2")
+
         callback1("--", "--", parsedBody.vacationState)
     } else {
+        console.log("getSecondApproverStateAndFinalState3")
+
         var i = 0;
         async.whilst(
             function () { return parsedBody.managerApproval[i]; },
