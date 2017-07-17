@@ -191,7 +191,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
             console.log("from date", JSON.stringify(body))
             console.log("from date", JSON.parse(body)[0].fromDate)
             console.log("from date", JSON.parse(body)[0].toDate)
-            /*
+
 
             var i = 0;
             //check if no history ,so empty response
@@ -203,21 +203,21 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 else {
                     //build message Json result to send it to slack
                     while ((body)[i]) {
-                        env.dateHelper.converDateToWords(body[i].fromDate, body[i].toDate, 0, function (fromDateWord, toDateWord) {
-
-                            env.messageGenerator.generateManagerApprovelsSection(body[i].managerApproval, email, "HR", 0, function (managerApprovalSection) {
-                                var message = env.stringFile.historyMessage(email, fromDateWord, body[i].period, toDateWord, body[i].type, managerApprovalSection,
-                                    body[i].vacationState)
+                        env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
+                            env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, employeeEmail, 0, function (managerApprovalSection) {
+                                var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].period, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
+                                    (JSON.parse(body))[i].vacationState)
                                 msg.say(message)
                                 i++;
                             })
+
                         })
                     }
 
 
                 }
             }
-*/
+
         })
     })
 }
