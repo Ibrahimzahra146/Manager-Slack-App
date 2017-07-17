@@ -205,7 +205,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                     while ((JSON.parse(body)[i])) {
                         env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
                             env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, employeeEmail, 0, function (managerApprovalSection) {
-                                var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].days, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
+                                var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].period, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
                                     (JSON.parse(body))[i].vacationState)
                                 msg.say(message)
                                 i++;

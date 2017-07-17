@@ -244,7 +244,7 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
                     },
                     {
                         "title": "Days/Time ",
-                        "value": parseFloat(workingDays).toFixed(2) + " day",
+                        "value": parseFloat(workingDays).toFixed(2) + " week/s",
                         "short": true
                     },
                     {
