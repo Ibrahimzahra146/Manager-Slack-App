@@ -187,18 +187,8 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
     msg.say(employeeEmail + " history is :")
     printLogs("showEmployeeStats")
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
-        var uri = 'http://' + IP + '/api/v1/employee/' + Id + '/vacations/2017'
-        console.log("uri" + uri)
+        env.mRequests.getEmployeeHistory(Id, function (error, response, body) {
 
-        request({
-            url: uri,
-            json: true,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': managerHelper.general_remember_me + ";" + managerHelper.general_session_id
-            }
-        }, function (error, response, body) {
 
             var i = 0;
             //check if no history ,so empty response
@@ -210,9 +200,9 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 else {
                     //build message Json result to send it to slack
                     while ((body)[i]) {
-                        env.dateHelper.converDateToWords((body))[i].fromDate, ((body))[i].toDate, 0, function (fromDateWord, toDateWord) {
+                        env.dateHelper.converDateToWords(((body))[i].fromDate, ((body))[i].toDate, 0, function (fromDateWord, toDateWord) {
 
-                            env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, employeeEmail, "HR", 0, function (managerApprovalSection) {
+                            env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, email, "HR", 0, function (managerApprovalSection) {
                                 var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].period, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
                                     (JSON.parse(body))[i].vacationState)
                                 msg.say(message)
