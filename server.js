@@ -346,7 +346,7 @@ function sendRequestToApiAi(emailValue, msg) {
               //Show pending request for manager  
               if (response.result.parameters.employee_info_types == "pending") {
                 env.PendingService.showManagerPendingRequest(msg, emailValue)
-                msg.say("I will show your pending request")
+
 
               } else {
 
