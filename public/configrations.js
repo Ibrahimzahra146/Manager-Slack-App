@@ -60,6 +60,9 @@ exports.messageGenerator = messageGenerator
 
 const VacationConfirmationService = require('.././toffy.service/VacationConfirmationService.js')
 exports.VacationConfirmationService = VacationConfirmationService
+const vacationType = require('.././toffy.utils/VacationTypes.js')
+exports.vacationType = vacationType
+
 
 const VacationService = require('.././toffy.service/VacationService.js')
 exports.VacationService = VacationService

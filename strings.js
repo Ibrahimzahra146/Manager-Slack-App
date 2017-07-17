@@ -94,7 +94,10 @@ module.exports.commentFieldInManagerMessageFunction = function commentFieldInMan
  */
 module.exports.sendVacationToManagerFunction = function sendVacationToManagerFunction(comment, ImageUrl, userEmail, startDate, workingDays, endDate, type,
     vacationId, approvalId, managerEmail, managerApprovalMessage, YourActionMessage, vacationState) {
+    var type1 = ""
     console.log("sendVacationToManagerFunction" + managerApprovalMessage)
+    //vacation type oin words
+    type1 = env.vacationType.getVacationType(type)
     var reject_with_comment_button = {
         "name": "reject_with_comment",
         "text": "Reject with comment",
@@ -144,7 +147,7 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
                     },
                     {
                         "title": "Type",
-                        "value": type,
+                        "value": type1,
                         "short": true
                     }, {
                         "title": "Your action",
