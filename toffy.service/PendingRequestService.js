@@ -29,19 +29,16 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                             var type = JSON.parse(body)[i].type
                             var workingDays = JSON.parse(body)[i].period
                             var ImageUrl = JSON.parse(body)[i].employee.profilePicture
-                            console.log("fromDate" + fromDate)
-                            console.log("toDate" + toDate)
+                   
 
 
                             env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
-                                console.log("fromDateWord1" + fromDateWord)
-
-                                console.log("toDateWord1" + toDateWord)
+                           
 
                                 env.messageGenerator.generateManagerApprovelsSection(JSON.parse(body)[i].managerApproval, managerEmail, JSON.parse(body)[i].needsSickReport, function (managerApprovalsSection) {
                                     env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, JSON.parse(body)[i], 1, 1, function (myEmail, myAction, vacationState, approvalId) {
                                         console.log("approvalId" + approvalId)
-                                        var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState);
+                                        var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState);
                                         msg.say(messageBody)
                                     })
                                 })

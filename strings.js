@@ -71,7 +71,7 @@ module.exports.employee_message_manager_vacation_behalf = function employee_mess
  * 
  * Show pending vacation message body
  */
-module.exports.sendVacationToManagerFunction = function sendVacationToManagerFunction(comment, ImageUrl, userEmail, startDate, workingDays, endDate, type, approver2State,
+module.exports.sendVacationToManagerFunction = function sendVacationToManagerFunction(comment, ImageUrl, userEmail, startDate, workingDays, endDate, type,
     vacationId, approvalId, managerEmail,managerApprovalMessage, YourActionMessage, vacationState) {
     console.log("sendVacationToManagerFunction" + managerApprovalMessage)
     var reject_with_comment_button = {
