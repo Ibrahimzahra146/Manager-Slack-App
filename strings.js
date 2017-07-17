@@ -67,12 +67,33 @@ module.exports.employee_message_manager_vacation_behalf = function employee_mess
     return message;
 
 }
+module.exports.dont_detuct_button_Function = function dont_detuct_button_Function(userEmail, vacationId, approvalId, managerEmail, startDate, endDate, type, workingDays, ImageUrl) {
+    var dont_detuct_button = {
+        "name": "dont_detuct",
+        "text": "Don’t Deduct ",
+        "type": "button",
+        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+    }
+
+    return dont_detuct_button;
+}
+module.exports.commentFieldInManagerMessageFunction = function commentFieldInManagerMessageFunction(comment) {
+    var commentFieldInManagerMessage = ""
+    if (comment != "") {
+        commentFieldInManagerMessage = {
+            "title": "Comment",
+            "value": comment,
+            "short": true
+        }
+    }
+    return commentFieldInManagerMessage;
+}
 /**
  * 
  * Show pending vacation message body
  */
 module.exports.sendVacationToManagerFunction = function sendVacationToManagerFunction(comment, ImageUrl, userEmail, startDate, workingDays, endDate, type,
-    vacationId, approvalId, managerEmail,managerApprovalMessage, YourActionMessage, vacationState) {
+    vacationId, approvalId, managerEmail, managerApprovalMessage, YourActionMessage, vacationState) {
     console.log("sendVacationToManagerFunction" + managerApprovalMessage)
     var reject_with_comment_button = {
         "name": "reject_with_comment",
@@ -83,7 +104,7 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
     }
     //  managerApprovalMessage = JSON.parse(managerApprovalMessage)
 
-    var dont_detuct_button = stringFile.dont_detuct_button_Function(userEmail, vacationId, approvalId, managerEmail, startDate, endDate, type, workingDays, ImageUrl);
+    var dont_detuct_button = env.stringFile.dont_detuct_button_Function(userEmail, vacationId, approvalId, managerEmail, startDate, endDate, type, workingDays, ImageUrl);
     var actions_based_on_type = dont_detuct_button
     if (type == "sick") {
 
@@ -96,7 +117,7 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + startDate + ";" + endDate + ";" + type + ";" + workingDays + ";" + ImageUrl
         }
     }
-    var commentFieldInManagerMessage = stringFile.commentFieldInManagerMessageFunction(comment);
+    var commentFieldInManagerMessage = env.stringFile.commentFieldInManagerMessageFunction(comment);
     var messageBody = {
         "text": "This folk has pending time off request:",
         "attachments": [
