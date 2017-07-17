@@ -188,7 +188,10 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
     printLogs("showEmployeeStats")
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
         env.mRequests.getEmployeeHistory(Id, function (error, response, body) {
-
+            console.log("from date", JSON.stringify(body))
+            console.log("from date", JSON.parse(body)[0].fromDate)
+            console.log("from date", JSON.parse(body)[0].toDate)
+            /*
 
             var i = 0;
             //check if no history ,so empty response
@@ -214,7 +217,7 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
 
                 }
             }
-
+*/
         })
     })
 }
