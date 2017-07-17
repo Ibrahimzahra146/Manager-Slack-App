@@ -210,49 +210,14 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                 else {
                     //build message Json result to send it to slack
                     while ((body)[i]) {
-                        parsedBody = body[i]
-                        var stringMessage = "["
-                        //var fromDate = new Date(parsedBody.fromDate);
-                        env.dateHelper.converDateToWords(parsedBody.fromDate, parsedBody.toDate, 0, function (fromDateWord, toDateWord) {
-                            var fromDate = fromDateWord
-                            var toDate = toDateWord
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "From date" + "\"" + ",\"value\":" + "\"" + fromDate + "\"" + ",\"short\":true}"
-                            stringMessage = stringMessage + ","
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "To date" + "\"" + ",\"value\":" + "\"" + toDate + "\"" + ",\"short\":true}"
-                            stringMessage = stringMessage + ","
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + "Vacation state" + "\"" + ",\"value\":" + "\"" + parsedBody.vacationState + "\"" + ",\"short\":true}"
-                            var typeOfVacation = ""
-                            if (parsedBody.type == 0)
-                                typeOfVacation = "Time off"
-                            else if (parsedBody.type == 4)
-                                typeOfVacation = "Sick time off"
-                            else if (parsedBody.type == 7)
-                                typeOfVacation = "Work from home "
-                            printLogs("stringMessage::" + stringMessage);
-                            stringMessage = stringMessage + "]"
-                            var messageBody = {
-                                "text": "*" + typeOfVacation + "*",
-                                "attachments": [
-                                    {
-                                        "attachment_type": "default",
-                                        "text": " ",
-                                        "fallback": "ReferenceError",
-                                        "fields": stringMessage,
-                                        "color": "#F35A00"
-                                    }
-                                ]
-                            }
-                            printLogs("messageBody" + messageBody)
-                            var stringfy = JSON.stringify(messageBody);
+                        env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
 
-                            printLogs("stringfy" + stringfy)
-                            stringfy = stringfy.replace(/\\/g, "")
-                            stringfy = stringfy.replace(/]\"/, "]")
-                            stringfy = stringfy.replace(/\"\[/, "[")
-                            stringfy = JSON.parse(stringfy)
-
-                            msg.say(stringfy)
-                            i++;
+                            env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, employeeEmail, "HR", 0, function (managerApprovalSection) {
+                                var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].period, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
+                                    (JSON.parse(body))[i].vacationState)
+                                msg.say(message)
+                                i++;
+                            })
                         })
                     }
 

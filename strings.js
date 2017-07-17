@@ -211,3 +211,82 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
 
     return JSON.parse(stringfy);
 }
+/**
+ * Hsitory message
+ */
+module.exports.historyMessage = function historyMessage(userEmail, startDate,
+    workingDays, endDate, type,
+    managerApprovalMessage, vacationState) {
+    var color = "#439FE0"
+    if (vacationState == "Rejected") {
+        color = "danger"
+    } else if (vacationState == "Approved") {
+        color = "good"
+    }
+    var type1 = env.vacationType.getVacationType(type)
+
+    //"#3AA3E3"//blue
+
+    var messageBody = {
+        "text": "",
+        "attachments": [
+            {
+                "attachment_type": "default",
+                "callback_id": "manager_confirm_reject",
+                "text": "",
+                "color": color,
+                "fallback": "ReferenceError",
+                "fields": [
+                    {
+                        "title": "From",
+                        "value": startDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Days/Time ",
+                        "value": parseFloat(workingDays).toFixed(2) + " day",
+                        "short": true
+                    },
+                    {
+                        "title": "to",
+                        "value": endDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Type",
+                        "value": type1,
+                        "short": true
+                    },
+                    managerApprovalMessage,
+
+
+
+                    {
+                        "title": "Final state",
+                        "value": vacationState,
+                        "short": false
+                    }
+                ],
+
+            }
+        ]
+    }
+    var stringfy = JSON.stringify(messageBody)
+    console.log("stringfy11" + stringfy)
+    stringfy = stringfy.replace(/\\/, "")
+
+    stringfy = stringfy.replace(/}\"/g, "}")
+    stringfy = stringfy.replace(/\"\{/g, "{")
+    stringfy = stringfy.replace(/\\/g, "")
+    stringfy = stringfy.replace(/\",\"\"/g, "")
+    stringfy = stringfy.replace(/,,/, ",")
+    stringfy = stringfy.replace(/,\",/g, ",")
+    stringfy = stringfy.replace(/\"\"\",/g, "")
+    stringfy = stringfy.replace(/\"\{/g, "{")
+    console.log("stringfy1122" + stringfy)
+    // stringfy = stringfy.replace(/\\/, "")
+    // stringfy = JSON.parse(stringfy)
+
+
+    return JSON.parse(stringfy);
+}
