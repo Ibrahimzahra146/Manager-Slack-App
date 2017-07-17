@@ -38,11 +38,12 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                             env.messageGenerator.generateManagerApprovelsSection(JSON.parse(body)[i].managerApproval, managerEmail, JSON.parse(body)[i].needsSickReport, function (managerApprovalsSection) {
                                 env.VacationHelper.getSecondApproverStateAndFinalState(managerEmail, JSON.parse(body)[i], 1, 1, function (myEmail, myAction, vacationState, approvalId) {
                                     console.log("approvalId" + approvalId)
-                                    var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState );
-                                    i++
+                                    var messageBody = env.stringFile.sendVacationToManagerFunction(comment, ImageUrl, userEmail, fromDateWord, workingDays, toDateWord, type, approver2State, vacationId, approvalId, managerEmail, managerApprovalsSection, myAction, vacationState);
                                     msg.say(messageBody)
                                 })
                             })
+                            i++
+
                             //  var message = env.stringFile.pendingVacationMessage(email, JSON.parse(body)[i].id, JSON.parse(body)[i].managerApproval, JSON.parse(body)[i].fromDate, JSON.parse(body)[i].toDate, JSON.parse(body)[i].type, fromDateWord, toDateWord)
                             //  i++
                             // msg.say(message)
