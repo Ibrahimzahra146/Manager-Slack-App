@@ -12,7 +12,7 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
                 else {
                     //build message Json result to send it to slack
 
-                    async.whilst(
+                    env.async.whilst(
                         function () { return (JSON.parse(body)[i]) },
                         function (callback) {
                             console.log(JSON.stringify(body))
