@@ -6,7 +6,7 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
 
         env.mRequests.getManagerPendingVacation(email, Id, function (error, response, body) {
             if (!error && response.statusCode === 200) {
-                if (!(body)[i]) {
+                if (!(JSON.parse(body)[i])) {
                     msg.say("There are nopending requests");
                 }
                 else {
