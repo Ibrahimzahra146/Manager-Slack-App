@@ -98,13 +98,13 @@ module.exports.SendNotificationToSecondManagerOnManagerBehalfVacation = function
                     var jsonResponse = JSON.parse(body);
                     var slack_Message = env.stringFile.slack_message(jsonResponse.managerChannelId, jsonResponse.slackUserId, jsonResponse.teamId);
                     var message = "Hi,Approver " + managerEmail + "has submitted vacattion for " + employeeEmail + "from " + fromDate + " to " + toDate
-                    env.bot.startConversation(slack_Message, function (err, convo) {
+                    env.managerBot.startConversation(slack_Message, function (err, convo) {
                         if (!err) {
 
                             var stringfy = JSON.stringify(message);
                             var obj1 = JSON.parse(stringfy);
 
-                            env.bot.reply(slack_Message, obj1, function (err, response) {
+                            env.managerBot.reply(slack_Message, obj1, function (err, response) {
                             });
 
                         } else {
