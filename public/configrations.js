@@ -137,4 +137,9 @@ var bot = controller.spawn({
 
 }).startRTM();
 exports.bot = bot
+var managerBot = controller1.spawn({
+    token: MANAGER_BOT_ACCESS_KEY
+
+}).startRTM();
+exports.managerBot = managerBot
 
