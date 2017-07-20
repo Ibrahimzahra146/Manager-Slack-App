@@ -113,7 +113,7 @@ var pg = require('pg');
 var APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_KEY;
 
 var SLACK_BOT_TOKEN = process.env.SLACK_BOT_ACCESS_KEY;
-
+var MANAGER_BOT_ACCESS_KEY = process.env.MANAGER_BOT_ACCESS_KEY;
 
 exports.count = count;
 pg.defaults.ssl = true;
