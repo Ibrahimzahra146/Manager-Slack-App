@@ -1,8 +1,4 @@
-const request = require('request');
-var managerHelper = require('.././managerToffyHelper.js')
-var server = require('.././server.js')
-var sessionFlag = 0;
-var generalCookies = "initial"
+const env = require('.././public/configrations.js')
 
 var IP = process.env.SLACK_IP
 module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment1) {
@@ -88,4 +84,52 @@ module.exports.sendMessagetoEmpOnAction = function sendMessagetoEmpOnAction(msg,
         }
 
     });
+}
+module.exports.SendNotificationToSecondManagerOnManagerBehalfVacation = function SendNotificationToSecondManagerOnManagerBehalfVacation(employeeEmail, fromDate, toDate, email, type, vacationId, managerApproval, workingDays) {
+    var i = 0
+    var managerEmail = ""
+    while (managerApproval[i]) {
+
+        managerEmail = managerApproval[i].managerEmail
+        if (managerEmail != email) {
+            env.mRequests.getSlackRecord(managerEmail, function (error, response, body) {
+                var jsonResponse = JSON.parse(body);
+                var slack_Message = env.stringFile.slack_message(jsonResponse.managerChannelId, jsonResponse.slackUserId, jsonResponse.teamId);
+                var message12 = "Hi,Approver " + managerEmail + "has submitted vacattion for " + employeeEmail + "from " + fromDate + " to " + toDate
+                env.bot.startConversation(slack_Message, function (err, convo) {
+                    if (!err) {
+
+                        var stringfy = JSON.stringify(messageBody);
+                        var obj1 = JSON.parse(stringfy);
+
+                        env.bot.reply(slack_Message, obj1, function (err, response) {
+                        });
+
+                    } else {
+                    }
+
+                });
+            })
+        }
+        i++;
+    }
+}
+module.exports.sendFeedBackToEmpOnManagerBehalfFeedback = function sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail, fromDate, toDate, managerEmail, type, vacationId, managerApproval, workingDays) {
+    env.mRequests.getSlackRecord(employeeEmail, function (error, response, body) {
+        var responseBody = JSON.parse(body);
+        var slack_message = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserId, responseBody.teamId)
+        feedback_message_to_emp = env.stringFile.employee_message_manager_vacation_behalf(managerEmail, vacationId, fromDate, toDate, type)
+
+
+        env.bot.startConversation(slack_message, function (err, convo) {
+
+            if (!err) {
+                var stringfy = JSON.stringify(feedback_message_to_emp);
+                var obj1 = JSON.parse(stringfy);
+                env.bot.reply(slack_message, obj1);
+
+            }
+        });
+
+    })
 }

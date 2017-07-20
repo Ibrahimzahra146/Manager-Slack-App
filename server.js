@@ -607,7 +607,8 @@ function managerAction(msg, value, typeOfaction) {
           } else {
             console.log("fromDate:::-->" + fromDate)
             console.log("toDate:::-->" + toDate)
-            managerToffyHelper.sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail, wordFromDate, wordToDate, managerEmail, type, vacationId, managerApproval, workingDays)
+            messageSender.sendFeedBackToEmpOnManagerBehalfFeedback(employeeEmail, wordFromDate, wordToDate, managerEmail, type, vacationId, managerApproval, workingDays)
+            messageSender.SendNotificationToSecondManagerOnManagerBehalfVacation(employeeEmail, wordFromDate, wordToDate, managerEmail, type, vacationId, managerApproval, workingDays)
 
             if (type == "sick") {
               console.log("Managers approvals sick vacation is ::" + JSON.stringify(managerApproval))

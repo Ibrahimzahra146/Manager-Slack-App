@@ -7,8 +7,9 @@ var IP = process.env.SLACK_IP
 var employee = require(".././employeeSide.js")
 module.exports.whoIsOff = function whoIsOff(msg, response, email) {
     managerToffyHelper.getTodayDate(function (today) {
-        var time1 = "17:00:00";
-        var time = "08:00:00";
+        var time = "00:00:00";
+        var time1 = "23:59:59";
+
         var date = today
         var date1 = today
         var fromDateMilli = ""
