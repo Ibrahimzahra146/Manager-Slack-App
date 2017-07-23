@@ -76,10 +76,11 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
             console.log("JSON:" + JSON.stringify(body))
             console.log("JSON:" + (body))
         })
-      /*  var isOffFlag = 0
+        console.log(body[0]["vacationsGroupedByDay"][0].id)
+        var isOffFlag = 0
         var obj = JSON.parse(body);
         var stringMessage = "["
-        var i = 0*/
+        var i = 0
         /*   if (!obj[0])
                if (employeeEmail != "") {
                    msg.say(employeeEmail + " is not off.")
