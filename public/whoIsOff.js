@@ -93,7 +93,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         if (j > 0) {
                             stringMessage = stringMessage + ","
                         }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + jsonBody.type + "( " + jsonBody.workingDays + " working days)" + "\"" + ",\"short\":false}"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type) + "( " + jsonBody.vacationsGroupedByDay[j].workingDays + " working days)" + "\"" + ",\"short\":false}"
 
                         j++;
                     }
