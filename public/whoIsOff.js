@@ -75,7 +75,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
         }, function (error, response, body) {
             console.log("JSON:" + JSON.stringify(body))
             console.log("JSON:" + (body))
-            console.log(JSON.parse(body)[0])
+            console.log(JSON.parse(body)[0].vacationsGroupedByDay[0].id)
 
         })
         /*  var isOffFlag = 0
