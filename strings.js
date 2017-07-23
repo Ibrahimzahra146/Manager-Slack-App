@@ -218,7 +218,9 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
     workingDays, endDate, type,
     managerApprovalMessage, vacationState, sickConvertedToPersonal) {
     var sickConvertedToPersonalMsg = ""
+    var sickConvertedToPersonalEmoji = ""
     if (sickConvertedToPersonal == true) {
+        sickConvertedToPersonalEmoji = ":small_blue_diamond: "
         sickConvertedToPersonalMsg = "(Converted from sick time off)."
     }
     var color = "#439FE0"
@@ -258,7 +260,7 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
                     },
                     {
                         "title": "Type",
-                        "value": type1 + " " + sickConvertedToPersonalMsg,
+                        "value": sickConvertedToPersonalEmoji + "" + type1 + " " + sickConvertedToPersonalMsg,
                         "short": true
                     },
                     managerApprovalMessage,
