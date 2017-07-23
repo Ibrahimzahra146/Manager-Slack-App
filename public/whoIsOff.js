@@ -5,6 +5,7 @@ var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
 var employee = require(".././employeeSide.js")
+const env = require('./configrations.js')
 module.exports.whoIsOff = function whoIsOff(msg, response, email) {
     managerToffyHelper.getTodayDate(function (today) {
         var time = "00:00:00";
@@ -89,11 +90,11 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                     stringMessage = "["
                     while (jsonBody.vacationsGroupedByDay[j]) {
 
-
+                        env.dateHelper.converDateToWords()
                         if (j > 0) {
                             stringMessage = stringMessage + ","
                         }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + jsonBody.type + "( " + jsonBody.workingDays + " working days)" + "\"" + ",\"short\":false}"
 
                         j++;
                     }
