@@ -73,73 +73,60 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
-            console.log("JSON:" + JSON.stringify(body))
-            console.log("JSON:" + (body))
-            console.log(JSON.parse(body)[0].vacationsGroupedByDay[0].id)
+
+            //  var obj = JSON.parse(body);
+            var stringMessage = "["
+            var i = 0
+            var j = 0
+            if (!JSON.parse(body)[0])
+                msg.say("There are no off employees.")
+            else {
+
+
+                while (JSON.parse(body)[i]) {
+                    j = 0
+                    var jsonBody = JSON.parse(body)[i]
+                    stringMessage = "["
+                    while (jsonBody.vacationsGroupedByDay[j]) {
+
+
+                        if (j > 0) {
+                            stringMessage = stringMessage + ","
+                        }
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
+
+                        j++;
+                    }
+                    stringMessage = stringMessage + "]"
+                    console.log("stringMessage", stringMessage)
+                    var messageBody = {
+                        "text": jsonBody.day,
+                        "attachments": [
+                            {
+                                "attachment_type": "default",
+                                "text": " ",
+                                "fallback": "ReferenceError",
+                                "fields": stringMessage,
+                                "color": "#F35A00"
+                            }
+                        ]
+                    }
+                    var stringfy = JSON.stringify(messageBody);
+
+                    stringfy = stringfy.replace(/\\/g, "")
+                    stringfy = stringfy.replace(/]\"/, "]")
+                    stringfy = stringfy.replace(/\"\[/, "[")
+                    stringfy = JSON.parse(stringfy)
+                    msg.say(stringfy);
+                    i++;
+                }
+
+            }
 
         })
-        /*  var isOffFlag = 0
-          var obj = JSON.parse(body);
-          var stringMessage = "["
-          var i = 0*/
-        /*   if (!obj[0])
-               if (employeeEmail != "") {
-                   msg.say(employeeEmail + " is not off.")
-
-               } else
-                   msg.say("There are no off employees.")
-           else {
-               while (obj[i]) {
-                   if (employeeEmail != "") {
-                       console.log("employeeEmail11")
-                       console.log("JSON.parse(body))[i].email" + JSON.parse(body)[i].email + "s")
-                       console.log("employeeEmail::" + employeeEmail + "s")
-                       if ((JSON.parse(body))[i].email == employeeEmail) {
-                           console.log("employeeEmail12")
-                           isOffFlag = 1
-                       }
-                   }
-                   else {
-                       if (i > 0) {
-                           stringMessage = stringMessage + ","
-                       }
-                       stringMessage = stringMessage + "{" + "\"title\":" + "\"" + (JSON.parse(body))[i].name + "\"" + ",\"value\":" + "\"" + (JSON.parse(body))[i].email + "\"" + ",\"short\":false}"
-                   }
-                   i++;
-               }
-               if (employeeEmail != "") {
-                   if (isOffFlag == 1) {
-                       msg.say(employeeEmail + " is off.")
-
-                   } else msg.say(employeeEmail + " is not off.")
-               } else {
-                   stringMessage = stringMessage + "]"
-                   console.log("stringMessage", stringMessage)
-                   var messageBody = {
-                       "text": "These employees are off :",
-                       "attachments": [
-                           {
-                               "attachment_type": "default",
-                               "text": " ",
-                               "fallback": "ReferenceError",
-                               "fields": stringMessage,
-                               "color": "#F35A00"
-                           }
-                       ]
-                   }
-                   var stringfy = JSON.stringify(messageBody);
-
-                   stringfy = stringfy.replace(/\\/g, "")
-                   stringfy = stringfy.replace(/]\"/, "]")
-                   stringfy = stringfy.replace(/\"\[/, "[")
-                   stringfy = JSON.parse(stringfy)
-                   msg.say(stringfy);
-               }
-           }
-       })
 
 
-   })*/
+
     })
 
 }
