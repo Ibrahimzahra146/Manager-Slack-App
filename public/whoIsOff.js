@@ -90,7 +90,6 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                     stringMessage = "["
                     while (jsonBody.vacationsGroupedByDay[j]) {
 
-                        env.dateHelper.converDateToWords()
                         if (j > 0) {
                             stringMessage = stringMessage + ","
                         }
