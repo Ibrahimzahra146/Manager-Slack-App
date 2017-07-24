@@ -104,7 +104,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         workingDays = parseFloat(jsonBody.vacationsGroupedByDay[j].workingDays).toFixed(2)
                         Wordtype = env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type)
                         if (workingDays < 1) {
-                            Wordtype = "Leave"
+                            Wordtype = ":walking: Leave"
                         }
                         workingHours = jsonBody.vacationsGroupedByDay[j].hours
 
