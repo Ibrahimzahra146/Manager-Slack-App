@@ -140,6 +140,7 @@ module.exports.getDayNameOfDate = function getDayNameOfDate(date, callback) {
     callback(weekday[d.getDay()]);
 }
 //convert Date to word 
+
 module.exports.converDateToWords = function converDateToWords(fromDate, toDate, flag, callback) {
     console.log("fromDate" + fromDate)
     console.log("toDate" + toDate)

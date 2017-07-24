@@ -107,7 +107,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                             fromDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
                             toDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
 
-                            env.dateHelper.converDateToWords(fromDate, toDate, function (fromDateWord, toDateWord) {
+                            env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
                                 console.log("fromDateWord" + fromDateWord)
                                 console.log("toDateWord" + toDateWord)
                                 stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":false}"
