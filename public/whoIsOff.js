@@ -129,7 +129,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
 
 
                         } else {
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + workingDays + " working days " + "\"" + ",\"short\":false}"
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + workingDays + " working day " + "\"" + ",\"short\":false}"
                             j++;
 
                         }
