@@ -79,6 +79,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
             }
             //Set the body as a stringcc
         }, function (error, response, body) {
+            console.log(body)
 
             //  var obj = JSON.parse(body);
             var stringMessage = "["
@@ -110,7 +111,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                             env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
                                 console.log("fromDateWord" + fromDateWord)
                                 console.log("toDateWord" + toDateWord)
-                                stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":false}"
+                                stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":true}"
                                 j++;
                             })
 
