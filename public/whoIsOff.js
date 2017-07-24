@@ -116,10 +116,10 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                                 console.log("fromDateWord" + fromDateWord)
                                 console.log("toDateWord" + toDateWord)
                                 if (workingDays > 1) {
-                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord + "\"" + ",\"short\":false}"
+                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord + " ( " + workingDays + " workingDays )" + "\"" + ",\"short\":false}"
                                     // leave 
                                 } else {
-                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord + "\n hours" + "\"" + ",\"short\":false}"
+                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord + " ( " + workingHours + " hours )" + "\"" + ",\"short\":false}"
 
                                 }
                                 j++;
