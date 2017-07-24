@@ -103,7 +103,6 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         workingDays = parseFloat(jsonBody.vacationsGroupedByDay[j].workingDays).toFixed(2)
                         Wordtype = env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type)
 
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":true}"
                         if (workingDays < 1) {
                             fromDate = (jsonBody.vacationsGroupedByDay[j].from)
                             toDate = (jsonBody.vacationsGroupedByDay[j].to)
@@ -111,13 +110,17 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                             env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
                                 console.log("fromDateWord" + fromDateWord)
                                 console.log("toDateWord" + toDateWord)
+                                stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":true}"
+
                                 stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":false}"
                                 j++;
                             })
 
-                        } else
-
+                        } else {
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":false}"
                             j++;
+
+                        }
                     }
 
                     stringMessage = stringMessage + "]"
