@@ -507,7 +507,7 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
 
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
-          vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1,0, function (myEmail, myAction, vacationState) {
+          vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
             replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
 
           })
@@ -541,7 +541,7 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
       } else {
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
-          vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1,0, function (myEmail, myAction, vacationState) {
+          vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
             replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, managerApprovalsSection, vacationState, JSON.parse(body).comments)
 
           })
@@ -683,6 +683,10 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
               if (isDeleted == false) {
                 if (fromManager != 1) {
                   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
+                    if (JSON.parse(vacationBody1).attachments)
+                      console.log("Therse is attachments")
+                    else console.log("Therse is no attachments")
+
                     //if (JSON.parse(vacationBody1).vacationState == "Approved")
                     var existReportFlag = JSON.parse(vacationBody1).needsSickReport
                     messageGenerator.generateManagerApprovelsSection(JSON.parse(vacationBody1).managerApproval, managerEmail, existReportFlag, function (managerApprovalsSection1) {
@@ -775,7 +779,7 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
 
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1,0, function (myEmail, myAction, vacationState) {
+      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
         replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
       })
     })
@@ -794,7 +798,7 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var workingDays = arr[8]
   var ImageUrl = arr[9]
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
-    vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1,0, function (myEmail, myAction, vacationState) {
+    vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
 
       messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
 
