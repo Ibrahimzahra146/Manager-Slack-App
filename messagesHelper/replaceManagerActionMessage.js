@@ -4,96 +4,107 @@ var server = require('.././server.js')
 var sessionFlag = 0;
 var generalCookies = "initial"
 var IP = process.env.SLACK_IP
+const env = require('.././public/configrations.js')
 module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays,
     managerApprovalsSection, vacationState, comment, sickReport) {
-    var sickReportField = ""
-
-    console.log("Comment" + comment)
-    var commentField = ""
-    if (comment != null && comment != "") {
-        commentField =
+    var sick_report_field = ""
+    if (sickReport = 1) {
+        sick_report_field =
             {
-                "title": "Comment ",
-                "value": comment,
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
                 "short": false
 
             }
     }
-    getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
 
-        var messageBody = {
-            "text": "Time off request:",
-            "attachments": [
-                {
-                    "attachment_type": "default",
-                    "callback_id": "manager_confirm_reject",
-                    "text": userEmail,
-                    "fallback": "ReferenceError",
-                    "fields": [
-                        {
-                            "title": "From",
-                            "value": fromDate,
-                            "short": true
-                        },
-                        {
-                            "title": "Days/Time ",
-                            "value": workingDays + " day",
-                            "short": true
-                        },
-                        {
-                            "title": "to",
-                            "value": toDate,
-                            "short": true
-                        },
-                        {
-                            "title": "Type",
-                            "value": type + " " + typeEmoji,
-                            "short": true
-                        }
-                        ,
-                        {
-                            "title": "Your action ",
-                            "value": approvalType + " " + myActionEmoji,
-                            "short": true
-                        }
+console.log("Comment" + comment)
+var commentField = ""
+if (comment != null && comment != "") {
+    commentField =
+        {
+            "title": "Comment ",
+            "value": comment,
+            "short": false
 
-                        ,
-                        managerApprovalsSection
-                        , commentField,
-
-                        {
-                            "title": "Final state",
-                            "value": vacationState + " " + finalStateEmoji,
-                            "short": false
-                        }
-
-                    ],
-                    "actions": [
-                        {
-                            "name": "Undo",
-                            "text": "back",
-                            "type": "button",
-
-                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        }, {
-                            "name": "check_state_undo",
-                            "text": ":arrows_counterclockwise:",
-
-                            "type": "button",
-                            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-                        },
-                    ],
-                    "color": "#F35A00",
-                    "thumb_url": ImageUrl,
-                }
-            ]
         }
+}
+getEmoji("", vacationState, type, approvalType, function (approverActionEmoji, finalStateEmoji, typeEmoji, myActionEmoji) {
+
+    var messageBody = {
+        "text": "Time off request:",
+        "attachments": [
+            {
+                "attachment_type": "default",
+                "callback_id": "manager_confirm_reject",
+                "text": userEmail,
+                "fallback": "ReferenceError",
+                "fields": [
+                    {
+                        "title": "From",
+                        "value": fromDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Days/Time ",
+                        "value": workingDays + " day",
+                        "short": true
+                    },
+                    {
+                        "title": "to",
+                        "value": toDate,
+                        "short": true
+                    },
+                    {
+                        "title": "Type",
+                        "value": type + " " + typeEmoji,
+                        "short": true
+                    }
+                    ,
+                    {
+                        "title": "Your action ",
+                        "value": approvalType + " " + myActionEmoji,
+                        "short": true
+                    }
+
+                    ,
+                    managerApprovalsSection
+                    , commentField,
+                    sick_report_field,
+
+                    {
+                        "title": "Final state",
+                        "value": vacationState + " " + finalStateEmoji,
+                        "short": false
+                    }
+
+                ],
+                "actions": [
+                    {
+                        "name": "Undo",
+                        "text": "back",
+                        "type": "button",
+
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    }, {
+                        "name": "check_state_undo",
+                        "text": ":arrows_counterclockwise:",
+
+                        "type": "button",
+                        "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+                    },
+                ],
+                "color": "#F35A00",
+                "thumb_url": ImageUrl,
+            }
+        ]
+    }
 
 
-        prepareMessage(messageBody, function (stringfy) {
-            msg.respond(msg.body.response_url, stringfy)
-        })
+    prepareMessage(messageBody, function (stringfy) {
+        msg.respond(msg.body.response_url, stringfy)
     })
+})
 }
 //return original message when click on undo
 module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {

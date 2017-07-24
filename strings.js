@@ -28,6 +28,7 @@ module.exports.slack_message = function (userChannelId, slackUserId, teamId) {
  * 
  * 
  */
+
 module.exports.upload_sick_report_message = function upload_sick_report_message(email, vacationId, fromDate, toDate, messageFB) {
     messageFB = env.stringFile.manager_message_on_accept_with_report(email, fromDate, toDate)
     var message = {
@@ -295,4 +296,11 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
 
 
     return JSON.parse(stringfy);
+}
+/**
+ * Sick report linl
+ */
+module.exports.sick_report_link = function sick_report_link(vacationId) {
+    var sick_report = "<http://46.43.71.50:19090/reports?vId=" + vacationId + "|sick report>"
+    return sick_report;
 }

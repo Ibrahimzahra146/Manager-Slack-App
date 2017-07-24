@@ -532,7 +532,12 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
+    if (JSON.parse(body).attachments != "") {
+      sick_attachments = 1
+    }
+
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
@@ -542,7 +547,7 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
           vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
-            replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, managerApprovalsSection, vacationState, JSON.parse(body).comments)
+            replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, myAction, vacationId, approvalId, ImageUrl, "", workingDays, managerApprovalsSection, vacationState, JSON.parse(body).comments, sick_attachments)
 
           })
         })
@@ -643,6 +648,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  var sick_attachments = 0
   console.log("ImageUrl" + ImageUrl)
   var typeText = " time off"
   if (type == "sick") {
@@ -684,8 +690,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                 if (fromManager != 1) {
                   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
                     if (JSON.parse(vacationBody1).attachments != "")
-                      console.log("Therse is attachments")
-                    else console.log("Therse is no attachments")
+                      sick_attachments = 1
+
 
                     //if (JSON.parse(vacationBody1).vacationState == "Approved")
                     var existReportFlag = JSON.parse(vacationBody1).needsSickReport
@@ -720,7 +726,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                         } else
 
 
-                          replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection1, JSON.parse(vacationBody1).vacationState, JSON.parse(vacationBody1).comments)
+                          replaceMessage.replaceMessage(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection1, JSON.parse(vacationBody1).vacationState, JSON.parse(vacationBody1).comments, sick_attachments)
                         /* if (comment != "accept_with_report")
                            messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, body, typeText, responseBody, comment);
          */
@@ -777,12 +783,19 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var ImageUrl = arr[9]
 
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
-    messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
+    if (state == 404) {
+      replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
-      vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
-        replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
+    } else {
+
+
+      messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
+
+        vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
+          replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
+        })
       })
-    })
+    }
   })
 })
 slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
