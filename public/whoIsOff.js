@@ -115,19 +115,21 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                             env.dateHelper.converDateToWords(fromDate, toDate, 0, function (fromDateWord, toDateWord) {
                                 console.log("fromDateWord" + fromDateWord)
                                 console.log("toDateWord" + toDateWord)
-                                stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":true}"
                                 if (workingDays > 1) {
-                                    stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "-" + toDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":true}"
+                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord + "\"" + ",\"short\":true}"
                                     // leave 
                                 } else {
-                                    stringMessage = stringMessage + ",{" + "\"title\":" + "\"" + fromDateWord + "-" + toDateWord + "\"" + ",\"value\":" + "\"" + workingHours + "\"" + ",\"short\":true}"
+                                    stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + fromDateWord + "-" + toDateWord +"\n hours"+ "\"" + ",\"short\":true}"
 
                                 }
                                 j++;
                             })
 
+
+
+
                         } else {
-                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":false}"
+                            stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + " (" + Wordtype + " )" + "\"" + ",\"value\":" + "\"" + "" + "\"" + ",\"short\":true}"
                             j++;
 
                         }
