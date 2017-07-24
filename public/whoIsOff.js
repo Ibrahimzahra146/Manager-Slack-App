@@ -48,10 +48,10 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
         fromDateMilli = new Date(date)
         console.log("fromDateMilli:" + fromDateMilli)
         fromDateMilli = fromDateMilli.getTime();
-        fromDateMilli = fromDateMilli - (3 * 60 * 60 * 1000);
+        fromDateMilli = fromDateMilli //- (3 * 60 * 60 * 1000);
         toDateMilli = new Date(date1)
         toDateMilli = toDateMilli.getTime();
-        toDateMilli = toDateMilli - (3 * 60 * 60 * 1000)
+        toDateMilli = toDateMilli //- (3 * 60 * 60 * 1000)
         showWhoIsOff(msg, email, fromDateMilli, toDateMilli, employeeEmail, type)
 
 
