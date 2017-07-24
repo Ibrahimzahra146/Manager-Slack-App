@@ -683,7 +683,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
               if (isDeleted == false) {
                 if (fromManager != 1) {
                   vacationHelper.getVacationState(managerEmail, vacationId, function (state, vacationBody1) {
-                    if (JSON.parse(vacationBody1).attachments)
+                    if (JSON.parse(vacationBody1).attachments != null)
                       console.log("Therse is attachments")
                     else console.log("Therse is no attachments")
 
