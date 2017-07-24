@@ -64,7 +64,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
         var uri = 'http://' + IP + '/api/v1/employee/vacation-groupedByDay?fromDate=' + date + '&toDate=' + date1 + '&type=' + type
         var email = ""
         var workingDays = ""
-        var type = ""
+        var Wordtype = ""
         var fromDate = ""
         var toDate = ""
         console.log("uri " + uri)
@@ -100,9 +100,9 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         }
                         email = jsonBody.vacationsGroupedByDay[j].employee.email
                         workingDays = parseFloat(jsonBody.vacationsGroupedByDay[j].workingDays).toFixed(2)
-                        type = env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type)
+                        Wordtype = env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type)
 
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + type + "\"" + ",\"short\":false},"
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + Wordtype + "\"" + ",\"short\":false},"
                         if (workingDays < 1) {
                             fromDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
                             toDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
