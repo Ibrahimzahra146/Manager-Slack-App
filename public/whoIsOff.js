@@ -62,6 +62,11 @@ module.exports.whoIsOff = function whoIsOff(msg, response, email) {
 function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
     managerToffyHelper.getNewSessionwithCookie(email, function (remember_me_cookie, session_Id) {
         var uri = 'http://' + IP + '/api/v1/employee/vacation-groupedByDay?fromDate=' + date + '&toDate=' + date1 + '&type=' + type
+        var email = ""
+        var workingDays = ""
+        var type = ""
+        var fromDate = ""
+        var toDate = ""
         console.log("uri " + uri)
 
         request({
@@ -93,15 +98,31 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         if (j > 0) {
                             stringMessage = stringMessage + ","
                         }
-                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + jsonBody.vacationsGroupedByDay[j].employee.email + "\"" + ",\"value\":" + "\"" + env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type) + " ( " + parseFloat(jsonBody.vacationsGroupedByDay[j].workingDays).toFixed(2) + " working days )" + "\"" + ",\"short\":false}"
+                        email = jsonBody.vacationsGroupedByDay[j].employee.email
+                        workingDays = parseFloat(jsonBody.vacationsGroupedByDay[j].workingDays).toFixed(2)
+                        type = env.vacationType.getVacationType(jsonBody.vacationsGroupedByDay[j].type)
 
-                        j++;
+                        stringMessage = stringMessage + "{" + "\"title\":" + "\"" + email + "\"" + ",\"value\":" + "\"" + type + "\"" + ",\"short\":false},"
+                        if (workingDays < 1) {
+                            fromDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
+                            toDate = (jsonBody.vacationsGroupedByDay[j].fromDate)
+
+                            env.dateHelper.converDateToWords(fromDate, toDate, function (fromDateWord, toDateWord) {
+                                console.log("fromDateWord" + fromDateWord)
+                                console.log("toDateWord" + toDateWord)
+                                stringMessage = stringMessage + "{" + "\"title\":" + "\"" + fromDateWord + "\"" + ",\"value\":" + "\"" + workingDays + "\"" + ",\"short\":false}"
+                                j++;
+                            })
+
+                        } else
+
+                            j++;
                     }
-                    
+
                     stringMessage = stringMessage + "]"
                     console.log("stringMessage", stringMessage)
                     var messageBody = {
-                        "text": "*"+jsonBody.day+"*",
+                        "text": "*" + jsonBody.day + "*",
                         "attachments": [
                             {
                                 "attachment_type": "default",
