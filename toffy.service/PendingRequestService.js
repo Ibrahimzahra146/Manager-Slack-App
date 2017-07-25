@@ -7,7 +7,7 @@ module.exports.showManagerPendingRequest = function showManagerPendingRequest(ms
         env.mRequests.getManagerPendingVacation(email, Id, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 if (!(JSON.parse(body)[i])) {
-                    msg.say("There are nopending requests");
+                    msg.say("There are no pending requests");
                 }
                 else {
                     //build message Json result to send it to slack
