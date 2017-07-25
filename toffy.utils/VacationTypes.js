@@ -1,6 +1,6 @@
 module.exports.getVacationType = function getVacationType(type) {
     if (type == 0) {
-        return "Personal"
+        return "time off"
     } else if (type == 1) {
         return "Death"
     }
