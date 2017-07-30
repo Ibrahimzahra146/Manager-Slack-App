@@ -886,11 +886,14 @@ controller.on('direct_message', function (bot, message) {
 
 });
 */
+app.use(env.bodyParser.text({ type: 'application/json' }));
 app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
   //console.log(JSON.stringify(req))
-  console.log(req.Body)
+  var parsedBody = JSON.parse(req.body)
+  console.log(parsedBody.name)
+
   //console.log(req)
   //var parsedBody = JSON.parse(req)
   //var name = parsedBody.name
