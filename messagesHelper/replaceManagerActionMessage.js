@@ -10,7 +10,7 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
     var sick_report_field = ""
 
     console.log("sickReport" + sickReport)
-    if (sickReport = 1) {
+    if (sickReport == 1) {
         sick_report_field =
             {
                 "title": "Sick report ",
