@@ -554,6 +554,7 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
   var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     if (JSON.parse(body).attachments != "") {
+      console.log("sick_attachments" + sick_attachments)
       sick_attachments = 1
     }
 
