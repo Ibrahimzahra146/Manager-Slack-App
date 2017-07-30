@@ -29,12 +29,7 @@ module.exports.pending_request_reminder = function (numberOfPendingRequests, ema
                         "text": "Show pendings",
                         "type": "button",
                         "value": email + ";" + "Show pending",
-                        confirm: {
-                            title: "Employee comment",
-                            text: "Comment:"+"I want compensatio ",
-                            ok_text: "Yes",
-                            dismiss_text: "No"
-                        },
+                       
 
                     }
                 ]
