@@ -191,12 +191,12 @@ function storeManagerSlackInformation(email, msg) {
 //wheather  the text received from user input or from button
 //1 for buttons 0 for user input
 //meg variable ,is the button text or the msg slack object ,depends on the source
-function sendRequestToApiAi(emailValue, msg, flag) {
+function sendRequestToApiAi(emailValue, msg, flag, buttonText) {
   var text = ""
   env.managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     if (role == true) {
       if (flag == 1) {
-        text = msg
+        text = buttonText
 
       } else {
         storeManagerSlackInformation(emailValue, msg);
@@ -452,7 +452,7 @@ function getMembersList(Id, msg) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
 
-          sendRequestToApiAi(emailValue, msg, 0);
+          sendRequestToApiAi(emailValue, msg, 0, "");
           break;
         }
 
@@ -867,9 +867,9 @@ slapp.action('reminders', 'show.pending', (msg, value) => {
 
   value = value.toString().split(";")
   var email = value[0]
-  var msg = value[1]
+  var text = value[1]
 
-  sendRequestToApiAi(email, msg, 1)
+  sendRequestToApiAi(email, msg, 1, text)
 
 
 })
