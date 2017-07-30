@@ -893,6 +893,10 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   //console.log(JSON.stringify(req))
   var parsedBody = JSON.parse(req.body)
   console.log(JSON.stringify(parsedBody))
+  var managerSlackId = parsedBody[0].toffy.slackUserId
+  console.log("managerSlackId" + managerSlackId)
+  var managerChannelId = parsedBody[0].toffy.managerChannelId
+  console.log("managerSlackId" + managerChannelId)
 
   //console.log(req)
   //var parsedBody = JSON.parse(req)
