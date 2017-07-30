@@ -868,7 +868,8 @@ slapp.action('reminders', 'show.pending', (msg, value) => {
   value = value.toString().split(";")
   var email = value[0]
   var text = value[1]
-
+  console.log("email" + email)
+  console.log("text" + text)
   sendRequestToApiAi(email, msg, 1, text)
 
 
