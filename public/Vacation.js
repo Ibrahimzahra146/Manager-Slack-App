@@ -63,6 +63,9 @@ module.exports.getSecondApproverStateAndFinalState = function getSecondApproverS
             function () { return parsedBody.managerApproval[i]; },
             function (callback) {
                 console.log("Arrive")
+                console.log("parsedBody.managerApproval[i].managerEmail" + parsedBody.managerApproval[i].managerEmail)
+                console.log("email" + email)
+
                 if (parsedBody.managerApproval[i].managerEmail == email && state == 1 && parsedBody.managerApproval[i].type == "Manager") {
 
                     approver2Email = parsedBody.managerApproval[i].managerEmail
