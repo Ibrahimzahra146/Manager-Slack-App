@@ -881,7 +881,7 @@ controller.on('direct_message', function (bot, message) {
  * 
  * Post api to send reminder to managers every day when they have pending request
  */
-app.configure(function () {
+/*app.configure(function () {
   app.use(express.bodyParser());
 });
 app.post('/manager/pending-request-reminder', (req, res) => {
