@@ -163,14 +163,20 @@ module.exports.getNewSessionwithCookie = function getNewSessionwithCookie(email,
         if (response.statusCode == 500 || response.statusCode == 451) {
             callback(1000, 1000)
         } else {
-            var cookies = JSON.stringify((response.headers["set-cookie"])[1]);
-            var arr = cookies.toString().split(";")
-            res = arr[0].replace(/['"]+/g, '');
-            var cookies1 = JSON.stringify((response.headers["set-cookie"])[0]);
-            var arr1 = cookies1.toString().split(";")
-            res1 = arr1[0].replace(/['"]+/g, '');
-            printLogs("final session is =========>" + res)
-            callback(res, res1);
+            if (response.headers["set-cookie"] == undefined) {
+                callback(env.managerToffyHelper.general_remember_me, env.managerToffyHelper.general_session_id)
+            } else {
+
+
+                var cookies = JSON.stringify((response.headers["set-cookie"])[1]);
+                var arr = cookies.toString().split(";")
+                res = arr[0].replace(/['"]+/g, '');
+                var cookies1 = JSON.stringify((response.headers["set-cookie"])[0]);
+                var arr1 = cookies1.toString().split(";")
+                res1 = arr1[0].replace(/['"]+/g, '');
+                printLogs("final session is =========>" + res)
+                callback(res, res1);
+            }
         }
     });
 
