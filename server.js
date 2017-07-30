@@ -877,6 +877,44 @@ controller.on('direct_message', function (bot, message) {
  
 })
 */
+/**
+ * 
+ * Post api to send reminder to managers every day when they have pending request
+ */
+app.post('/pending-request-reminder', (req, res) => {
+  var parsedBody = JSON.parse(req.body)
+  var vacationId = parsedBody.id
+
+  var fromDate = parsedBody.fromDate
+
+  var toDate = parsedBody.toDate
+
+  var email = parsedBody.employee.email
+
+  env.mRequests.getSlackRecord(email, function (body) {
+
+
+    var responseBody = JSON.parse(body);
+    var slackMsg = env.stringFile.Slack_Channel_Function(responseBody.userChannelId, responseBody.slackUserIdresponseBody.teamId);
+    var messageFB = env.stringFile.oneDayLeftInfoMessage(fromDateWord, toDateWord)
+    var text12 = env.stringFile.oneDayLeftSickJsonMessage(messageFB, email, vacationId, fromDateWord, toDateWord)
+    env.bot.startConversation(slackMsg, function (err, convo) {
+
+
+      if (!err) {
+
+        var stringfy = JSON.stringify(text12);
+        var obj1 = JSON.parse(stringfy);
+        env.employeeBot.reply(slackMsg, obj1);
+
+      }
+
+    });
+  })
+
+  res.send(200)
+});
+
 app.get('/', function (req, res) {
   var clientIp = requestIp.getClientIp(req);
   console.log("new request ");
