@@ -885,7 +885,7 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
   //console.log(JSON.stringify(req))
-  console.log(req)
+  console.log(req.Body)
   //console.log(req)
   //var parsedBody = JSON.parse(req)
   var name = parsedBody.name
