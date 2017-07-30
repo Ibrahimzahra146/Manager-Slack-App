@@ -896,8 +896,23 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   var managerSlackId = parsedBody[0].toffy.slackUserId
   console.log("managerSlackId" + managerSlackId)
   var managerChannelId = parsedBody[0].toffy.managerChannelId
+  var teamId = parsedBody[0].toffy.teamId
   console.log("managerSlackId " + managerChannelId)
+  var slackMsg = env.stringFile.slack_message(responseBody.userChannelId, responseBody.slackUserIdresponseBody.teamId);
+  var messageFB = env.stringFile.oneDayLeftInfoMessage(fromDateWord, toDateWord)
+  var text12 = env.stringFile.oneDayLeftSickJsonMessage(messageFB, email, vacationId, fromDateWord, toDateWord)
+  env.managerBot.startConversation(slackMsg, function (err, convo) {
 
+
+    if (!err) {
+
+      var stringfy = JSON.stringify(text12);
+      var obj1 = JSON.parse(stringfy);
+      env.employeeBot.reply(slackMsg, obj1);
+
+    }
+
+  });
   //console.log(req)
   //var parsedBody = JSON.parse(req)
   //var name = parsedBody.name
