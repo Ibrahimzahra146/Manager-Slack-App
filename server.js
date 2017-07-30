@@ -197,6 +197,7 @@ function sendRequestToApiAi(emailValue, msg, flag, buttonText) {
     if (role == true) {
       if (flag == 1) {
         text = buttonText
+        msg.say("Hi")
 
       } else {
         storeManagerSlackInformation(emailValue, msg);
