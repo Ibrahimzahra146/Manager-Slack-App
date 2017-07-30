@@ -517,15 +517,17 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
   var ImageUrl = arr[9]
   var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
+
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
+      if (JSON.parse(body).attachments != "")
+        sick_attachments = 1
       if (JSON.parse(body).sickCovertedToPersonal == true) {
-        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, sick_attachments)
       } else {
 
-        if (JSON.parse(body).attachments != "")
-          sick_attachments = 1
+
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
           vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
@@ -565,7 +567,7 @@ slapp.action('manager_confirm_reject', 'check_state_undo', (msg, value) => {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
     } else if (state == 200) {
       if (JSON.parse(body).sickCovertedToPersonal == true) {
-        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, sick_attachments)
       } else {
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
@@ -695,7 +697,10 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
         pastflag = 1
       //check if the vaction rejected in order to prevent manager to take an action
       if (JSON.parse(vacationBody).sickCovertedToPersonal == true) {
-        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+        if (JSON.parse(vacationBody1).attachments != "")
+          sick_attachments = 1
+        replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type,
+          vacationId, approvalId, ImageUrl, workingDays, sick_attachments)
       }
       else {
 
@@ -704,7 +709,8 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
 
 
           if (approvalType == "Rejected" && pastflag == 1 && rejectConfFlag == 0 && type == "sick") {
-            replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, "Pending", vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments)
+            replaceMessage.replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, "Pending", vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection,
+              JSON.parse(vacationBody).vacationState, JSON.parse(vacationBody).comments, sick_attachments)
           } else {
 
 
@@ -744,7 +750,9 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
 
                         }
                         if (approvalType == "Rejected" && rejectConfFlag == 1) {
-                          replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
+                          if (JSON.parse(vacationBody1).attachments != "")
+                            sick_attachments = 1
+                          replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, sick_attachments)
 
                         } else
 

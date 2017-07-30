@@ -369,8 +369,20 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
  * Refresh the current message
  */
 
-module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays) {
+module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type,
+    vacationId, approvalId, ImageUrl, workingDays, sickReport) {
+    var sick_report_field = ""
 
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
 
     var messageBody = {
         "text": "Time off request:",
@@ -406,7 +418,7 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
                         "title": "State",
                         "value": "Cancelled by employee :no_entry_sign:",
                         "short": true
-                    }
+                    }, sick_report_field
                 ],
 
                 "color": "#F35A00",
@@ -563,9 +575,21 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
  * 
  * Already rejected vacation 
  */
-module.exports.replaceAlreadyRejectedVacation = function replaceAlreadyRejectedVacationovalIde(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
+module.exports.replaceAlreadyRejectedVacation = function replaceAlreadyRejectedVacationovalIde(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText,
+    workingDays, managerApprovalsSection, vacationState, comment, sickReport) {
 
+    var sick_report_field = ""
 
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
     var messageBody = {
         "text": "Time off request:",
         "attachments": [
@@ -600,7 +624,7 @@ module.exports.replaceAlreadyRejectedVacation = function replaceAlreadyRejectedV
                         "title": "State",
                         "value": "Rejected",
                         "short": true
-                    }
+                    }, sick_report_field
                 ],
 
                 "color": "#F35A00",
