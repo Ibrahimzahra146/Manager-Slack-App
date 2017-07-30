@@ -888,65 +888,34 @@ controller.on('direct_message', function (bot, message) {
 */
 app.use(env.bodyParser.text({ type: 'application/json' }));
 app.post('/manager/pending-request-reminder', (req, res) => {
-  console.log("New Request received")
-  console.log("Body:")
-  //console.log(JSON.stringify(req))
+  var i = 0
+
   var parsedBody = JSON.parse(req.body)
-  console.log(JSON.stringify(parsedBody))
-  var managerSlackId = parsedBody[0].toffy.slackUserId
-  console.log("managerSlackId" + managerSlackId)
-  var managerChannelId = parsedBody[0].toffy.managerChannelId
-  var teamId = parsedBody[0].toffy.teamId
-  var numberOfPendingRequest = parsedBody[0].numberOFVacations
-  console.log("managerSlackId " + managerChannelId)
-  var slackMsg = env.stringFile.slack_message(managerChannelId, managerSlackId, teamId);
-  var messageFB = env.stringFile.pending_request_reminder(numberOfPendingRequest)
-  env.managerBot.startConversation(slackMsg, function (err, convo) {
+  while (parsedBody[i]) {
 
 
-    if (!err) {
-
-      var stringfy = JSON.stringify(messageFB);
-      var obj1 = JSON.parse(stringfy);
-      env.managerBot.reply(slackMsg, obj1);
-
-    }
-
-  });
-  //console.log(req)
-  //var parsedBody = JSON.parse(req)
-  //var name = parsedBody.name
-  //console.log("name" + name)
-  //console.log(JSON.parse(req.body))
-  /*var parsedBody = JSON.parse(req.body)
-  var vacationId = parsedBody.id
-
-  var fromDate = parsedBody.fromDate
-
-  var toDate = parsedBody.toDate
-
-  var email = parsedBody.employee.email
-
-  env.mRequests.getSlackRecord(email, function (body) {
-
-
-    var responseBody = JSON.parse(body);
-    var slackMsg = env.stringFile.Slack_Channel_Function(responseBody.userChannelId, responseBody.slackUserIdresponseBody.teamId);
-    var messageFB = env.stringFile.oneDayLeftInfoMessage(fromDateWord, toDateWord)
-    var text12 = env.stringFile.oneDayLeftSickJsonMessage(messageFB, email, vacationId, fromDateWord, toDateWord)
-    env.bot.startConversation(slackMsg, function (err, convo) {
+    console.log(JSON.stringify(parsedBody))
+    var managerSlackId = parsedBody[i].toffy.slackUserId
+    console.log("managerSlackId" + managerSlackId)
+    var managerChannelId = parsedBody[i].toffy.managerChannelId
+    var teamId = parsedBody[i].toffy.teamId
+    var numberOfPendingRequest = parsedBody[i].numberOFVacations
+    console.log("managerSlackId " + managerChannelId)
+    var slackMsg = env.stringFile.slack_message(managerChannelId, managerSlackId, teamId);
+    var messageFB = env.stringFile.pending_request_reminder(numberOfPendingRequest)
+    env.managerBot.startConversation(slackMsg, function (err, convo) {
 
 
       if (!err) {
 
-        var stringfy = JSON.stringify(text12);
+        var stringfy = JSON.stringify(messageFB);
         var obj1 = JSON.parse(stringfy);
-        env.employeeBot.reply(slackMsg, obj1);
-
+        env.managerBot.reply(slackMsg, obj1);
+        i++
       }
 
     });
-  })*/
+  }
 
   res.send(200)
 });
