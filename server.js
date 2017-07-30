@@ -900,7 +900,7 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   var numberOfPendingRequest = parsedBody[0].numberOFVacations
   console.log("managerSlackId " + managerChannelId)
   var slackMsg = env.stringFile.slack_message(managerChannelId, managerSlackId, teamId);
-  var messageFB = env.stringFile.oneDayLeftInfoMessage(numberOfPendingRequest)
+  var messageFB = env.stringFile.pending_request_reminder(numberOfPendingRequest)
   env.managerBot.startConversation(slackMsg, function (err, convo) {
 
 
