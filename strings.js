@@ -7,6 +7,14 @@ exports.holiday_notice = holiday_notice
  * 
  * 
  */
+/**
+ * 
+ * Manager pending request reminder message
+ */
+module.exports.pending_request_reminder = function (numberOfPendingRequests) {
+    var message = "Good morning,you have " + numberOfPendingRequests + " pending time off requests"
+
+}
 module.exports.manager_message_on_accept_with_report = function manager_message_on_accept_with_report(email, fromDate, toDate) {
     var message = "The approver " + email + " asked you to submit a sick report for your sick time from ( " + fromDate + "-" + toDate + " )";
     return message;
