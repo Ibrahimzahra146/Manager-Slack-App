@@ -883,7 +883,9 @@ controller.on('direct_message', function (bot, message) {
  */
 /*app.configure(function () {
   app.use(express.bodyParser());
+
 });
+*/
 app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
