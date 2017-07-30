@@ -26,7 +26,7 @@ module.exports.pending_request_reminder = function (numberOfPendingRequests, ema
                 "actions": [
                     {
                         "name": "show.pending",
-                        "text": "Show pendings",
+                        "text": "Show pending",
                         "type": "button",
                         "value": email + ";" + "Show pending",
                        
