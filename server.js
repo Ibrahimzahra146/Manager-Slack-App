@@ -885,7 +885,9 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
   //console.log(req.body)
-  console.log(JSON.stringify(req.body))
+  var parsedBody = JSON.parse(req.body)
+  var name = parsedBody.name
+  console.log("name"+name)
   //console.log(JSON.parse(req.body))
   /*var parsedBody = JSON.parse(req.body)
   var vacationId = parsedBody.id
