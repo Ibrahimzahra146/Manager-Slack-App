@@ -515,6 +515,7 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
@@ -523,11 +524,13 @@ slapp.action('manager_confirm_reject', 'check_state', (msg, value) => {
         replaceMessage.replaceAlreadyRejectedVacation(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
       } else {
 
-
+        if (JSON.parse(body).attachments != "")
+          sick_attachments = 1
         // replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
         messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
           vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
-            replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
+            replaceMessage.replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays,
+              managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments, sick_attachments)
 
           })
         })
@@ -801,18 +804,19 @@ slapp.action('manager_confirm_reject', 'Undo', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
-
+  var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
     if (state == 404) {
       replaceMessage.replaceCanceledRequestOnAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays)
 
     } else {
 
-
+      if (JSON.parse(body).attachments != "")
+        sick_attachments = 1
       messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
 
         vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
-          replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
+          replaceMessage.undoAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments, sick_attachments)
         })
       })
     }
@@ -830,12 +834,18 @@ slapp.action('manager_confirm_reject', 'reject_with_comment', (msg, value) => {
   var type = arr[7]
   var workingDays = arr[8]
   var ImageUrl = arr[9]
+  var sick_attachments = 0
   vacationHelper.getVacationState(managerEmail, vacationId, function (state, body) {
+
+    if (JSON.parse(body).attachments != "")
+      sick_attachments = 1
+
     vacationHelper.getSecondApproverStateAndFinalState(managerEmail, body, 1, 0, function (myEmail, myAction, vacationState) {
 
       messageGenerator.generateManagerApprovelsSection(JSON.parse(body).managerApproval, managerEmail, JSON.parse(body).needsSickReport, function (managerApprovalsSection) {
 
-        replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, JSON.parse(body).comments)
+        replaceMessage.replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection,
+          vacationState, myAction, JSON.parse(body).comments, sick_attachments)
       })
     })
   })

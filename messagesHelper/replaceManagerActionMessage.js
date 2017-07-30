@@ -109,7 +109,21 @@ module.exports.replaceMessage = function replaceMessage(msg, userEmail, managerE
     })
 }
 //return original message when click on undo
-module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection,
+    vacationState, myAction, comment, sickReport) {
+    var sick_report_field = ""
+
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
+
     //console.log("undoAction1" + undoAction)
     var commentField = ""
     if (comment != null && comment != "") {
@@ -187,6 +201,7 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
                         ,
                         managerApprovalsSection,
                         commentField,
+                        sick_report_field,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -229,7 +244,20 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
     })
 }
 
-module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection,
+    vacationState, myAction, comment, sickReport) {
+    var sick_report_field = ""
+
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
     var commentField = ""
     if (comment != null && comment != "") {
         commentField =
@@ -281,6 +309,7 @@ module.exports.replaceWithComment = function replaceWithComment(msg, userEmail, 
                         }
                         , managerApprovalsSection,
                         commentField,
+                        sick_report_field,
 
                         {
                             "title": "Final state",
@@ -391,8 +420,21 @@ module.exports.replaceCanceledRequestOnAction = function replaceCanceledRequestO
  * Check state of not canceled request
  * 
  */
-module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays, managerApprovalsSection, vacationState, myAction, comment) {
+module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(msg, userEmail, managerEmail, fromDate, toDate, type, vacationId, approvalId, ImageUrl, workingDays,
+    managerApprovalsSection, vacationState, myAction, comment, sickReport) {
     var commentField = ""
+    var sick_report_field = ""
+
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
     if (comment != null && comment != "") {
         commentField =
             {
@@ -473,6 +515,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
                         ,
                         managerApprovalsSection,
                         commentField,
+                        sick_report_field,
                         {
                             "title": "Final state",
                             "value": vacationState + " " + finalStateEmoji,
@@ -571,7 +614,21 @@ module.exports.replaceAlreadyRejectedVacation = function replaceAlreadyRejectedV
  * 
  * 
  */
-module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId, approvalId, ImageUrl, typeText, workingDays, managerApprovalsSection, vacationState, comment) {
+module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmation(msg, userEmail, managerEmail, fromDate, toDate, type, approvalType, vacationId,
+    approvalId, ImageUrl, typeText, workingDays,
+    managerApprovalsSection, vacationState, comment, sickReport) {
+    var sick_report_field = ""
+
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
     console.log("Comment" + comment)
     var commentField = ""
     if (comment != null && comment != "") {
@@ -623,6 +680,7 @@ module.exports.replaceRejectedConfirmation = function replaceRejectedConfirmatio
                         ,
                         managerApprovalsSection
                         , commentField,
+                        sick_report_field,
 
                         {
                             "title": "Final state",
