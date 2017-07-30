@@ -14,7 +14,7 @@ exports.holiday_notice = holiday_notice
 module.exports.pending_request_reminder = function (numberOfPendingRequests, email) {
     email = email.toString().split('@')
     email = email[0];
-    var text = "Hi" + email + ", you have " + numberOfPendingRequests + " pending requests."
+    var text = "Hi " + email + ", you have " + numberOfPendingRequests + " pending requests."
     var message = {
         "text": "",
         "attachments": [
