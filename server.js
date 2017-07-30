@@ -881,7 +881,7 @@ controller.on('direct_message', function (bot, message) {
  * 
  * Post api to send reminder to managers every day when they have pending request
  */
-app.get('/manager/pending-request-reminder', (req, res) => {
+app.post('/manager/pending-request-reminder', (req, res) => {
   /*var parsedBody = JSON.parse(req.body)
   var vacationId = parsedBody.id
 
@@ -912,7 +912,7 @@ app.get('/manager/pending-request-reminder', (req, res) => {
     });
   })*/
 
-  res.send("Hi")
+  res.send(200)
 });
 
 app.get('/', function (req, res) {
