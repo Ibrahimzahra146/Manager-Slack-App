@@ -867,7 +867,7 @@ slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
 slapp.action('reminders', 'show.pending', (msg, value) => {
 
   value = value.toString().split(";")
-  var email = value[0]
+  var email = value[0].toLowerCase();
   var text = value[1]
   console.log("email" + email)
   console.log("text" + text)
