@@ -12,11 +12,12 @@ exports.holiday_notice = holiday_notice
  * Manager pending request reminder message
  */
 module.exports.pending_request_reminder = function (numberOfPendingRequests, email) {
+    var text = "Good morning,you have " + numberOfPendingRequests + " pending requests."
     var message = {
         "text": "",
         "attachments": [
             {
-                "text": messageFB,
+                "text": text,
                 "callback_id": 'reminders',
                 "color": "#3AA3E3",
                 "attachment_type": "default",
