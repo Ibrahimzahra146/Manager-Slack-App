@@ -892,7 +892,7 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("Body:")
   //console.log(JSON.stringify(req))
   var parsedBody = JSON.parse(req.body)
-  console.log(parsedBody.name)
+  console.log(JSON.stringify(parsedBody))
 
   //console.log(req)
   //var parsedBody = JSON.parse(req)
