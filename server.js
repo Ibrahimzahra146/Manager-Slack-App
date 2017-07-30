@@ -881,6 +881,9 @@ controller.on('direct_message', function (bot, message) {
  * 
  * Post api to send reminder to managers every day when they have pending request
  */
+app.configure(function () {
+  app.use(express.bodyParser());
+});
 app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
@@ -888,8 +891,8 @@ app.post('/manager/pending-request-reminder', (req, res) => {
   console.log(req.Body)
   //console.log(req)
   //var parsedBody = JSON.parse(req)
-  var name = parsedBody.name
-  console.log("name" + name)
+  //var name = parsedBody.name
+  //console.log("name" + name)
   //console.log(JSON.parse(req.body))
   /*var parsedBody = JSON.parse(req.body)
   var vacationId = parsedBody.id
