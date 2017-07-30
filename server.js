@@ -884,7 +884,7 @@ controller.on('direct_message', function (bot, message) {
 app.post('/manager/pending-request-reminder', (req, res) => {
   console.log("New Request received")
   console.log("Body:")
-  console.log(req.body)
+  //console.log(req.body)
   console.log(JSON.stringify(req.body))
   //console.log(JSON.parse(req.body))
   /*var parsedBody = JSON.parse(req.body)
