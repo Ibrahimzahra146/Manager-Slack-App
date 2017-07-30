@@ -13,6 +13,7 @@ exports.holiday_notice = holiday_notice
  */
 module.exports.pending_request_reminder = function (numberOfPendingRequests) {
     var message = "Good morning,you have " + numberOfPendingRequests + " pending time off requests"
+    return message
 
 }
 module.exports.manager_message_on_accept_with_report = function manager_message_on_accept_with_report(email, fromDate, toDate) {
