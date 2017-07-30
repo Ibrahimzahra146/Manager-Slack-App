@@ -11,9 +11,28 @@ exports.holiday_notice = holiday_notice
  * 
  * Manager pending request reminder message
  */
-module.exports.pending_request_reminder = function (numberOfPendingRequests) {
-    var message = "Good morning,you have " + numberOfPendingRequests + " pending time off requests"
-    return message
+module.exports.pending_request_reminder = function (numberOfPendingRequests, email) {
+    var message = {
+        "text": "",
+        "attachments": [
+            {
+                "text": messageFB,
+                "callback_id": 'reminders',
+                "color": "#3AA3E3",
+                "attachment_type": "default",
+                "actions": [
+                    {
+                        "name": "show.pending",
+                        "text": "Show pendings",
+                        "type": "button",
+                        "value": email + ";" + "Show pending"
+
+                    }
+                ]
+            }
+        ]
+    }
+    return message;
 
 }
 module.exports.manager_message_on_accept_with_report = function manager_message_on_accept_with_report(email, fromDate, toDate) {

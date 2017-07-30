@@ -185,12 +185,30 @@ function storeManagerSlackInformation(email, msg) {
     }
   });
 }
+
 //send the text to api ai 
-function sendRequestToApiAi(emailValue, msg) {
+//flag to indicate the source of the text 
+//wheather  the text received from user input or from button
+//1 for buttons 0 for user input
+//meg variable ,is the button text or the msg slack object ,depends on the source
+function sendRequestToApiAi(emailValue, msg, flag) {
+  var text = ""
   env.managerToffyHelper.getRoleByEmail(emailValue, "ADMIN", function (role) {
     if (role == true) {
-      storeManagerSlackInformation(emailValue, msg);
-      var text = msg.body.event.text;
+      if (flag == 1) {
+        text = msg
+
+      } else {
+        storeManagerSlackInformation(emailValue, msg);
+        text = msg.body.event.text;
+      }
+      /*
+      Store slack info like channel id in order to get it from employee bot 
+      **/
+
+
+      //remove @ sign from email and send it without @ since it cause problems 
+      //received email <mailto:ibraim.zahra@exalt.ps>
       env.TextService.prepareTextForApiAi(text, function (preparedText) {
         console.log("prepareTextForApiAi" + preparedText)
 
@@ -199,6 +217,7 @@ function sendRequestToApiAi(emailValue, msg) {
           {
             sessionId: env.sessionId
           });
+        //call back from api.ai
         apiaiRequest.on('response', (response) => {
           let responseText = response.result.fulfillment.speech;
 
@@ -213,6 +232,7 @@ function sendRequestToApiAi(emailValue, msg) {
             if (response.result.parameters.any && response.result.parameters.any != "") {
               env.mRequests.getUserSlackInfoBySlackId(response.result.parameters.any, function (error, response1, body) {
                 //Mention user
+                //1000 in callbacks   refers to an error occured 
                 if (error != 1000) {
                   employeeEmail = body.user.profile.email
                 } else {
@@ -432,7 +452,7 @@ function getMembersList(Id, msg) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
 
-          sendRequestToApiAi(emailValue, msg);
+          sendRequestToApiAi(emailValue, msg, 0);
           break;
         }
 
@@ -843,6 +863,16 @@ slapp.action('manager_confirm_reject', 'accept_with_report', (msg, value) => {
 
 })
 
+slapp.action('reminders', 'show.pending', (msg, value) => {
+
+  value = value.toString().split(";")
+  var email = value[0]
+  var msg = value[1]
+
+  sendRequestToApiAi(email, msg, 1)
+
+
+})
 slapp.action('manager_confirm_reject', 'Rejected_Conf', (msg, value) => {
 
   managerApproval1(msg, value, "Rejected", 0, "", 1, 0)
@@ -895,14 +925,15 @@ app.post('/manager/pending-request-reminder', (req, res) => {
 
 
     console.log(JSON.stringify(parsedBody))
+    var managerEmail = parsedBody[i].managerEmail
     var managerSlackId = parsedBody[i].toffy.slackUserId
-    console.log("managerSlackId" + managerSlackId)
+
     var managerChannelId = parsedBody[i].toffy.managerChannelId
     var teamId = parsedBody[i].toffy.teamId
     var numberOfPendingRequest = parsedBody[i].numberOFVacations
-    console.log("managerSlackId " + managerChannelId)
+
     var slackMsg = env.stringFile.slack_message(managerChannelId, managerSlackId, teamId);
-    var messageFB = env.stringFile.pending_request_reminder(numberOfPendingRequest)
+    var messageFB = env.stringFile.pending_request_reminder(numberOfPendingRequest, managerEmail)
     env.managerBot.startConversation(slackMsg, function (err, convo) {
 
 
