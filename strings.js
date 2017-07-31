@@ -29,7 +29,7 @@ module.exports.pending_request_reminder = function (numberOfPendingRequests, ema
                         "text": "Show pending",
                         "type": "button",
                         "value": email + ";" + "Show pending",
-                       
+
 
                     }
                 ]
@@ -249,9 +249,21 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
  */
 module.exports.historyMessage = function historyMessage(userEmail, startDate,
     workingDays, endDate, type,
-    managerApprovalMessage, vacationState, sickConvertedToPersonal) {
+    managerApprovalMessage, vacationState, sickConvertedToPersonal, sickReport) {
     var sickConvertedToPersonalMsg = ""
     var sickConvertedToPersonalEmoji = ""
+    var sick_report_field = ""
+
+    console.log("sickReport" + sickReport)
+    if (sickReport == 1) {
+        sick_report_field =
+            {
+                "title": "Sick report ",
+                "value": env.stringFile.sick_report_link(vacationId),
+                "short": false
+
+            }
+    }
     if (sickConvertedToPersonal == true) {
         sickConvertedToPersonalEmoji = ":small_blue_diamond: "
         sickConvertedToPersonalMsg = "(Converted from sick )."
@@ -297,6 +309,7 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
                         "short": true
                     },
                     managerApprovalMessage,
+                    sick_report_field,
 
 
 

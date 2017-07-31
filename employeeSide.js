@@ -184,6 +184,7 @@ module.exports.showEmployeeStats = function showEmployeeStats(email, employeeEma
 }
 //show employee history 
 module.exports.showEmployeeHistory = function showEmployeeHistory(email, employeeEmail, msg) {
+    var sick_attachments = 0
     msg.say(employeeEmail + " history is :")
     printLogs("showEmployeeStats")
     managerHelper.getIdFromEmail(email, employeeEmail, function (Id) {
@@ -205,8 +206,10 @@ module.exports.showEmployeeHistory = function showEmployeeHistory(email, employe
                     while ((JSON.parse(body)[i])) {
                         env.dateHelper.converDateToWords((JSON.parse(body))[i].fromDate, (JSON.parse(body))[i].toDate, 0, function (fromDateWord, toDateWord) {
                             env.messageGenerator.generateManagerApprovelsSection((JSON.parse(body))[i].managerApproval, employeeEmail, 0, function (managerApprovalSection) {
+                                if ((JSON.parse(body))[i].attachments != "")
+                                    sick_attachments = 1
                                 var message = env.stringFile.historyMessage(email, fromDateWord, (JSON.parse(body))[i].period, toDateWord, (JSON.parse(body))[i].type, managerApprovalSection,
-                                    (JSON.parse(body))[i].vacationState,(JSON.parse(body))[i].sickCovertedToPersonal)
+                                    (JSON.parse(body))[i].vacationState, (JSON.parse(body))[i].sickCovertedToPersonal, sick_attachments)
                                 msg.say(message)
                                 i++;
                             })
