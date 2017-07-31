@@ -249,7 +249,7 @@ module.exports.sendVacationToManagerFunction = function sendVacationToManagerFun
  */
 module.exports.historyMessage = function historyMessage(userEmail, startDate,
     workingDays, endDate, type,
-    managerApprovalMessage, vacationState, sickConvertedToPersonal, sickReport) {
+    managerApprovalMessage, vacationState, sickConvertedToPersonal, sickReport, vacationId) {
     var sickConvertedToPersonalMsg = ""
     var sickConvertedToPersonalEmoji = ""
     var sick_report_field = ""
@@ -346,6 +346,6 @@ module.exports.historyMessage = function historyMessage(userEmail, startDate,
  * Sick report linl
  */
 module.exports.sick_report_link = function sick_report_link(vacationId) {
-    var sick_report = "<http://46.43.71.50:19090/reports?vId=" + vacationId + "|sick report>"
+    var sick_report = "<http://46.43.71.50:19090/reports?vId=" + vacationId + "|link>"
     return sick_report;
 }
