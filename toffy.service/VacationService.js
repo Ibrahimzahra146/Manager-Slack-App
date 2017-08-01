@@ -89,6 +89,8 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     }
                     else if (other_vacation_types == "Marriage") {
                         vacation_type1 = "Marriage"
+                    } else if (other_vacation_types == "Maternity") {
+                        vacation_type1 = "Maternity"
                     }
 
                 }
