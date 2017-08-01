@@ -68,6 +68,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
         var fromDate = ""
         var toDate = ""
         var workingHours = ""
+        var headerMsg = ""
         console.log("uri " + uri)
 
         request({
@@ -92,11 +93,14 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
 
 
                 while (JSON.parse(body)[i]) {
-                    
+
                     j = 0
                     var jsonBody = JSON.parse(body)[i]
                     stringMessage = "["
                     while (jsonBody.vacationsGroupedByDay[j]) {
+                        if (jsonBody.vacationsGroupedByDay[j] == "") {
+                            headerMsg = "There are no off employees in this day"
+                        }
 
                         if (j > 0) {
                             stringMessage = stringMessage + ","
@@ -143,7 +147,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         "attachments": [
                             {
                                 "attachment_type": "default",
-                                "text": " ",
+                                "text": headerMsg,
                                 "fallback": "ReferenceError",
                                 "fields": stringMessage,
                                 "color": "#F35A00"
