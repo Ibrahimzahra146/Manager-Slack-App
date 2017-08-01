@@ -78,20 +78,20 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 if (response.result.parameters.sick_synonyms) {
                     vacation_type1 = "sick"
                 }
-                /*  else if (response.result.parameters.other_vacation_types) {
-                      other_vacation_types = response.result.parameters.other_vacation_types;
-                      if (other_vacation_types == "Wedding")
-                          vacation_type1 = "Wedding"
-                      else if (other_vacation_types == "Paternity")
-                          vacation_type1 = "Paternity"
-                      else if (other_vacation_types == "death") {
-                          vacation_type1 = "death"
-                      }
-                      else if (other_vacation_types == "Marriage") {
-                          vacation_type1 = "Marriage"
-                      }
-          
-                  }*/
+                else if (response.result.parameters.other_vacation_types) {
+                    other_vacation_types = response.result.parameters.other_vacation_types;
+                    if (other_vacation_types == "Wedding")
+                        vacation_type1 = "Wedding"
+                    else if (other_vacation_types == "Paternity")
+                        vacation_type1 = "Paternity"
+                    else if (other_vacation_types == "death") {
+                        vacation_type1 = "death"
+                    }
+                    else if (other_vacation_types == "Marriage") {
+                        vacation_type1 = "Marriage"
+                    }
+
+                }
                 else if (response.result.parameters.working_from_home) {
                     vacation_type1 = "WFH"
                 }
