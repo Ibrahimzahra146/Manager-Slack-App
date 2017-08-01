@@ -68,6 +68,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
         var fromDate = ""
         var toDate = ""
         var workingHours = ""
+        var headerMsg = ""
         console.log("uri " + uri)
 
         request({
@@ -92,6 +93,12 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
 
 
                 while (JSON.parse(body)[i]) {
+
+
+                    if (JSON.parse(body)[i] == "") {
+                        headerMsg = "There are no off employees."
+                    }
+
                     j = 0
                     var jsonBody = JSON.parse(body)[i]
                     stringMessage = "["
@@ -142,7 +149,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                         "attachments": [
                             {
                                 "attachment_type": "default",
-                                "text": " ",
+                                "text": headerMsg,
                                 "fallback": "ReferenceError",
                                 "fields": stringMessage,
                                 "color": "#F35A00"
@@ -156,10 +163,11 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                     stringfy = stringfy.replace(/\"\[/, "[")
                     stringfy = JSON.parse(stringfy)
                     msg.say(stringfy);
-                    i++;
                 }
-
+                i++;
             }
+
+
 
         })
 
