@@ -98,9 +98,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
                     var jsonBody = JSON.parse(body)[i]
                     stringMessage = "["
                     while (jsonBody.vacationsGroupedByDay[j]) {
-                        if (jsonBody.vacationsGroupedByDay[j] == "") {
-                            headerMsg = "There are no off employees in this day"
-                        }
+
 
                         if (j > 0) {
                             stringMessage = stringMessage + ","
@@ -142,6 +140,9 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
 
                     stringMessage = stringMessage + "]"
                     console.log("stringMessage", stringMessage)
+                    if (jsonBody.vacationsGroupedByDay[i] == "") {
+                        headerMsg = "There are no off employees in this day"
+                    }
                     var messageBody = {
                         "text": "*" + jsonBody.day + "*",
                         "attachments": [
