@@ -140,7 +140,7 @@ function showWhoIsOff(msg, email, date, date1, employeeEmail, type) {
 
                     stringMessage = stringMessage + "]"
                     console.log("stringMessage", stringMessage)
-                    if (jsonBody.vacationsGroupedByDay[i] == "") {
+                    if (jsonBody == "") {
                         console.log("True")
                         headerMsg = "There are no off employees in this day"
                     } else console.log("False")
