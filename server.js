@@ -218,6 +218,7 @@ function sendRequestToApiAi(emailValue, msg, flag, buttonText) {
           });
         //call back from api.ai
         apiaiRequest.on('response', (response) => {
+          console.log("API AI response " + JSON.stringify(response))
           let responseText = response.result.fulfillment.speech;
 
           if (responseText == "whoIsOff") {
