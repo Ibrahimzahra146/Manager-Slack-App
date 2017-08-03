@@ -746,7 +746,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
                           });
 
                         } else {
-                          if ((JSON.parse(vacationBody1).vacationState == "Approved") || (JSON.parse(vacationBody1).vacationState == "Rejected") || JSON.parse(vacationBody1).vacationState == "ApprovedWithoutDeduction")
+                          //if ((JSON.parse(vacationBody1).vacationState == "Approved") || (JSON.parse(vacationBody1).vacationState == "Rejected") || JSON.parse(vacationBody1).vacationState == "ApprovedWithoutDeduction")
                             messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, vacationBody1, typeText, responseBody, comment);
 
                         }
