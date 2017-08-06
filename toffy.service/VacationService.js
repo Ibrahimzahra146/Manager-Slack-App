@@ -191,31 +191,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         date = arr[0];
                         date1 = arr[1]
                     }
-                    if (response.result.parameters.vacation_types) {
-                        if (vacation_type1 == "Maternity") {
-                            numberOfDaysToAdd = 70
 
-                        } else if (response.result.parameters.vacation_types == "Paternity") {
-                            numberOfDaysToAdd = 3
-                        }
-                        else if (response.result.parameters.vacation_types == "Wedding") {
-                            numberOfDaysToAdd = 3
-                        }
-                        else if (response.result.parameters.vacation_types == "Death") {
-                            numberOfDaysToAdd = 3
-                        } else if (response.result.parameters.vacation_types == "Haj") {
-                            numberOfDaysToAdd = 10
-                        }
-                        var someDate = new Date(date);
-                        someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
-
-                        var dd = someDate.getDate();
-                        var mm = someDate.getMonth() + 1;
-                        var y = someDate.getFullYear();
-
-                        date1 = y + '/' + mm + '/' + dd;
-                        timeOffCase = 8
-                    }
 
                 }
                 else if (response.result.parameters.time) {
@@ -230,6 +206,31 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 }
                 console.log("new Api ai response " + JSON.stringify(response))
                 console.log("Repeated" + time)
+                if (response.result.parameters.vacation_types) {
+                    if (vacation_type1 == "Maternity") {
+                        numberOfDaysToAdd = 70
+
+                    } else if (response.result.parameters.vacation_types == "Paternity") {
+                        numberOfDaysToAdd = 3
+                    }
+                    else if (response.result.parameters.vacation_types == "Wedding") {
+                        numberOfDaysToAdd = 3
+                    }
+                    else if (response.result.parameters.vacation_types == "Death") {
+                        numberOfDaysToAdd = 3
+                    } else if (response.result.parameters.vacation_types == "Haj") {
+                        numberOfDaysToAdd = 10
+                    }
+                    var someDate = new Date(date);
+                    someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+
+                    var dd = someDate.getDate();
+                    var mm = someDate.getMonth() + 1;
+                    var y = someDate.getFullYear();
+
+                    date1 = y + '/' + mm + '/' + dd;
+                    timeOffCase = 8
+                }
                 //get the milliseconds for the  end of the vacation 
                 dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                     dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
