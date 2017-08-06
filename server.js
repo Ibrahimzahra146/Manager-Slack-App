@@ -482,7 +482,7 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     console.log("the message is ");
     console.log(stringfy);
     msg.say("Sorry, The system is under maintainence ,please try later.")
-    getMembersList(msg.body.event.user, msg)
+    //getMembersList(msg.body.event.user, msg)
   }
 })
 
