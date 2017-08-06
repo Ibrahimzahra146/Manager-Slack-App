@@ -74,13 +74,13 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 console.log("response" + JSON.stringify(response))
 
                 console.log("employeeEmail" + employeeEmail)
-                console.log("response.result.parameters.other_vacation_types" + response.result.parameters.other_vacation_types)
+                console.log("response.result.parameters.other_vacation_types" + response.result.parameters.vacation_types)
 
 
 
                 if (response.result.parameters.vacation_types) {
                     console.log("Other vacation type")
-                    other_vacation_types = response.result.parameters.other_vacation_types;
+                    other_vacation_types = response.result.parameters.vacation_types;
                     if (other_vacation_types == "Wedding")
                         vacation_type1 = "Wedding"
                     else if (other_vacation_types == "Paternity")
@@ -113,7 +113,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
 
                 }
-              
+
                 else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && (response.result.parameters.date == "") && !(response.result.parameters.date1)) {
                     msg.say("Please specify the date and/or time ")
                     console.log("sick_synonyms4")
@@ -121,7 +121,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && (response.result.parameters.date == "") && (response.result.parameters.date1 == "")) {
                     msg.say("Please specify the date and/or time ")
                     console.log("sick_synonyms4")
-                } 
+                }
 
                 else {
                     console.log("vacation_type1" + vacation_type1)
@@ -264,19 +264,19 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             date = arr[0];
                             date1 = arr[1]
                         }
-                        if (response.result.parameters.other_vacation_types) {
+                        if (response.result.parameters.vacation_types) {
                             if (vacation_type1 == "Maternity") {
                                 numberOfDaysToAdd = 70
 
-                            } else if (response.result.parameters.other_vacation_types == "Paternity") {
+                            } else if (response.result.parameters.vacation_types == "Paternity") {
                                 numberOfDaysToAdd = 3
                             }
-                            else if (response.result.parameters.other_vacation_types == "Wedding") {
+                            else if (response.result.parameters.vacation_types == "Wedding") {
                                 numberOfDaysToAdd = 3
                             }
-                            else if (response.result.parameters.other_vacation_types == "death") {
+                            else if (response.result.parameters.vacation_types == "Death") {
                                 numberOfDaysToAdd = 3
-                            } else if (response.result.parameters.other_vacation_types == "Haj") {
+                            } else if (response.result.parameters.vacation_types == "Haj") {
                                 numberOfDaysToAdd = 10
                             }
                             var someDate = new Date(date);
