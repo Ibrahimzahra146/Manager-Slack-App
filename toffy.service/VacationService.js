@@ -80,7 +80,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     } else if (other_vacation_types == "Maternity") {
                         vacation_type1 = "Maternity"
                     } else if (other_vacation_types == "Sick") {
-                        vacation_type1 = "sick"
+                        vacation_type1 = "Sick"
                     } else if (other_vacation_types == "WFH") {
                         vacation_type1 = "WFH"
                     }
