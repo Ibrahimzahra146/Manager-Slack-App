@@ -8,6 +8,7 @@ var vacation_type1 = ""
 module.exports.vacationWithLeave = function vacationWithLeave(msg, response, emailValue) {
     console.log("response" + response)
     console.log("JSON response" + JSON.stringify(response))
+    response = PrepareApiAiResponse(response)
 
     var other_vacation_types = ""
     var messageText = ""
@@ -271,5 +272,21 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
             })
         }
     })
+
+}
+function PrepareApiAiResponse(response) {
+    console.log("response before Preparation" + JSON.stringify(response))
+    if (response.result.parameters.date == "" || !response.result.parameters.date)
+        response.result.parameters.date = undefined
+    if (response.result.parameters.date1 == "" || !response.result.parameters.date1)
+        response.result.parameters.date1 = undefined
+    if (response.result.parameters.time == "" || !response.result.parameters.time)
+        response.result.parameters.time = undefined
+    if (response.result.parameters.time1 == "" || !response.result.parameters.time1)
+        response.result.parameters.time1 = undefined
+    console.log("response after Preparation" + JSON.stringify(response))
+
+    return response
+
 
 }
