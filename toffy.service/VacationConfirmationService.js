@@ -3,10 +3,10 @@ const env = require('.././public/configrations.js')
 
 module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpecDayConfirmation(msg, fromTime, fromDate, toTime, ToDate, fromMilliseconds, toMilliseconds, email, employeeEmail, type, timeOffcase) {
     console.log("sendVacationWithLeaveConfirmation: " + employeeEmail)
-
+    console.log("Type: " + type)
     var holidaysNotice = ""
     var typeNum = ""
-    if (type == "sick") {
+    if (type == "Sick") {
         typeNum = 4
     } else if (type == "Maternity")
         typeNum = 2
@@ -38,7 +38,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
                         var toDateWordServer = new Date(body.toTimeSlot.date)
                         toDateWordServer.setHours(body.toTimeSlot.hour)
                         toDateWordServer.setMinutes(body.toTimeSlot.minute)
-                      
+
                         env.dateHelper.converDateToWords(fromDateServer, toDateWordServer, 0, function (wordFromDate, wordTodate) {
 
 

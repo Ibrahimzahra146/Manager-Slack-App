@@ -22,7 +22,7 @@ module.exports.getVacationType = function getVacationType(type) {
 module.exports.getVacationTypeNum = function (type) {
     if (type == "Personal") {
         return 0;
-    } else if (type == "death") {
+    } else if (type == "Death") {
         return 1;
     }
     else if (type == "Maternity") {
