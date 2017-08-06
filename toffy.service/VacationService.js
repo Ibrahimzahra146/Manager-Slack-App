@@ -301,10 +301,11 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     if (vacation_type1 == "") {
                         vacation_type1 = "personal"
                     }
-                    console.log("Repeated")
+                    console.log("Repeated" + time)
                     //get the milliseconds for the  end of the vacation 
                     dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                         dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
+                            console.log("reapeted")
                             var toDate = date1 + " " + convertedTime1
 
                             var fromDate = date + " " + convertedTime;
