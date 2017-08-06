@@ -451,8 +451,9 @@ function getMembersList(Id, msg) {
         if (body.members[i]["id"] == Id) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
-
-          sendRequestToApiAi(emailValue, msg, 0, "");
+          if (emailValue == "ibrahim.zahra@exalt.ps")
+            sendRequestToApiAi(emailValue, msg, 0, "");
+          else msg.say("Sorry, The system is under maintainence , please try later.")
           break;
         }
 
@@ -481,8 +482,8 @@ slapp.message('(.*)', ['direct_message'], (msg, text, match1) => {
     var stringfy = JSON.stringify(msg);
     console.log("the message is ");
     console.log(stringfy);
-    msg.say("Sorry, The system is under maintainence ,please try later.")
-    //getMembersList(msg.body.event.user, msg)
+    // msg.say(")
+    getMembersList(msg.body.event.user, msg)
   }
 })
 
@@ -748,7 +749,7 @@ function managerApproval1(msg, value, approvalType, fromManager, comment, reject
 
                         } else {
                           //if ((JSON.parse(vacationBody1).vacationState == "Approved") || (JSON.parse(vacationBody1).vacationState == "Rejected") || JSON.parse(vacationBody1).vacationState == "ApprovedWithoutDeduction")
-                            messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, vacationBody1, typeText, responseBody, comment);
+                          messageSender.sendMessagetoEmpOnAction(msg, managerEmail, fromDate, toDate, userEmail, type, bot, approvalType, vacationBody1, typeText, responseBody, comment);
 
                         }
                         if (approvalType == "Rejected" && rejectConfFlag == 1) {
