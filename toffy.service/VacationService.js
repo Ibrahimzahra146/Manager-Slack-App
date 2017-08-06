@@ -77,30 +77,30 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 console.log("response.result.parameters.other_vacation_types" + response.result.parameters.other_vacation_types)
 
 
-                if (response.result.parameters.sick_synonyms) {
-                    vacation_type1 = "sick"
-                }
-                else if (response.result.parameters.other_vacation_types) {
+
+                if (response.result.parameters.vacation_types) {
                     console.log("Other vacation type")
                     other_vacation_types = response.result.parameters.other_vacation_types;
                     if (other_vacation_types == "Wedding")
                         vacation_type1 = "Wedding"
                     else if (other_vacation_types == "Paternity")
                         vacation_type1 = "Paternity"
-                    else if (other_vacation_types == "death") {
+                    else if (other_vacation_types == "Death") {
                         vacation_type1 = "death"
                     }
-                    else if (other_vacation_types == "Marriage") {
+                    else if (other_vacation_types == "Wedding") {
                         vacation_type1 = "Marriage"
                     } else if (other_vacation_types == "Maternity") {
                         vacation_type1 = "Maternity"
+                    } else if (other_vacation_types == "Sick") {
+                        vacation_type1 = "sick"
+                    } else if (other_vacation_types == "WFH") {
+                        vacation_type1 = "WFH"
                     }
                     console.log("Other vacation type" + vacation_type1)
 
-                }
-                else if (response.result.parameters.working_from_home) {
-                    vacation_type1 = "WFH"
-                }
+                } else vacation_type1 = "personal"
+
                 if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
 
                     msg.say("Please specify the date and/or time ")
@@ -108,20 +108,12 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     console.log("sick_synonyms1")
 
                 }
-                else if (response.result.parameters.sick_synonyms && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
+                else if (response.result.parameters.vacation_type1 && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
                     msg.say("Please specify the date and/or time ")
 
-                    console.log("sick_synonyms2")
-                    vacation_type1 = "sick"
 
                 }
-                else if (response.result.parameters.working_from_home && !(response.result.parameters.time) && !(response.result.parameters.time1) && !(response.result.parameters.date) && !(response.result.parameters.date1)) {
-                    msg.say("Please specify the date and/or time ")
-
-                    console.log("sick_synonyms3")
-                    vacation_type1 = "WFH"
-
-                }
+              
                 else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && (response.result.parameters.date == "") && !(response.result.parameters.date1)) {
                     msg.say("Please specify the date and/or time ")
                     console.log("sick_synonyms4")
@@ -129,11 +121,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 else if (response.result.parameters.time_off_types && !(response.result.parameters.time) && !(response.result.parameters.time1) && (response.result.parameters.date == "") && (response.result.parameters.date1 == "")) {
                     msg.say("Please specify the date and/or time ")
                     console.log("sick_synonyms4")
-                } else if (response.result.parameters.sick_synonyms && response.result.parameters.date == "" && !(response.result.parameters.time)) {
-                    msg.say("Please specify the date and/or time ")
-                    vacation_type1 = "sick"
-                    console.log("sick_synonyms5")
-                }
+                } 
 
                 else {
                     console.log("vacation_type1" + vacation_type1)
