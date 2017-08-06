@@ -285,6 +285,10 @@ function PrepareApiAiResponse(response) {
         response.result.parameters.time = undefined
     if (response.result.parameters.time1 == "" || !response.result.parameters.time1)
         response.result.parameters.time1 = undefined
+    if (response.result.parameters.any == "" || !response.result.parameters.any)
+        response.result.parameters.time1 = undefined
+    if (response.result.parameters.vacation_types == "" || !response.result.parameters.vacation_types)
+        response.result.parameters.time1 = undefined
     console.log("response after Preparation" + JSON.stringify(response))
 
     return response
