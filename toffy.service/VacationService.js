@@ -301,6 +301,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     if (vacation_type1 == "") {
                         vacation_type1 = "personal"
                     }
+                    console.log("Repeated")
                     //get the milliseconds for the  end of the vacation 
                     dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                         dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
