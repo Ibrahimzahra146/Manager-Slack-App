@@ -226,6 +226,8 @@ module.exports.getManagerPendingVacation = function getManagerPendingVacation(em
 module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id, callback) {
     var arr = ""
     console.log("getUserSlackInfoBySlackId " + id)
+    console.log("getUserSlackInfoBySlackId " + (id).indexOf('<'))
+
 
     // <@uudkmflkpe> format of the id so we handle it and remove the charaters 
     if ((id).indexOf('<') > -1 || id.includes("<")) {
@@ -241,7 +243,7 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
     } else if ((id).indexOf('@') > -1) {
         console.log("3")
 
-        arr = id.toString().split('@' || id.includes("<@"))
+        arr = id.toString().split('@' || id.includes("@"))
         id = arr[1]
     }
     console.log("getUserSlackInfoBySlackId " + id)
