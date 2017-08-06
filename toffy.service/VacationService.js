@@ -301,6 +301,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     if (vacation_type1 == "") {
                         vacation_type1 = "personal"
                     }
+                    console.log("new Api ai response " + JSON.stringify(response))
                     console.log("Repeated" + time)
                     //get the milliseconds for the  end of the vacation 
                     dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
