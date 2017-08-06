@@ -160,8 +160,9 @@ function getWorkingDays(startDate, endDate, email, employeeEmail, typeNum, callb
 
 }
 function getmessage(formattedFromTime, middayFrom, fromDate, formattedTime, midday, ToDate, email, employeeEmail, type, timeOffcase, workingDays, overlappedVacations, callback) {
+    console.log("getmessage" + type)
     var typeText = "Okay, you asked for a time off for " + employeeEmail
-    if (type == "sick") {
+    if (type == "Sick") {
         typeText = " you asked for a sick" + " time off for " + employeeEmail + " :persevere:,"
     } else if (type == "Maternity") {
         typeText = env.stringFile.maternity_message
