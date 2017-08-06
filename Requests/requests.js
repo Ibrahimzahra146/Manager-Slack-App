@@ -228,12 +228,12 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
     console.log("getUserSlackInfoBySlackId " + id)
 
     // <@uudkmflkpe> format of the id so we handle it and remove the charaters 
-    if ((id).indexOf('<') > -1) {
+    if ((id).indexOf('<') > -1 || id.includes("<")) {
         console.log("1")
         arr = id.toString().split('<')
         id = arr[1]
     }
-    if ((id).indexOf('>') > -1) {
+    if ((id).indexOf('>') > -1 || id.includes(">")) {
         console.log("2")
 
         arr = id.toString().split('>')
@@ -241,7 +241,7 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
     } else if ((id).indexOf('@') > -1) {
         console.log("3")
 
-        arr = id.toString().split('@')
+        arr = id.toString().split('@' || id.includes("<@"))
         id = arr[1]
     }
     console.log("getUserSlackInfoBySlackId " + id)
