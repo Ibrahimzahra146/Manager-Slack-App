@@ -369,7 +369,9 @@ function sendRequestToApiAi(emailValue, msg, flag, buttonText) {
 
 
           else if (responseText == "vacationWithLeave") {
-            env.VacationService.vacationWithLeave(msg, response, emailValue)
+            msg.say("Toffy has encountered some issues :-( .. we’re working hard to fix it. Please try later. Sorry for inconvenience.")
+
+            //env.VacationService.vacationWithLeave(msg, response, emailValue)
 
           }
           else if ((responseText) == "Help") {
@@ -451,9 +453,8 @@ function getMembersList(Id, msg) {
         if (body.members[i]["id"] == Id) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
-          if (emailValue == "ibrahim.zahra@exalt.ps")
-            sendRequestToApiAi(emailValue, msg, 0, "");
-          else msg.say("Sorry, The system is under maintainence , please try later.")
+
+          sendRequestToApiAi(emailValue, msg, 0, "");
           break;
         }
 
