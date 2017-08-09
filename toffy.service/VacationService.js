@@ -220,24 +220,28 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         numberOfDaysToAdd = 3
                     } else if (response.result.parameters.vacation_types == "Haj") {
                         numberOfDaysToAdd = 10
+                    } else if (response.result.parameters.vacation_types == "sick") {
+                        numberOfDaysToAdd = 0
                     }
                     var someDate = new Date(date);
-                    someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+                    if (date1 == undefined) {
+                        someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
-                    var dd = someDate.getDate();
-                    var mm = someDate.getMonth() + 1;
-                    var y = someDate.getFullYear();
+                        var dd = someDate.getDate();
+                        var mm = someDate.getMonth() + 1;
+                        var y = someDate.getFullYear();
 
-                    date1 = y + '/' + mm + '/' + dd;
-                    timeOffCase = 8
+                        date1 = y + '/' + mm + '/' + dd;
+                    }
+
                 }
-                console.log("timeOffCase"+timeOffCase)
+                console.log("timeOffCase" + timeOffCase)
                 //get the milliseconds for the  end of the vacation 
                 dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                     dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                         console.log("reapeted")
                         var toDate = date1 + " " + convertedTime1
-                        console.log("toDate" + toDate   )
+                        console.log("toDate" + toDate)
 
                         var fromDate = date + " " + convertedTime;
                         var timeMilliseconds = new Date(fromDate);
