@@ -369,9 +369,9 @@ function sendRequestToApiAi(emailValue, msg, flag, buttonText) {
 
 
           else if (responseText == "vacationWithLeave") {
-            msg.say("Toffy has encountered some issues :-( .. we’re working hard to fix it. Please try later. Sorry for inconvenience.")
+            /// msg.say("Toffy has encountered some issues :-( .. we’re working hard to fix it. Please try later. Sorry for inconvenience.")
 
-            //env.VacationService.vacationWithLeave(msg, response, emailValue)
+            env.VacationService.vacationWithLeave(msg, response, emailValue)
 
           }
           else if ((responseText) == "Help") {
