@@ -231,12 +231,13 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     date1 = y + '/' + mm + '/' + dd;
                     timeOffCase = 8
                 }
+                console.log
                 //get the milliseconds for the  end of the vacation 
                 dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                     dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
                         console.log("reapeted")
                         var toDate = date1 + " " + convertedTime1
-                        console.log("toDate" + toDate)
+                        console.log("toDate" + toDate   )
 
                         var fromDate = date + " " + convertedTime;
                         var timeMilliseconds = new Date(fromDate);
