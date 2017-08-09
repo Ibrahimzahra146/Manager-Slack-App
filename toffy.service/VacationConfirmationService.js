@@ -21,6 +21,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
     else if (type == "Wedding")
         typeNum = 8
     else typeNum = 0
+    console.log("Type: " + type)
 
     env.dateHelper.convertTimeFormat(fromTime, function (formattedFromTime, middayFrom, TimeforMilliseconds) {
         env.dateHelper.convertTimeFormat(toTime, function (formattedTime, midday, TimeforMilliseconds1) {
@@ -41,6 +42,7 @@ module.exports.sendVacationWithLeaveConfirmation = function sendLeaveSpecTimeSpe
 
                         env.dateHelper.converDateToWords(fromDateServer, toDateWordServer, 0, function (wordFromDate, wordTodate) {
 
+                            console.log("Type: " + type)
 
                             getmessage(formattedFromTime, middayFrom, wordFromDate, formattedTime, midday, wordTodate, email, employeeEmail, type, timeOffcase, workingDays, overlappedVacations, function (messagetext) {
                                 var addCommentButton = ""
