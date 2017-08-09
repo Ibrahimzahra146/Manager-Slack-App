@@ -231,7 +231,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     date1 = y + '/' + mm + '/' + dd;
                     timeOffCase = 8
                 }
-                console.log
+                console.log("timeOffCase"+timeOffCase)
                 //get the milliseconds for the  end of the vacation 
                 dateHelper.convertTimeFormat(time, function (x, y, convertedTime) {
                     dateHelper.convertTimeFormat(time1, function (x, y, convertedTime1) {
