@@ -183,7 +183,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
                 } else if (response.result.parameters.date) {
                     date = response.result.parameters.date
-                    date1 = response.result.parameters.date1
+                    date1 = response.result.parameters.date
                     timeOffCase = 10
 
                 }
@@ -209,7 +209,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         numberOfDaysToAdd = 3
                     } else if (response.result.parameters.vacation_types == "Haj") {
                         numberOfDaysToAdd = 10
-                    } else if (response.result.parameters.vacation_types == "sick") {
+                    } else if (response.result.parameters.vacation_types == "Sick") {
                         numberOfDaysToAdd = 0
                     }
                     var someDate = new Date(date);
