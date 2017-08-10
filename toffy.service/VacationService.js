@@ -213,7 +213,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         numberOfDaysToAdd = 0
                     }
                     var someDate = new Date(date);
-                    if (date1 == undefined) {
+                    if (response.result.parameters.date_period == undefined) {
                         someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
                         var dd = someDate.getDate();
