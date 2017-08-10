@@ -241,7 +241,13 @@ module.exports.getUserSlackInfoBySlackId = function getUserSlackInfoBySlackId(id
 
         arr = id.toString().split('>')
         id = arr[0]
-    } else if ((id).indexOf('@') > -1) {
+    } else if ((id).indexOf(' ') > -1) {
+        console.log("2")
+
+        arr = id.toString().split(' ')
+        id = arr[0]
+    } 
+    if ((id).indexOf('@') > -1) {
         console.log("3")
 
         arr = id.toString().split('@' || id.includes("@"))
