@@ -279,16 +279,16 @@ function PrepareApiAiResponse(response) {
     console.log("response before Preparation" + JSON.stringify(response))
     if (response.result.parameters.date == "" || !response.result.parameters.date)
         response.result.parameters.date = undefined
-    if (response.result.parameters.date1 == "" || !response.result.parameters.date1)
-        response.result.parameters.date1 = undefined
+    if (response.result.parameters.date_period == "" || !response.result.parameters.date_period)
+        response.result.parameters.date_period = undefined
     if (response.result.parameters.time == "" || !response.result.parameters.time)
         response.result.parameters.time = undefined
-    if (response.result.parameters.time1 == "" || !response.result.parameters.time1)
-        response.result.parameters.time1 = undefined
+    if (response.result.parameters.time_period == "" || !response.result.parameters.time_period)
+        response.result.parameters.time_period = undefined
     if (response.result.parameters.any == "" || !response.result.parameters.any)
-        response.result.parameters.time1 = undefined
+        response.result.parameters.any = undefined
     if (response.result.parameters.vacation_types == "" || !response.result.parameters.vacation_types)
-        response.result.parameters.time1 = undefined
+        response.result.parameters.vacation_types = undefined
     console.log("response after Preparation" + JSON.stringify(response))
 
     return response
