@@ -133,6 +133,9 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
                             var d = new Date(arr[0]);
                             if (d.toString() != 'Invalid Date') {
+                                if (date > date1) {
+                                    console.log("Greater")
+                                }
                                 date = arr[0]
                                 date1 = arr[1]
                             } else {
