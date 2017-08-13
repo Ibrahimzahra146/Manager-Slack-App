@@ -128,7 +128,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             var arr = date_time.toString().split('/')
                             time = arr[0]
                             time1 = arr[1]
-                        }
+                        } else date = response.result.parameters.date_time
                     } else if (response.result.parameters.time) {
                         time = response.result.parameters.time
                     }
