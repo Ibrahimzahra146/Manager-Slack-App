@@ -140,7 +140,10 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                                 time1 = arr[1]
                             }
 
-                        } else date = response.result.parameters.date_time
+                        } else {
+                            date = response.result.parameters.date_time
+                            date1 = date
+                        }
                     } else if (response.result.parameters.time) {
                         time = response.result.parameters.time
                     }
