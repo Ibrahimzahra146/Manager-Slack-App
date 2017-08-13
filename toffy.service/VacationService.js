@@ -112,7 +112,9 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     }
 
                 } else if (response.result.action == "timeoff.date_time") {
-                    console.log("date_time")
+
+
+
                     if (response.result.parameters.date_time) {
                         if ((response.result.parameters.date_time).indexOf("T") > -1) {
 
@@ -124,8 +126,13 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             arr = arr[1].toString().split('Z')
                             time = arr[0]
                         } else if ((response.result.parameters.date_time).indexOf("/") > -1) {
+
                             var date_time = response.result.parameters.date_time;
                             var arr = date_time.toString().split('/')
+                            console.log("date_time")
+
+                            var d = new Date(arr[0]);
+                            console.log(d.toString() === 'Invalid Date')
                             time = arr[0]
                             time1 = arr[1]
                         } else date = response.result.parameters.date_time
