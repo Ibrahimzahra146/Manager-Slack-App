@@ -165,6 +165,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         numberOfDaysToAdd = 70
 
                     } else if (response.result.parameters.vacation_types == "Paternity") {
+                        console.log("Paternity")
                         numberOfDaysToAdd = 3
                     }
                     else if (response.result.parameters.vacation_types == "Wedding") {
@@ -178,7 +179,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         numberOfDaysToAdd = 0
                     }
                     var someDate = new Date(date);
-                    if (response.result.parameters.date_period == undefined) {
+                    if (date == date1) {
                         console.log("Arrive vacation_types2")
 
                         someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
