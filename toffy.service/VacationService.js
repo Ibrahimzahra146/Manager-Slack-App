@@ -181,10 +181,8 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     }
                     var someDate = new Date(date);
                     if (date == date1) {
-                        console.log("someDate" + someDate.toString())
-                        console.log("Arrive vacation_types2" + date)
-                        console.log("numberOfDaysToAdd" + numberOfDaysToAdd)
-                        someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+                      
+                        someDate.setDate(someDate.getDate() + numberOfDaysToAdd - 1);
 
                         var dd = someDate.getDate();
                         var mm = someDate.getMonth() + 1;
