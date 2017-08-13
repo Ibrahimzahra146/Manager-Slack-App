@@ -137,7 +137,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             if (d.toString() != 'Invalid Date') {
                                 date = arr[0]
                                 date1 = arr[1]
-                                if (d.getTime() > d1.getTime()) {
+                                if (d.getFullYear() < new Date(today).getFullYear()) {
                                     date1 = date
                                     console.log("Greater")
                                 } else console.log("Smaller" + d.getTime() + ":" + d1.getTime())
@@ -217,17 +217,17 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         var timeMilliseconds = new Date(fromDate);
                         var validPreviousDate = 1;
 
-                        if (timeMilliseconds.getFullYear() == 2018) {
+                        if (timeMilliseconds.getFullYear() != new Date(today).getFullYear()) {
 
-                            timeMilliseconds.setFullYear(2017)
+                            timeMilliseconds.setFullYear(new Date(today).getFullYear())
 
                         }
                         timeMilliseconds = timeMilliseconds.getTime();
                         timeMilliseconds = timeMilliseconds - (3 * 60 * 60 * 1000);
                         toDate = new Date(toDate);
-                        if (toDate.getFullYear() == 2018) {
+                        if (toDate.getFullYear() != new Date(today).getFullYear()) {
 
-                            toDate.setFullYear(2017)
+                            toDate.setFullYear(new Date(today).getFullYear())
 
                         }
                         var dateMilliSeconds = toDate.getTime();
