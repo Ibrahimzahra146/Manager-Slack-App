@@ -132,9 +132,14 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                             console.log("date_time")
 
                             var d = new Date(arr[0]);
-                            console.log(d.toString() === 'Invalid Date')
-                            time = arr[0]
-                            time1 = arr[1]
+                            if (d.toString() != 'Invalid Date') {
+                                dqte = arr[0]
+                                date1 = arr[1]
+                            } else {
+                                time = arr[0]
+                                time1 = arr[1]
+                            }
+
                         } else date = response.result.parameters.date_time
                     } else if (response.result.parameters.time) {
                         time = response.result.parameters.time
