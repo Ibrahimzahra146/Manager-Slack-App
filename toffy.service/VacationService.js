@@ -146,6 +146,9 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         }
                     } else if (response.result.parameters.time) {
                         time = response.result.parameters.time
+                    } else if (response.result.parameters.date) {
+                        date = response.result.parameters.date
+                        date1 = date
                     }
 
 
@@ -181,7 +184,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     }
                     var someDate = new Date(date);
                     if (date == date1) {
-                      
+
                         someDate.setDate(someDate.getDate() + numberOfDaysToAdd - 1);
 
                         var dd = someDate.getDate();
