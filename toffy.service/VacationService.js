@@ -83,7 +83,10 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         vacation_type1 = "Sick"
                     } else if (other_vacation_types == "WFH") {
                         vacation_type1 = "WFH"
+                    } else if (other_vacation_types == "Haj") {
+                        vacation_type1 = "Haj"
                     }
+
                     console.log("Other vacation type" + vacation_type1)
 
                 } else vacation_type1 = "Personal"
@@ -129,7 +132,6 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
 
                             var date_time = response.result.parameters.date_time;
                             var arr = date_time.toString().split('/')
-                            console.log("date_time")
 
                             var d = new Date(arr[0]);
                             var d1 = new Date(arr[1]);
@@ -139,9 +141,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                                 date1 = arr[1]
                                 if (d.getFullYear() < new Date(today).getFullYear()) {
                                     date1 = date
-                                    console.log("Greater")
-                                } else console.log("Smaller" + d.getTime() + ":" + d1.getTime())
-
+                                }
 
                             } else {
                                 time = arr[0]
@@ -169,10 +169,9 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     vacation_type1 = "personal"
                 }
                 console.log("new Api ai response " + JSON.stringify(response))
-                console.log("Repeated" + time)
+
                 var numberOfDaysToAdd = 0
                 if (response.result.parameters.vacation_types) {
-                    console.log("Arrive vacation_types1")
                     if (vacation_type1 == "Maternity") {
                         numberOfDaysToAdd = 70
 
