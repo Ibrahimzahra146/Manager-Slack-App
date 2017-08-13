@@ -159,6 +159,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                 }
                 console.log("new Api ai response " + JSON.stringify(response))
                 console.log("Repeated" + time)
+                var numberOfDaysToAdd = 0
                 if (response.result.parameters.vacation_types) {
                     console.log("Arrive vacation_types1")
                     if (vacation_type1 == "Maternity") {
@@ -181,7 +182,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     var someDate = new Date(date);
                     if (date == date1) {
                         console.log("Arrive vacation_types2")
-
+                        console.log("numberOfDaysToAdd" + numberOfDaysToAdd)
                         someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
                         var dd = someDate.getDate();
