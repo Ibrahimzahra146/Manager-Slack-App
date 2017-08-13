@@ -87,6 +87,8 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     console.log("Other vacation type" + vacation_type1)
 
                 } else vacation_type1 = "Personal"
+
+
                 if (response.result.action == "timeoff.date_period") {
 
                     var date_period = response.result.parameters.date_period
@@ -94,7 +96,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     date = arr[0]
                     date1 = arr[1]
                 }
-                else if ("timeoff.time_period") {
+                else if (response.result.action == "timeoff.time_period") {
                     if (response.result.parameters.date && response.result.parameters.time_period) {
                         date = response.result.parameters.date
                         date1 = response.result.parameters.date
@@ -109,7 +111,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                         time1 = arr[1]
                     }
 
-                } else if ("timeoff.date_time") {
+                } else if (response.result.action == "timeoff.date_time") {
                     console.log("date_time")
                     if (response.result.parameters.date_time) {
                         if ((response.result.parameters.date_time).indexOf("T") > -1) {
