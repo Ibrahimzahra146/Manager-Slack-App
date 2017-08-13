@@ -245,6 +245,8 @@ function PrepareApiAiResponse(response) {
         response.result.parameters.any = undefined
     if (response.result.parameters.vacation_types == "" || !response.result.parameters.vacation_types)
         response.result.parameters.vacation_types = undefined
+    if (response.result.parameters.date_time == "" || !response.result.parameters.date_time)
+        response.result.parameters.date_time = undefined
     console.log("response after Preparation" + JSON.stringify(response))
 
     return response
