@@ -87,106 +87,43 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                     console.log("Other vacation type" + vacation_type1)
 
                 } else vacation_type1 = "Personal"
+                if (response.result.action == "timeoff.date_period") {
 
-
-
-
-
-                var time_period = response.result.parameters.time_period;
-                var date_period = response.result.parameters.date_period
-                if (response.result.parameters.time_period && response.result.parameters.date_period) {
-
-
-                    var arr = time_period.toString().split('/')
-                    time = arr[0]
-                    time1 = arr[1]
-                    arr = date_period.toString().split('/')
-                    date = arr[0]
-                    date1 = arr[1]
-                    if (date == "") {
-                        date = today
-                    }
-                    timeOffCase = 1
-
-                }
-                else if (response.result.parameters.time && response.result.parameters.date) {
-
-                    time = response.result.parameters.time
-
-                    date = response.result.parameters.date
-                    date1 = date
-
-
-                    timeOffCase = 2
-
-                } else if (response.result.parameters.time_period && response.result.parameters.date) {
-                    var arr = time_period.toString().split('/')
-                    time = arr[0]
-                    time1 = arr[1]
-                    date = response.result.parameters.date
-                    date1 = response.result.parameters.date
-
-                    timeOffCase = 3
-
-                }
-                else if (response.result.parameters.date_period) {
+                    var date_period = response.result.parameters.date_period
                     var arr = date_period.toString().split('/')
                     date = arr[0]
                     date1 = arr[1]
+                }
+                else if ("timeoff.time_period") {
+                    if (response.result.parameters.date && response.result.parameters.time_period) {
+                        date = response.result.parameters.date
+                        date1 = response.result.parameters.date
+                        var time_period = response.result.parameters.time_period;
+                        var arr = time_period.toString().split('/')
+                        time = arr[0]
+                        time1 = arr[1]
+                    } else if (response.result.parameters.time_period) {
+                        var time_period = response.result.parameters.time_period;
+                        var arr = time_period.toString().split('/')
+                        time = arr[0]
+                        time1 = arr[1]
+                    }
 
+                } else if ("timeoff.date_time") {
+                    if (response.result.parameters.date_time) {
+                        var date_time = response.result.parameters.date_time;
+                        var arr = date_time.toString().split('T')
+                        date = arr[0]
+                        date1 = date
+                        arr = arr[1].toString().split('Z')
+                        time = arr[0]
+                    } else if (response.result.parameters.time) {
+                        time = response.result.parameters.time
+                    }
 
-                    timeOffCase = 3
-
-                } else if (response.result.parameters.time_period) {
-                    var arr = time_period.toString().split('/')
-                    time = arr[0]
-                    time1 = arr[1]
-
-
-                    timeOffCase = 3
 
                 }
 
-
-
-                /*  else if (response.result.parameters.date && response.result.parameters.date1 && response.result.parameters.date1 != "" && response.result.parameters.date != "") {
-  
-                      date = response.result.parameters.date
-                      date1 = response.result.parameters.date1
-                      timeOffCase = 8
-  
-                  }
-                  else if (response.result.parameters.date && response.result.parameters.date != "") {
-  
-                      timeOffCase = 9
-  
-                      var numberOfDaysToAdd = ""
-  
-                      date = response.result.parameters.date
-                      date1 = response.result.parameters.date
-                      if (response.result.parameters.date == "") {
-                          date = today;
-                          date1 = date
-  
-                      } else if ((response.result.parameters.date).indexOf(',') > -1) {
-  
-                          var arr = (response.result.parameters.date).toString().split(',')
-                          date = arr[0];
-                          date1 = arr[1]
-                      }
-  
-  
-                  }*/
-                else if (response.result.parameters.time) {
-                    time = response.result.parameters.time
-                    timeOffCase = 10
-
-                } else if (response.result.parameters.date) {
-                    date = response.result.parameters.date
-                    date1 = response.result.parameters.date
-                    timeOffCase = 10
-
-                }
 
 
 
