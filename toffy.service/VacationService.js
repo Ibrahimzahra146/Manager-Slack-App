@@ -140,7 +140,7 @@ module.exports.vacationWithLeave = function vacationWithLeave(msg, response, ema
                                 if (d.getTime() > d1.getTime()) {
                                     date1 = date
                                     console.log("Greater")
-                                } else console.log("Smaller")
+                                } else console.log("Smaller" + d.getTime() + ":" + d1.getTime(:))
 
 
                             } else {
