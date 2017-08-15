@@ -3,7 +3,7 @@ const env = require('.././public/configrations.js')
 //const leave = require('.././leave.js')
 
 
-
+var 
 var vacation_type1 = ""
 module.exports.vacationWithLeave = function vacationWithLeave(msg, response, emailValue) {
     console.log("response" + response)
