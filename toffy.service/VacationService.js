@@ -1,9 +1,6 @@
 const dateHelper = require('.././DateEngine/DateHelper.js')
 const env = require('.././public/configrations.js')
-//const leave = require('.././leave.js')
-
-
-var 
+//const leave = require('.././leave.js') 
 var vacation_type1 = ""
 module.exports.vacationWithLeave = function vacationWithLeave(msg, response, emailValue) {
     console.log("response" + response)
