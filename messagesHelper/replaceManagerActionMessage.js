@@ -143,14 +143,16 @@ module.exports.undoAction = function unduAction(msg, userEmail, managerEmail, fr
             "type": "button",
             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
         }
+        var dont_detuct_button = {
+            "name": "dont_detuct",
+            "text": "Don’t Deduct ",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
+        }
         var dont_detuct_button = ""
-        if (type != "WFH") {
-            dont_detuct_button = {
-                "name": "dont_detuct",
-                "text": "Don’t Deduct ",
-                "type": "button",
-                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-            }
+        if (type == "WFH") {
+            dont_detuct_button = ""
+            reject_with_comment_button = ""
         }
         var actions_based_on_type = dont_detuct_button
         if (type == "sick") {
@@ -465,17 +467,18 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
             "type": "button",
             "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl + ";" + "Pending" + ";" + "Pending" + ";" + "Pending"
         }
-        var dont_detuct_button = ""
-        if (type != "WFH") {
-            reject_with_comment_button = ""
-
-            dont_detuct_button = {
-                "name": "dont_detuct",
-                "text": "Don’t Deduct ",
-                "type": "button",
-                "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
-            }
+        var dont_detuct_button = {
+            "name": "dont_detuct",
+            "text": "Don’t Deduct ",
+            "type": "button",
+            "value": userEmail + ";" + vacationId + ";" + approvalId + ";" + managerEmail + ";employee" + ";" + fromDate + ";" + toDate + ";" + type + ";" + workingDays + ";" + ImageUrl
         }
+
+        if (type == "WFH") {
+            dont_detuct_button = ""
+            reject_with_comment_button = ""
+        }
+
         var actions_based_on_type = dont_detuct_button
         if (type == "sick") {
             reject_with_comment_button = ""
