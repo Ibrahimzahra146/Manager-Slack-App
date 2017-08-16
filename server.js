@@ -647,16 +647,7 @@ function managerAction(msg, value, typeOfaction) {
       });
 
       //get The id of the manager inorder to get approval id and vacation ID
-      var i = 0
-      while (managerApproval[i]) {
-        if (managerApproval[i].manager == managerId) {
-          var value = employeeEmail + ";" + vacationId + ";" + managerApproval[i].id + ";" + managerEmail
-          console.log("value: :" + value)
-          managerApproval1(msg, value, "Approved", 1, "")
-          break;
-        }
-        i++;
-      }
+
 
     });
   })

@@ -467,7 +467,7 @@ module.exports.replaceMessageOnCheckState = function replaceMessageOnCheckState(
         }
         var dont_detuct_button = ""
         if (type != "WFH") {
-
+            reject_with_comment_button = ""
 
             dont_detuct_button = {
                 "name": "dont_detuct",
