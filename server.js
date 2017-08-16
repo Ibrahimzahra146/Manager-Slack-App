@@ -453,9 +453,6 @@ function getMembersList(Id, msg) {
         if (body.members[i]["id"] == Id) {
           console.log(body.members[i]["profile"].email);
           emailValue = body.members[i]["profile"].email;
-          if (emailValue == "ibrahim.zahra@exalt.ps") {
-            emailValue = "tareq@exalt.ps"
-          }
 
           sendRequestToApiAi(emailValue, msg, 0, "");
           break;
